@@ -12,10 +12,10 @@ import {
   Eye,
   ExternalLink,
   Calendar,
-  DollarSign,
   User,
   AlertTriangle,
 } from "lucide-react";
+import { EchoCoinIcon } from "@/components/EchoCoinIcon";
 
 interface EvidenceSubmission {
   id: string;
