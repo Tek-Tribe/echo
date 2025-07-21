@@ -394,7 +394,7 @@ export default function InfluencerDashboard() {
                     Total Earnings
                   </div>
                   <div className="text-lg sm:text-2xl font-bold text-gray-900">
-                    ${influencerStats.totalEarnings.toLocaleString()}
+                    {influencerStats.totalEarnings.toLocaleString()} EC
                   </div>
                 </div>
               </div>
