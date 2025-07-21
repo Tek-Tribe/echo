@@ -51,9 +51,11 @@ export default function InfluencerLogin() {
                 </div>
               </div>
 
-              <Button className="w-full bg-brand-600 hover:bg-brand-700 text-white">
-                Sign In
-              </Button>
+              <Link to="/influencer-dashboard" className="w-full">
+                <Button className="w-full bg-brand-600 hover:bg-brand-700 text-white">
+                  Sign In
+                </Button>
+              </Link>
 
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
