@@ -257,49 +257,49 @@ export default function Index() {
       </section>
 
       {/* How It Works */}
-      <section id="how-it-works" className="py-20 bg-white">
+      <section id="how-it-works" className="py-12 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
               How Echo Works
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
               Simple, transparent process from campaign creation to completion
             </p>
           </div>
-          <div className="grid lg:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-brand-500 to-gradient-to rounded-3xl flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-white">1</span>
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-brand-500 to-gradient-to rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <span className="text-xl sm:text-2xl font-bold text-white">1</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Post Your Campaign</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">Post Your Campaign</h3>
+              <p className="text-sm sm:text-base text-gray-600">
                 Create a campaign with details about your brand, requirements, and budget
               </p>
             </div>
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-brand-500 to-gradient-to rounded-3xl flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-white">2</span>
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-brand-500 to-gradient-to rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <span className="text-xl sm:text-2xl font-bold text-white">2</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Receive Bids</h3>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">Receive Bids</h3>
               <p className="text-gray-600">
                 Qualified influencers submit their proposals with custom pricing
               </p>
             </div>
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-brand-500 to-gradient-to rounded-3xl flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-white">3</span>
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-brand-500 to-gradient-to rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <span className="text-xl sm:text-2xl font-bold text-white">3</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Select & Confirm</h3>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">Select & Confirm</h3>
               <p className="text-gray-600">
                 Choose your preferred influencers and they confirm their participation
               </p>
             </div>
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-brand-500 to-gradient-to rounded-3xl flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-white">4</span>
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-brand-500 to-gradient-to rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <span className="text-xl sm:text-2xl font-bold text-white">4</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Verify & Pay</h3>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">Verify & Pay</h3>
               <p className="text-gray-600">
                 Review proof of posting, approve the work, and payments are processed automatically
               </p>
@@ -309,22 +309,22 @@ export default function Index() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-brand-600 to-gradient-to">
+      <section className="py-12 sm:py-20 bg-gradient-to-br from-brand-600 to-gradient-to">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6">
             Ready to Amplify Your Brand?
           </h2>
-          <p className="text-xl text-brand-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-brand-100 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
             Join thousands of businesses and influencers who trust Echo for their marketing collaborations
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/business-dashboard">
-              <Button size="lg" className="bg-white text-brand-600 hover:bg-gray-50 px-8 py-6 text-lg">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+            <Link to="/business-dashboard" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full sm:w-auto bg-white text-brand-600 hover:bg-gray-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg">
                 Start Your First Campaign
               </Button>
             </Link>
-            <Link to="/influencer-login">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
+            <Link to="/influencer-login" className="w-full sm:w-auto">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto border-white text-white hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg">
                 Join as Influencer
               </Button>
             </Link>
@@ -333,47 +333,47 @@ export default function Index() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-gray-900 text-white py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">E</span>
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+            <div className="sm:col-span-2 md:col-span-1">
+              <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-base sm:text-lg">E</span>
                 </div>
-                <span className="text-xl font-bold">Echo</span>
+                <span className="text-lg sm:text-xl font-bold">Echo</span>
               </div>
-              <p className="text-gray-400">
+              <p className="text-sm sm:text-base text-gray-400">
                 Connecting businesses with influencers for authentic social media collaborations.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Platform</h3>
-              <ul className="space-y-2 text-gray-400">
+              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Platform</h3>
+              <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
                 <li><Link to="/business-dashboard" className="hover:text-white">For Businesses</Link></li>
                 <li><Link to="/influencer-login" className="hover:text-white">For Influencers</Link></li>
                 <li><a href="#pricing" className="hover:text-white">Pricing</a></li>
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Support</h3>
-              <ul className="space-y-2 text-gray-400">
+              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Support</h3>
+              <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
                 <li><a href="#" className="hover:text-white">Help Center</a></li>
                 <li><a href="#" className="hover:text-white">Contact Us</a></li>
                 <li><a href="#" className="hover:text-white">API Docs</a></li>
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-4">Company</h3>
-              <ul className="space-y-2 text-gray-400">
+              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Company</h3>
+              <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
                 <li><a href="#" className="hover:text-white">About</a></li>
                 <li><a href="#" className="hover:text-white">Privacy</a></li>
                 <li><a href="#" className="hover:text-white">Terms</a></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Echo. All rights reserved.</p>
+          <div className="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-gray-400">
+            <p className="text-sm sm:text-base">&copy; 2024 Echo. All rights reserved.</p>
           </div>
         </div>
       </footer>
