@@ -99,22 +99,22 @@ export default function BusinessDashboard() {
         <header className="bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
-              <div className="flex items-center">
-                <Link to="/" className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">E</span>
-                  </div>
-                  <span className="text-xl font-bold text-gray-900">Echo</span>
-                </Link>
-              </div>
-              <Button
-                variant="ghost"
-                onClick={() => setShowCreateJob(false)}
-                className="flex items-center gap-2"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back to Dashboard
-              </Button>
+            <div className="flex items-center flex-1 min-w-0">
+              <Link to="/" className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">E</span>
+                </div>
+                <span className="text-xl font-bold text-gray-900">Echo</span>
+              </Link>
+            </div>
+            <Button
+              variant="ghost"
+              onClick={() => setShowCreateJob(false)}
+              className="flex items-center gap-2 ml-auto"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Dashboard
+            </Button>
             </div>
           </div>
         </header>
@@ -250,7 +250,7 @@ export default function BusinessDashboard() {
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
+            <div className="flex items-center flex-1 min-w-0">
               <Link to="/" className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-lg">E</span>
@@ -277,22 +277,22 @@ export default function BusinessDashboard() {
                   Payments
                 </a>
               </nav>
+            </div>
 
-              {/* Mobile menu button */}
-              <div className="md:hidden">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="text-gray-600 p-2"
-                >
-                  {mobileMenuOpen ? (
-                    <X className="h-6 w-6" />
-                  ) : (
-                    <Menu className="h-6 w-6" />
-                  )}
-                </Button>
-              </div>
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-gray-600 p-2"
+              >
+                {mobileMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
+              </Button>
             </div>
             <div className="hidden md:flex items-center space-x-4">
               <Button
