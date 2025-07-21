@@ -10,7 +10,6 @@ import {
   Users,
   Star,
   Instagram,
-  DollarSign,
   CheckCircle,
   X,
   Eye,
@@ -20,6 +19,7 @@ import {
   ExternalLink,
   Calendar,
 } from "lucide-react";
+import { EchoCoinIcon } from "@/components/EchoCoinIcon";
 
 interface InfluencerBid {
   id: string;
@@ -244,7 +244,7 @@ export default function BidManagement() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 mt-4">
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
-              <DollarSign className="h-4 w-4" />
+              <EchoCoinIcon className="h-4 w-4" />
               <span>Echo Coins: {campaign.echoCoins} EC</span>
             </div>
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
