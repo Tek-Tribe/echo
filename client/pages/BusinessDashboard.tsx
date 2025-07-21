@@ -113,18 +113,18 @@ export default function BusinessDashboard() {
         </header>
 
         {/* Create Job Form */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Create New Campaign</h1>
-            <p className="text-gray-600 mt-2">Post a new job to connect with qualified influencers</p>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+          <div className="mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Create New Campaign</h1>
+            <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Post a new job to connect with qualified influencers</p>
           </div>
 
           <Card>
             <CardHeader>
-              <CardTitle>Campaign Details</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">Campaign Details</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
+            <CardContent className="space-y-4 sm:space-y-6">
+              <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="title">Campaign Title</Label>
                   <Input id="title" placeholder="e.g., Instagram Story Repost Campaign" />
@@ -155,7 +155,7 @@ export default function BusinessDashboard() {
                 />
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6">
+              <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="budget">Total Budget ($)</Label>
                   <Input id="budget" type="number" placeholder="2500" />
@@ -172,7 +172,7 @@ export default function BusinessDashboard() {
 
               <div className="space-y-2">
                 <Label>Eligibility Criteria</Label>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="minFollowers">Minimum Followers</Label>
                     <Input id="minFollowers" type="number" placeholder="1000" />
@@ -196,14 +196,14 @@ export default function BusinessDashboard() {
                 </div>
               </div>
 
-              <div className="flex gap-4 pt-6">
-                <Button 
-                  onClick={() => setShowCreateJob(false)} 
-                  className="bg-brand-600 hover:bg-brand-700 text-white"
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 sm:pt-6">
+                <Button
+                  onClick={() => setShowCreateJob(false)}
+                  className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white"
                 >
                   Post Campaign
                 </Button>
-                <Button variant="outline" onClick={() => setShowCreateJob(false)}>
+                <Button variant="outline" onClick={() => setShowCreateJob(false)} className="w-full sm:w-auto">
                   Save as Draft
                 </Button>
               </div>
