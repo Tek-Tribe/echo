@@ -211,7 +211,7 @@ export default function BidManagement() {
         {/* Campaign Header */}
         <div className="mb-6 sm:mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{campaign.title}</h1>
-          <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Review and select influencers for your campaign</p>
+          <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Manage bids and review campaign evidence</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 mt-4">
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
