@@ -119,26 +119,26 @@ export default function EvidenceReview() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Evidence Review</h1>
-          <p className="text-gray-600 mt-2">Review and approve influencer campaign submissions</p>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Evidence Review</h1>
+          <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Review and approve influencer campaign submissions</p>
         </div>
 
         {/* Stats */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <Card>
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                    <AlertTriangle className="h-6 w-6 text-yellow-600" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                    <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-600" />
                   </div>
                 </div>
-                <div className="ml-4">
-                  <div className="text-sm font-medium text-gray-500">Pending Review</div>
-                  <div className="text-2xl font-bold text-gray-900">{pendingSubmissions.length}</div>
+                <div className="ml-3 sm:ml-4 min-w-0">
+                  <div className="text-xs sm:text-sm font-medium text-gray-500 truncate">Pending Review</div>
+                  <div className="text-lg sm:text-2xl font-bold text-gray-900">{pendingSubmissions.length}</div>
                 </div>
               </div>
             </CardContent>
@@ -179,25 +179,25 @@ export default function EvidenceReview() {
 
         {/* Pending Submissions */}
         {pendingSubmissions.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Pending Reviews</h2>
-            <div className="space-y-4">
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Pending Reviews</h2>
+            <div className="space-y-3 sm:space-y-4">
               {pendingSubmissions.map((submission) => (
                 <Card key={submission.id} className="hover:shadow-lg transition-shadow">
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-4">
-                        <Avatar className="h-12 w-12">
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
+                      <div className="flex items-center gap-3 sm:gap-4">
+                        <Avatar className="h-10 w-10 sm:h-12 sm:w-12">
                           <AvatarImage src={submission.influencerAvatar} />
                           <AvatarFallback>{submission.influencerName.charAt(0)}</AvatarFallback>
                         </Avatar>
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900">{submission.campaignTitle}</h3>
-                          <p className="text-sm text-gray-600">{submission.influencerName} ({submission.influencerHandle})</p>
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">{submission.campaignTitle}</h3>
+                          <p className="text-xs sm:text-sm text-gray-600">{submission.influencerName} ({submission.influencerHandle})</p>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-xl font-bold text-green-600">${submission.amount}</div>
+                      <div className="flex sm:flex-col sm:text-right items-center sm:items-end justify-between sm:justify-start gap-2 sm:gap-1">
+                        <div className="text-lg sm:text-xl font-bold text-green-600">${submission.amount}</div>
                         <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
                           <AlertTriangle className="h-3 w-3 mr-1" />
                           Pending Review
@@ -205,32 +205,32 @@ export default function EvidenceReview() {
                       </div>
                     </div>
 
-                    <div className="mb-4">
-                      <h4 className="font-medium text-gray-900 mb-2">Submission Description</h4>
-                      <p className="text-gray-600 text-sm">{submission.evidence.description}</p>
+                    <div className="mb-3 sm:mb-4">
+                      <h4 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Submission Description</h4>
+                      <p className="text-gray-600 text-xs sm:text-sm">{submission.evidence.description}</p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-4 mb-4">
+                    <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-4">
                       <div>
-                        <h5 className="font-medium text-gray-700 mb-2">Screenshots ({submission.evidence.screenshots.length})</h5>
-                        <div className="flex gap-2">
+                        <h5 className="font-medium text-gray-700 mb-2 text-xs sm:text-sm">Screenshots ({submission.evidence.screenshots.length})</h5>
+                        <div className="flex gap-1 sm:gap-2">
                           {submission.evidence.screenshots.map((screenshot, index) => (
-                            <div key={index} className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                              <Eye className="h-4 w-4 text-gray-400" />
+                            <div key={index} className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-200 rounded-lg flex items-center justify-center">
+                              <Eye className="h-3 w-3 sm:h-4 sm:w-4 text-gray-400" />
                             </div>
                           ))}
                         </div>
                       </div>
                       <div>
-                        <h5 className="font-medium text-gray-700 mb-2">Post Links</h5>
+                        <h5 className="font-medium text-gray-700 mb-2 text-xs sm:text-sm">Post Links</h5>
                         <div className="space-y-1">
                           {submission.evidence.links.map((link, index) => (
-                            <a 
-                              key={index} 
-                              href={link} 
-                              target="_blank" 
+                            <a
+                              key={index}
+                              href={link}
+                              target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-2 text-sm text-brand-600 hover:text-brand-700"
+                              className="flex items-center gap-2 text-xs sm:text-sm text-brand-600 hover:text-brand-700"
                             >
                               <ExternalLink className="h-3 w-3" />
                               View Post {index + 1}
@@ -240,26 +240,26 @@ export default function EvidenceReview() {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                    <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500 mb-4">
                       <span className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
+                        <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
                         Submitted {new Date(submission.submittedAt).toLocaleDateString()}
                       </span>
                     </div>
 
-                    <div className="flex gap-3">
-                      <Button 
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                      <Button
                         onClick={() => setSelectedSubmission(submission)}
-                        className="flex-1 bg-brand-600 hover:bg-brand-700 text-white"
+                        className="flex-1 bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm"
                       >
-                        <Eye className="h-4 w-4 mr-2" />
+                        <Eye className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
                         Review in Detail
                       </Button>
-                      <Button 
+                      <Button
                         onClick={() => handleApprove(submission.id)}
-                        className="bg-green-600 hover:bg-green-700 text-white px-6"
+                        className="bg-green-600 hover:bg-green-700 text-white px-4 sm:px-6 text-xs sm:text-sm"
                       >
-                        <CheckCircle className="h-4 w-4 mr-2" />
+                        <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
                         Quick Approve
                       </Button>
                     </div>
