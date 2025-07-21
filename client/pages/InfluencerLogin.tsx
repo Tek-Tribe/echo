@@ -70,7 +70,7 @@ export default function InfluencerLogin() {
                   Instagram
                 </Button>
                 <Button variant="outline" className="flex items-center gap-2">
-                  <TikTok className="h-4 w-4" />
+                  <Video className="h-4 w-4" />
                   TikTok
                 </Button>
               </div>
