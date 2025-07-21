@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Instagram, Twitter, Youtube, TikTok } from "lucide-react";
+import { ArrowLeft, Instagram, Twitter, Youtube, Video } from "lucide-react";
 
 export default function InfluencerLogin() {
   return (
