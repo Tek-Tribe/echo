@@ -137,6 +137,303 @@ export default function BusinessDashboard() {
   const publishedCampaigns = jobs.filter((job) => job.status === "published").length;
   const totalBids = jobs.reduce((sum, job) => sum + job.bidCount, 0);
 
+  const renderAnalytics = () => (
+    <div className="space-y-6 sm:space-y-8">
+      {/* Analytics Header */}
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+          Analytics Overview
+        </h1>
+        <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">
+          Track your campaign performance and insights
+        </p>
+      </div>
+
+      {/* Analytics Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+        <Card>
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
+                </div>
+              </div>
+              <div className="ml-3 sm:ml-4">
+                <div className="text-xs sm:text-sm font-medium text-gray-500">
+                  Campaign Performance
+                </div>
+                <div className="text-lg sm:text-2xl font-bold text-gray-900">
+                  87%
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <PieChart className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
+                </div>
+              </div>
+              <div className="ml-3 sm:ml-4">
+                <div className="text-xs sm:text-sm font-medium text-gray-500">
+                  Avg. Engagement
+                </div>
+                <div className="text-lg sm:text-2xl font-bold text-gray-900">
+                  6.8%
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                  <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
+                </div>
+              </div>
+              <div className="ml-3 sm:ml-4">
+                <div className="text-xs sm:text-sm font-medium text-gray-500">
+                  ROI
+                </div>
+                <div className="text-lg sm:text-2xl font-bold text-gray-900">
+                  324%
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Campaign Performance Chart */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg sm:text-xl">Campaign Performance</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
+            <div className="text-center">
+              <BarChart3 className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <p className="text-gray-500">Campaign performance chart would be displayed here</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Top Performing Campaigns */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg sm:text-xl">Top Performing Campaigns</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {jobs.filter(job => job.status === "published").slice(0, 3).map((job) => (
+              <div key={job.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <h4 className="font-semibold text-gray-900">{job.title}</h4>
+                  <p className="text-sm text-gray-600">{job.bidCount} bids received</p>
+                </div>
+                <div className="text-right">
+                  <div className="font-semibold text-green-600">{job.echoCoins} EC</div>
+                  <div className="text-sm text-gray-500">Budget</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  const renderPayments = () => (
+    <div className="space-y-6 sm:space-y-8">
+      {/* Payments Header */}
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+          Payments & Billing
+        </h1>
+        <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">
+          Manage your payments and billing information
+        </p>
+      </div>
+
+      {/* Payment Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-6">
+        <Card>
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                  <EchoCoinIcon className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
+                </div>
+              </div>
+              <div className="ml-3 sm:ml-4">
+                <div className="text-xs sm:text-sm font-medium text-gray-500">
+                  Total Spent
+                </div>
+                <div className="text-lg sm:text-2xl font-bold text-gray-900">
+                  {totalEchoCoins.toLocaleString()} EC
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <Receipt className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
+                </div>
+              </div>
+              <div className="ml-3 sm:ml-4">
+                <div className="text-xs sm:text-sm font-medium text-gray-500">
+                  Pending Payments
+                </div>
+                <div className="text-lg sm:text-2xl font-bold text-gray-900">
+                  4,200 EC
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                  <CreditCard className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-600" />
+                </div>
+              </div>
+              <div className="ml-3 sm:ml-4">
+                <div className="text-xs sm:text-sm font-medium text-gray-500">
+                  This Month
+                </div>
+                <div className="text-lg sm:text-2xl font-bold text-gray-900">
+                  8,700 EC
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
+                </div>
+              </div>
+              <div className="ml-3 sm:ml-4">
+                <div className="text-xs sm:text-sm font-medium text-gray-500">
+                  Avg. Payment Time
+                </div>
+                <div className="text-lg sm:text-2xl font-bold text-gray-900">
+                  2.4 days
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Recent Transactions */}
+      <Card>
+        <CardHeader>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <CardTitle className="text-lg sm:text-xl">Recent Transactions</CardTitle>
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm">
+                <Filter className="h-4 w-4 mr-2" />
+                Filter
+              </Button>
+              <Button variant="outline" size="sm">
+                <Download className="h-4 w-4 mr-2" />
+                Export
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {[
+              { id: 1, campaign: "Instagram Story Repost", influencer: "Sarah Fitness", amount: 350, date: "2024-01-20", status: "completed" },
+              { id: 2, campaign: "Product Review Video", influencer: "Mike Strong", amount: 1200, date: "2024-01-19", status: "pending" },
+              { id: 3, campaign: "Brand Awareness Post", influencer: "Emma Wellness", amount: 450, date: "2024-01-18", status: "completed" },
+              { id: 4, campaign: "Summer Collection Launch", influencer: "Alex Style", amount: 800, date: "2024-01-17", status: "processing" },
+            ].map((transaction) => (
+              <div key={transaction.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 border border-gray-200 rounded-lg gap-2">
+                <div className="flex-1">
+                  <h4 className="font-semibold text-gray-900">{transaction.campaign}</h4>
+                  <p className="text-sm text-gray-600">Payment to {transaction.influencer}</p>
+                  <p className="text-xs text-gray-500">{transaction.date}</p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="text-right">
+                    <div className="font-semibold text-gray-900">{transaction.amount} EC</div>
+                  </div>
+                  <Badge
+                    variant={
+                      transaction.status === "completed" ? "default" :
+                      transaction.status === "pending" ? "secondary" : "outline"
+                    }
+                    className={
+                      transaction.status === "completed" ? "bg-green-100 text-green-800" :
+                      transaction.status === "pending" ? "bg-yellow-100 text-yellow-800" :
+                      "bg-blue-100 text-blue-800"
+                    }
+                  >
+                    {transaction.status}
+                  </Badge>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Payment Methods */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg sm:text-xl">Payment Methods</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <CreditCard className="h-5 w-5 text-blue-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900">•••• •••• •••• 4242</h4>
+                  <p className="text-sm text-gray-600">Expires 12/25</p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm">Edit</Button>
+                <Button variant="outline" size="sm">Remove</Button>
+              </div>
+            </div>
+            <Button variant="outline" className="w-full">
+              <Plus className="h-4 w-4 mr-2" />
+              Add Payment Method
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
   if (showCreateJob) {
     return (
       <div className="min-h-screen bg-gray-50">
