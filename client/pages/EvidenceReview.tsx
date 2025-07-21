@@ -243,7 +243,7 @@ export default function EvidenceReview() {
                       </div>
                       <div className="flex sm:flex-col sm:text-right items-center sm:items-end justify-between sm:justify-start gap-2 sm:gap-1">
                         <div className="text-lg sm:text-xl font-bold text-green-600">
-                          ${submission.amount}
+                          {submission.echoCoins} EC
                         </div>
                         <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
                           <AlertTriangle className="h-3 w-3 mr-1" />
