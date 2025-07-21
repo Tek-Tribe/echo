@@ -4,18 +4,22 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { 
-  ArrowLeft, 
-  Users, 
-  Star, 
-  Instagram, 
-  DollarSign, 
-  CheckCircle, 
+import {
+  ArrowLeft,
+  Users,
+  Star,
+  Instagram,
+  DollarSign,
+  CheckCircle,
   X,
   Eye,
   Heart,
-  MessageCircle
+  MessageCircle,
+  Clock,
+  ExternalLink,
+  Calendar
 } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 
 interface InfluencerBid {
   id: string;
@@ -38,9 +42,29 @@ interface InfluencerBid {
   };
 }
 
+interface EvidenceSubmission {
+  id: string;
+  bidId: string;
+  influencerId: string;
+  influencerName: string;
+  influencerAvatar: string;
+  influencerHandle: string;
+  amount: number;
+  submittedAt: string;
+  evidence: {
+    screenshots: string[];
+    links: string[];
+    description: string;
+  };
+  status: 'pending' | 'approved' | 'rejected';
+}
+
 export default function BidManagement() {
   const { campaignId } = useParams();
   const [selectedBids, setSelectedBids] = useState<string[]>([]);
+  const [selectedEvidence, setSelectedEvidence] = useState<EvidenceSubmission | null>(null);
+  const [reviewNotes, setReviewNotes] = useState('');
+  const [activeTab, setActiveTab] = useState<'bids' | 'evidence'>('bids');
 
   const [campaign] = useState({
     id: '1',
