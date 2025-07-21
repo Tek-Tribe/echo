@@ -35,6 +35,13 @@ import {
   Trash2,
   Send,
   Edit3,
+  BarChart3,
+  PieChart,
+  CreditCard,
+  Receipt,
+  Download,
+  Filter,
+  Calendar,
 } from "lucide-react";
 import { EchoCoinIcon } from "@/components/EchoCoinIcon";
 
@@ -55,6 +62,7 @@ interface Job {
 export default function BusinessDashboard() {
   const [showCreateJob, setShowCreateJob] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'analytics' | 'payments'>('dashboard');
   const [jobs, setJobs] = useState<Job[]>([
     {
       id: "1",
@@ -295,24 +303,36 @@ export default function BusinessDashboard() {
                 <span className="text-xl font-bold text-gray-900">Echo</span>
               </Link>
               <nav className="hidden md:flex ml-8 space-x-8">
-                <a
-                  href="#"
-                  className="text-brand-600 border-b-2 border-brand-600 pb-4 text-sm font-medium"
+                <button
+                  onClick={() => setActiveTab('dashboard')}
+                  className={`pb-4 text-sm font-medium transition-colors ${
+                    activeTab === 'dashboard'
+                      ? 'text-brand-600 border-b-2 border-brand-600'
+                      : 'text-gray-500 hover:text-gray-700'
+                  }`}
                 >
                   Dashboard
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-500 hover:text-gray-700 pb-4 text-sm font-medium"
+                </button>
+                <button
+                  onClick={() => setActiveTab('analytics')}
+                  className={`pb-4 text-sm font-medium transition-colors ${
+                    activeTab === 'analytics'
+                      ? 'text-brand-600 border-b-2 border-brand-600'
+                      : 'text-gray-500 hover:text-gray-700'
+                  }`}
                 >
                   Analytics
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-500 hover:text-gray-700 pb-4 text-sm font-medium"
+                </button>
+                <button
+                  onClick={() => setActiveTab('payments')}
+                  className={`pb-4 text-sm font-medium transition-colors ${
+                    activeTab === 'payments'
+                      ? 'text-brand-600 border-b-2 border-brand-600'
+                      : 'text-gray-500 hover:text-gray-700'
+                  }`}
                 >
                   Payments
-                </a>
+                </button>
               </nav>
             </div>
 
@@ -381,24 +401,39 @@ export default function BusinessDashboard() {
           {mobileMenuOpen && (
             <div className="md:hidden border-t border-gray-200 bg-white">
               <div className="px-2 pt-2 pb-3 space-y-1">
-                <a
-                  href="#"
-                  className="block px-3 py-2 text-base font-medium text-brand-600"
+                <button
+                  onClick={() => {
+                    setActiveTab('dashboard');
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`block w-full text-left px-3 py-2 text-base font-medium ${
+                    activeTab === 'dashboard' ? 'text-brand-600' : 'text-gray-600 hover:text-gray-700'
+                  }`}
                 >
                   Dashboard
-                </a>
-                <a
-                  href="#"
-                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700"
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveTab('analytics');
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`block w-full text-left px-3 py-2 text-base font-medium ${
+                    activeTab === 'analytics' ? 'text-brand-600' : 'text-gray-600 hover:text-gray-700'
+                  }`}
                 >
                   Analytics
-                </a>
-                <a
-                  href="#"
-                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700"
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveTab('payments');
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`block w-full text-left px-3 py-2 text-base font-medium ${
+                    activeTab === 'payments' ? 'text-brand-600' : 'text-gray-600 hover:text-gray-700'
+                  }`}
                 >
                   Payments
-                </a>
+                </button>
                 <div className="pt-2 pb-2">
                   <Button
                     onClick={() => setShowCreateJob(true)}
