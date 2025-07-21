@@ -45,7 +45,7 @@ interface Campaign {
   title: string;
   description: string;
   type: string;
-  budgetRange: { min: number; max: number };
+  echoCoinRange: { min: number; max: number };
   maxInfluencers: number;
   currentBids: number;
   deadline: string;
@@ -63,7 +63,7 @@ interface Bid {
   id: string;
   campaignId: string;
   campaignTitle: string;
-  amount: number;
+  echoCoins: number;
   proposal: string;
   status: "pending" | "accepted" | "rejected";
   submittedAt: string;
@@ -74,7 +74,7 @@ interface ActiveCampaign {
   title: string;
   businessName: string;
   type: string;
-  amount: number;
+  echoCoins: number;
   deadline: string;
   requirements: string;
   status: "in-progress" | "awaiting-review" | "completed";
@@ -91,7 +91,7 @@ export default function InfluencerDashboard() {
     null,
   );
   const [showBidModal, setShowBidModal] = useState(false);
-  const [bidAmount, setBidAmount] = useState("");
+  const [bidEchoCoins, setBidEchoCoins] = useState("");
   const [bidProposal, setBidProposal] = useState("");
   const [showEvidenceModal, setShowEvidenceModal] = useState(false);
   const [selectedActiveCampaign, setSelectedActiveCampaign] =
