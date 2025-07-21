@@ -7,16 +7,24 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Plus, 
-  Eye, 
-  Users, 
-  DollarSign, 
-  TrendingUp, 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Plus,
+  Eye,
+  Users,
+  DollarSign,
+  TrendingUp,
   Clock,
   ArrowLeft,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  LogOut,
+  ChevronDown
 } from "lucide-react";
 
 interface Job {
@@ -228,13 +236,38 @@ export default function BusinessDashboard() {
               </nav>
             </div>
             <div className="flex items-center space-x-4">
-              <Button 
+              <Button
                 onClick={() => setShowCreateJob(true)}
                 className="bg-brand-600 hover:bg-brand-700 text-white flex items-center gap-2"
               >
                 <Plus className="h-4 w-4" />
                 New Campaign
               </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center space-x-2 hover:bg-gray-50">
+                    <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                      <span className="text-sm font-medium text-gray-600">BC</span>
+                    </div>
+                    <span className="hidden md:block text-sm font-medium text-gray-700">Business Admin</span>
+                    <ChevronDown className="h-4 w-4 text-gray-500" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem className="flex items-center gap-2">
+                    <span>Account Settings</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="flex items-center gap-2">
+                    <span>Billing</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/" className="flex items-center gap-2 text-red-600">
+                      <LogOut className="h-4 w-4" />
+                      <span>Logout</span>
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
