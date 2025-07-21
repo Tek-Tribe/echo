@@ -196,7 +196,7 @@ export default function Index() {
                       Budget
                     </span>
                     <span className="font-semibold text-gray-900 text-sm sm:text-base">
-                      $2,500
+                      2,500 EC
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
