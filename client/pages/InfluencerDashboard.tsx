@@ -8,10 +8,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  DollarSign, 
-  Users, 
-  TrendingUp, 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  DollarSign,
+  Users,
+  TrendingUp,
   Clock,
   Star,
   Instagram,
@@ -24,7 +30,9 @@ import {
   CheckCircle,
   AlertCircle,
   Calendar,
-  Target
+  Target,
+  LogOut,
+  ChevronDown
 } from "lucide-react";
 
 interface Campaign {
@@ -186,11 +194,32 @@ export default function InfluencerDashboard() {
               </nav>
             </div>
             <div className="flex items-center space-x-4">
-              <Avatar className="h-8 w-8">
-                <AvatarImage src="/placeholder.svg" />
-                <AvatarFallback>JD</AvatarFallback>
-              </Avatar>
-              <span className="hidden md:block text-sm font-medium text-gray-700">Jane Doe</span>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center space-x-2 hover:bg-gray-50">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src="/placeholder.svg" />
+                      <AvatarFallback>JD</AvatarFallback>
+                    </Avatar>
+                    <span className="hidden md:block text-sm font-medium text-gray-700">Jane Doe</span>
+                    <ChevronDown className="h-4 w-4 text-gray-500" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem className="flex items-center gap-2">
+                    <span>Profile Settings</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="flex items-center gap-2">
+                    <span>Earnings</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/" className="flex items-center gap-2 text-red-600">
+                      <LogOut className="h-4 w-4" />
+                      <span>Logout</span>
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
