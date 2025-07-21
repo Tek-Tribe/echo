@@ -564,7 +564,7 @@ export default function BidManagement() {
                       </div>
                       <div className="flex sm:flex-col sm:text-right items-center sm:items-end justify-between sm:justify-start gap-2 sm:gap-1">
                         <div className="text-lg sm:text-xl font-bold text-green-600">
-                          ${submission.amount}
+                          {submission.echoCoins} EC
                         </div>
                         <Badge
                           className={
