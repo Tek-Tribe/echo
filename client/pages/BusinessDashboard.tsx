@@ -432,10 +432,10 @@ export default function BusinessDashboard() {
                 </div>
                 <div className="ml-3 sm:ml-4 min-w-0">
                   <div className="text-xs sm:text-sm font-medium text-gray-500 truncate">
-                    Active Campaigns
+                    Published Campaigns
                   </div>
                   <div className="text-lg sm:text-2xl font-bold text-gray-900">
-                    {activeCampaigns}
+                    {publishedCampaigns}
                   </div>
                 </div>
               </div>
