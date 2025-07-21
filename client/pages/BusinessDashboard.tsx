@@ -28,7 +28,6 @@ import {
   Menu,
   X
 } from "lucide-react";
-import { useState } from "react";
 
 interface Job {
   id: string;
