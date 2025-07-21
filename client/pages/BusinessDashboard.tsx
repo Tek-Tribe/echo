@@ -390,9 +390,11 @@ export default function BusinessDashboard() {
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Button variant="outline" size="sm">
-                        View Bids
-                      </Button>
+                      <Link to={`/bid-management/${job.id}`}>
+                        <Button variant="outline" size="sm">
+                          View Bids ({job.bidCount})
+                        </Button>
+                      </Link>
                       <Button variant="outline" size="sm">
                         Edit
                       </Button>
