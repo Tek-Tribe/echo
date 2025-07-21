@@ -18,11 +18,28 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 262 83% 58%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
+
+    /* Echo Brand Colors - Modern Purple-Blue Gradient Theme */
+    --brand-50: 262 100% 97%;
+    --brand-100: 262 100% 94%;
+    --brand-200: 262 100% 87%;
+    --brand-300: 262 100% 78%;
+    --brand-400: 262 91% 68%;
+    --brand-500: 262 83% 58%;
+    --brand-600: 262 75% 48%;
+    --brand-700: 262 67% 38%;
+    --brand-800: 262 60% 28%;
+    --brand-900: 262 52% 18%;
+    --brand-950: 262 45% 12%;
+
+    /* Gradient Colors */
+    --gradient-from: 262 83% 58%;
+    --gradient-to: 220 91% 65%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
@@ -66,8 +83,25 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 262 83% 58%;
+    --primary-foreground: 210 40% 98%;
+
+    /* Dark mode brand colors */
+    --brand-50: 262 45% 12%;
+    --brand-100: 262 52% 18%;
+    --brand-200: 262 60% 28%;
+    --brand-300: 262 67% 38%;
+    --brand-400: 262 75% 48%;
+    --brand-500: 262 83% 58%;
+    --brand-600: 262 91% 68%;
+    --brand-700: 262 100% 78%;
+    --brand-800: 262 100% 87%;
+    --brand-900: 262 100% 94%;
+    --brand-950: 262 100% 97%;
+
+    /* Dark mode gradients */
+    --gradient-from: 262 83% 58%;
+    --gradient-to: 220 91% 65%;
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
