@@ -47,7 +47,7 @@ export default function EvidenceReview() {
       influencerName: "Emma Wellness",
       influencerAvatar: "/placeholder.svg",
       influencerHandle: "@emmawellness",
-      amount: 450,
+      echoCoins: 450,
       submittedAt: "2024-01-20",
       evidence: {
         screenshots: ["/placeholder.svg", "/placeholder.svg"],
