@@ -913,7 +913,7 @@ export default function InfluencerDashboard() {
                   onClick={() => {
                     setShowBidModal(false);
                     setSelectedCampaign(null);
-                    setBidAmount("");
+                    setBidEchoCoins("");
                     setBidProposal("");
                   }}
                   className="w-full sm:flex-1"
