@@ -23,7 +23,6 @@ import {
   Plus,
   Eye,
   Users,
-  DollarSign,
   TrendingUp,
   Clock,
   ArrowLeft,
@@ -37,6 +36,7 @@ import {
   Send,
   Edit3,
 } from "lucide-react";
+import { EchoCoinIcon } from "@/components/EchoCoinIcon";
 
 interface Job {
   id: string;
@@ -451,7 +451,7 @@ export default function BusinessDashboard() {
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                    <DollarSign className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
+                    <EchoCoinIcon className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
                   </div>
                 </div>
                 <div className="ml-3 sm:ml-4 min-w-0">
@@ -559,7 +559,7 @@ export default function BusinessDashboard() {
                       </p>
                       <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 sm:gap-6 text-xs sm:text-sm text-gray-500">
                         <span className="flex items-center gap-1">
-                          <DollarSign className="h-3 w-3 sm:h-4 sm:w-4" />
+                          <EchoCoinIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                           {job.echoCoins.toLocaleString()} EC
                         </span>
                         <span className="flex items-center gap-1">
