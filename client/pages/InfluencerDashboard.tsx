@@ -385,7 +385,7 @@ export default function InfluencerDashboard() {
               <div className="flex flex-col sm:flex-row sm:items-center">
                 <div className="flex-shrink-0 mb-2 sm:mb-0">
                   <div className="w-8 h-8 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto sm:mx-0">
-                    <DollarSign className="h-4 w-4 sm:h-6 sm:w-6 text-green-600" />
+                    <EchoCoinIcon className="h-4 w-4 sm:h-6 sm:w-6 text-green-600" />
                   </div>
                 </div>
                 <div className="sm:ml-4 text-center sm:text-left min-w-0">
