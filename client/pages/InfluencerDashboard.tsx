@@ -38,6 +38,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { EchoCoinIcon } from "@/components/EchoCoinIcon";
 
 interface Campaign {
   id: string;
