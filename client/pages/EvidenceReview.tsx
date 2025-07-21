@@ -67,7 +67,7 @@ export default function EvidenceReview() {
       influencerName: "Mike Strong",
       influencerAvatar: "/placeholder.svg",
       influencerHandle: "@mikestrong",
-      amount: 1200,
+      echoCoins: 1200,
       submittedAt: "2024-01-19",
       evidence: {
         screenshots: ["/placeholder.svg"],
