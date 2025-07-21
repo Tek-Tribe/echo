@@ -946,7 +946,7 @@ export default function InfluencerDashboard() {
                 <div className="flex items-center justify-between text-xs sm:text-sm">
                   <span>Payment:</span>
                   <span className="font-semibold text-green-600">
-                    ${selectedActiveCampaign.amount}
+                    {selectedActiveCampaign.echoCoins} EC
                   </span>
                 </div>
               </div>
