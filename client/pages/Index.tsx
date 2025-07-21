@@ -81,7 +81,7 @@ export default function Index() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-gray-600"
+                className="text-gray-600 p-2"
               >
                 {mobileMenuOpen ? (
                   <X className="h-6 w-6" />
