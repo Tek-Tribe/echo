@@ -39,7 +39,6 @@ import {
   Menu,
   X
 } from "lucide-react";
-import { useState } from "react";
 
 interface Campaign {
   id: string;
