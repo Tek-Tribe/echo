@@ -202,7 +202,8 @@ export default function EvidenceReview() {
                     {reviewedSubmissions
                       .filter((s) => s.status === "approved")
                       .reduce((sum, s) => sum + s.echoCoins, 0)
-                      .toLocaleString()} EC
+                      .toLocaleString()}{" "}
+                    EC
                   </div>
                 </div>
               </div>

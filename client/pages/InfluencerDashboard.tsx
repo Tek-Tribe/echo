@@ -571,9 +571,12 @@ export default function InfluencerDashboard() {
                     <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-4">
                       <div className="space-y-2">
                         <div className="flex items-center justify-between text-xs sm:text-sm">
-                          <span className="text-gray-500">Echo Coin Range:</span>
+                          <span className="text-gray-500">
+                            Echo Coin Range:
+                          </span>
                           <span className="font-semibold text-gray-900">
-                            {campaign.echoCoinRange.min} - {campaign.echoCoinRange.max} EC
+                            {campaign.echoCoinRange.min} -{" "}
+                            {campaign.echoCoinRange.max} EC
                           </span>
                         </div>
                         <div className="flex items-center justify-between text-xs sm:text-sm">
@@ -866,14 +869,18 @@ export default function InfluencerDashboard() {
                 <div className="flex items-center justify-between text-xs sm:text-sm">
                   <span>Echo Coin Range:</span>
                   <span className="font-semibold">
-                    {selectedCampaign.echoCoinRange.min} - {selectedCampaign.echoCoinRange.max} EC
+                    {selectedCampaign.echoCoinRange.min} -{" "}
+                    {selectedCampaign.echoCoinRange.max} EC
                   </span>
                 </div>
               </div>
 
               <div className="space-y-3 sm:space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="bidEchoCoins" className="text-sm sm:text-base">
+                  <Label
+                    htmlFor="bidEchoCoins"
+                    className="text-sm sm:text-base"
+                  >
                     Your Bid (Echo Coins)
                   </Label>
                   <Input

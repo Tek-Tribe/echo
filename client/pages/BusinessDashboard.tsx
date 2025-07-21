@@ -112,24 +112,28 @@ export default function BusinessDashboard() {
   ]);
 
   const handlePublishCampaign = (jobId: string) => {
-    setJobs(prevJobs =>
-      prevJobs.map(job =>
+    setJobs((prevJobs) =>
+      prevJobs.map((job) =>
         job.id === jobId
-          ? { ...job, status: "published" as const, publishedAt: new Date().toISOString().split('T')[0] }
-          : job
-      )
+          ? {
+              ...job,
+              status: "published" as const,
+              publishedAt: new Date().toISOString().split("T")[0],
+            }
+          : job,
+      ),
     );
   };
 
   const handleDeleteCampaign = (jobId: string) => {
-    setJobs(prevJobs => prevJobs.filter(job => job.id !== jobId));
+    setJobs((prevJobs) => prevJobs.filter((job) => job.id !== jobId));
   };
 
   const totalEchoCoins = jobs.reduce((sum, job) => sum + job.echoCoins, 0);
-  const publishedCampaigns = jobs.filter((job) => job.status === "published").length;
+  const publishedCampaigns = jobs.filter(
+    (job) => job.status === "published",
+  ).length;
   const totalBids = jobs.reduce((sum, job) => sum + job.bidCount, 0);
-
-
 
   if (showCreateJob) {
     return (
@@ -535,8 +539,8 @@ export default function BusinessDashboard() {
                               : job.status === "completed"
                                 ? "bg-blue-100 text-blue-800 hover:bg-blue-100"
                                 : job.status === "draft"
-                                ? "bg-gray-100 text-gray-800 hover:bg-gray-100"
-                                : ""
+                                  ? "bg-gray-100 text-gray-800 hover:bg-gray-100"
+                                  : ""
                           }
                         >
                           {job.status === "published" && (

@@ -32,7 +32,7 @@ export default function Analytics() {
       status: "published",
     },
     {
-      id: "2", 
+      id: "2",
       title: "Product Review Video",
       echoCoins: 5000,
       bidCount: 12,
@@ -183,7 +183,7 @@ export default function Analytics() {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-4 sm:p-6">
               <div className="flex items-center">
@@ -203,7 +203,7 @@ export default function Analytics() {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-4 sm:p-6">
               <div className="flex items-center">
@@ -228,13 +228,17 @@ export default function Analytics() {
         {/* Campaign Performance Chart */}
         <Card className="mb-6 sm:mb-8">
           <CardHeader>
-            <CardTitle className="text-lg sm:text-xl">Campaign Performance</CardTitle>
+            <CardTitle className="text-lg sm:text-xl">
+              Campaign Performance
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
               <div className="text-center">
                 <BarChart3 className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500">Campaign performance chart would be displayed here</p>
+                <p className="text-gray-500">
+                  Campaign performance chart would be displayed here
+                </p>
               </div>
             </div>
           </CardContent>
@@ -243,18 +247,29 @@ export default function Analytics() {
         {/* Top Performing Campaigns */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg sm:text-xl">Top Performing Campaigns</CardTitle>
+            <CardTitle className="text-lg sm:text-xl">
+              Top Performing Campaigns
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {campaigns.map((campaign) => (
-                <div key={campaign.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div
+                  key={campaign.id}
+                  className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                >
                   <div>
-                    <h4 className="font-semibold text-gray-900">{campaign.title}</h4>
-                    <p className="text-sm text-gray-600">{campaign.bidCount} bids received</p>
+                    <h4 className="font-semibold text-gray-900">
+                      {campaign.title}
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      {campaign.bidCount} bids received
+                    </p>
                   </div>
                   <div className="text-right">
-                    <div className="font-semibold text-green-600">{campaign.echoCoins} EC</div>
+                    <div className="font-semibold text-green-600">
+                      {campaign.echoCoins} EC
+                    </div>
                     <div className="text-sm text-gray-500">Budget</div>
                   </div>
                 </div>

@@ -29,10 +29,38 @@ export default function Payments() {
   const totalEchoCoins = 12000;
 
   const transactions = [
-    { id: 1, campaign: "Instagram Story Repost", influencer: "Sarah Fitness", amount: 350, date: "2024-01-20", status: "completed" },
-    { id: 2, campaign: "Product Review Video", influencer: "Mike Strong", amount: 1200, date: "2024-01-19", status: "pending" },
-    { id: 3, campaign: "Brand Awareness Post", influencer: "Emma Wellness", amount: 450, date: "2024-01-18", status: "completed" },
-    { id: 4, campaign: "Summer Collection Launch", influencer: "Alex Style", amount: 800, date: "2024-01-17", status: "processing" },
+    {
+      id: 1,
+      campaign: "Instagram Story Repost",
+      influencer: "Sarah Fitness",
+      amount: 350,
+      date: "2024-01-20",
+      status: "completed",
+    },
+    {
+      id: 2,
+      campaign: "Product Review Video",
+      influencer: "Mike Strong",
+      amount: 1200,
+      date: "2024-01-19",
+      status: "pending",
+    },
+    {
+      id: 3,
+      campaign: "Brand Awareness Post",
+      influencer: "Emma Wellness",
+      amount: 450,
+      date: "2024-01-18",
+      status: "completed",
+    },
+    {
+      id: 4,
+      campaign: "Summer Collection Launch",
+      influencer: "Alex Style",
+      amount: 800,
+      date: "2024-01-17",
+      status: "processing",
+    },
   ];
 
   return (
@@ -178,7 +206,7 @@ export default function Payments() {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-4 sm:p-6">
               <div className="flex items-center">
@@ -198,7 +226,7 @@ export default function Payments() {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-4 sm:p-6">
               <div className="flex items-center">
@@ -218,7 +246,7 @@ export default function Payments() {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-4 sm:p-6">
               <div className="flex items-center">
@@ -244,7 +272,9 @@ export default function Payments() {
         <Card className="mb-6 sm:mb-8">
           <CardHeader>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <CardTitle className="text-lg sm:text-xl">Recent Transactions</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">
+                Recent Transactions
+              </CardTitle>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm">
                   <Filter className="h-4 w-4 mr-2" />
@@ -260,25 +290,39 @@ export default function Payments() {
           <CardContent>
             <div className="space-y-4">
               {transactions.map((transaction) => (
-                <div key={transaction.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 border border-gray-200 rounded-lg gap-2">
+                <div
+                  key={transaction.id}
+                  className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 border border-gray-200 rounded-lg gap-2"
+                >
                   <div className="flex-1">
-                    <h4 className="font-semibold text-gray-900">{transaction.campaign}</h4>
-                    <p className="text-sm text-gray-600">Payment to {transaction.influencer}</p>
+                    <h4 className="font-semibold text-gray-900">
+                      {transaction.campaign}
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      Payment to {transaction.influencer}
+                    </p>
                     <p className="text-xs text-gray-500">{transaction.date}</p>
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="text-right">
-                      <div className="font-semibold text-gray-900">{transaction.amount} EC</div>
+                      <div className="font-semibold text-gray-900">
+                        {transaction.amount} EC
+                      </div>
                     </div>
-                    <Badge 
+                    <Badge
                       variant={
-                        transaction.status === "completed" ? "default" :
-                        transaction.status === "pending" ? "secondary" : "outline"
+                        transaction.status === "completed"
+                          ? "default"
+                          : transaction.status === "pending"
+                            ? "secondary"
+                            : "outline"
                       }
                       className={
-                        transaction.status === "completed" ? "bg-green-100 text-green-800" :
-                        transaction.status === "pending" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-blue-100 text-blue-800"
+                        transaction.status === "completed"
+                          ? "bg-green-100 text-green-800"
+                          : transaction.status === "pending"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-blue-100 text-blue-800"
                       }
                     >
                       {transaction.status}
@@ -293,7 +337,9 @@ export default function Payments() {
         {/* Payment Methods */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg sm:text-xl">Payment Methods</CardTitle>
+            <CardTitle className="text-lg sm:text-xl">
+              Payment Methods
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -303,13 +349,19 @@ export default function Payments() {
                     <CreditCard className="h-5 w-5 text-blue-600" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">•••• •••• •••• 4242</h4>
+                    <h4 className="font-semibold text-gray-900">
+                      •••• •••• •••• 4242
+                    </h4>
                     <p className="text-sm text-gray-600">Expires 12/25</p>
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm">Edit</Button>
-                  <Button variant="outline" size="sm">Remove</Button>
+                  <Button variant="outline" size="sm">
+                    Edit
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    Remove
+                  </Button>
                 </div>
               </div>
               <Button variant="outline" className="w-full">
