@@ -520,25 +520,30 @@ export default function BusinessDashboard() {
                         </h3>
                         <Badge
                           variant={
-                            job.status === "active"
+                            job.status === "published"
                               ? "default"
                               : job.status === "completed"
                                 ? "secondary"
                                 : "outline"
                           }
                           className={
-                            job.status === "active"
+                            job.status === "published"
                               ? "bg-green-100 text-green-800 hover:bg-green-100"
                               : job.status === "completed"
                                 ? "bg-blue-100 text-blue-800 hover:bg-blue-100"
+                                : job.status === "draft"
+                                ? "bg-gray-100 text-gray-800 hover:bg-gray-100"
                                 : ""
                           }
                         >
-                          {job.status === "active" && (
-                            <AlertCircle className="h-3 w-3 mr-1" />
+                          {job.status === "published" && (
+                            <Send className="h-3 w-3 mr-1" />
                           )}
                           {job.status === "completed" && (
                             <CheckCircle className="h-3 w-3 mr-1" />
+                          )}
+                          {job.status === "draft" && (
+                            <Edit3 className="h-3 w-3 mr-1" />
                           )}
                           {job.status.charAt(0).toUpperCase() +
                             job.status.slice(1)}
