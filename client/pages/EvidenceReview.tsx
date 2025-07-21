@@ -360,7 +360,7 @@ export default function EvidenceReview() {
                       </div>
                       <div className="text-right">
                         <div className="font-bold text-gray-900">
-                          ${submission.amount}
+                          {submission.echoCoins} EC
                         </div>
                         <Badge
                           className={
