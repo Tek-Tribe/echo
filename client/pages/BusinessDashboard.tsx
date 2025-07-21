@@ -43,8 +43,9 @@ interface Job {
   budget: number;
   maxInfluencers: number;
   bidCount: number;
-  status: "active" | "completed" | "draft";
+  status: "draft" | "published" | "completed";
   createdAt: string;
+  publishedAt?: string;
 }
 
 export default function BusinessDashboard() {
