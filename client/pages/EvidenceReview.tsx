@@ -199,11 +199,10 @@ export default function EvidenceReview() {
                     Pending Payout
                   </div>
                   <div className="text-2xl font-bold text-gray-900">
-                    $
                     {reviewedSubmissions
                       .filter((s) => s.status === "approved")
-                      .reduce((sum, s) => sum + s.amount, 0)
-                      .toLocaleString()}
+                      .reduce((sum, s) => sum + s.echoCoins, 0)
+                      .toLocaleString()} EC
                   </div>
                 </div>
               </div>
