@@ -874,15 +874,15 @@ export default function InfluencerDashboard() {
 
               <div className="space-y-3 sm:space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="bidAmount" className="text-sm sm:text-base">
-                    Your Bid Amount ($)
+                  <Label htmlFor="bidEchoCoins" className="text-sm sm:text-base">
+                    Your Bid (Echo Coins)
                   </Label>
                   <Input
-                    id="bidAmount"
+                    id="bidEchoCoins"
                     type="number"
-                    placeholder={`Between ${selectedCampaign.budgetRange.min} - ${selectedCampaign.budgetRange.max}`}
-                    value={bidAmount}
-                    onChange={(e) => setBidAmount(e.target.value)}
+                    placeholder={`Between ${selectedCampaign.echoCoinRange.min} - ${selectedCampaign.echoCoinRange.max} EC`}
+                    value={bidEchoCoins}
+                    onChange={(e) => setBidEchoCoins(e.target.value)}
                     className="text-sm sm:text-base"
                   />
                 </div>
