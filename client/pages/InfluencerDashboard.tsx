@@ -35,8 +35,11 @@ import {
   ChevronDown,
   Upload,
   Camera,
-  Link as LinkIcon
+  Link as LinkIcon,
+  Menu,
+  X
 } from "lucide-react";
+import { useState } from "react";
 
 interface Campaign {
   id: string;
@@ -93,6 +96,7 @@ export default function InfluencerDashboard() {
   const [selectedActiveCampaign, setSelectedActiveCampaign] = useState<ActiveCampaign | null>(null);
   const [evidenceLinks, setEvidenceLinks] = useState('');
   const [evidenceDescription, setEvidenceDescription] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const [campaigns] = useState<Campaign[]>([
     {
@@ -253,6 +257,18 @@ export default function InfluencerDashboard() {
                   Profile
                 </a>
               </nav>
+
+              {/* Mobile menu button */}
+              <div className="md:hidden ml-4">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="text-gray-600"
+                >
+                  {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                </Button>
+              </div>
             </div>
             <div className="flex items-center space-x-4">
               <DropdownMenu>
@@ -283,44 +299,64 @@ export default function InfluencerDashboard() {
               </DropdownMenu>
             </div>
           </div>
+
+          {/* Mobile Navigation Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden border-t border-gray-200 bg-white">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                <a href="#" className="block px-3 py-2 text-base font-medium text-brand-600">
+                  Dashboard
+                </a>
+                <a href="#" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700">
+                  My Campaigns
+                </a>
+                <a href="#" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700">
+                  Earnings
+                </a>
+                <a href="#" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700">
+                  Profile
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Dashboard Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Influencer Dashboard</h1>
-          <p className="text-gray-600 mt-2">Discover campaigns and grow your influence</p>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Influencer Dashboard</h1>
+          <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Discover campaigns and grow your influence</p>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid md:grid-cols-6 gap-6 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-6 mb-6 sm:mb-8">
           <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                    <DollarSign className="h-6 w-6 text-green-600" />
+            <CardContent className="p-3 sm:p-6">
+              <div className="flex flex-col sm:flex-row sm:items-center">
+                <div className="flex-shrink-0 mb-2 sm:mb-0">
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto sm:mx-0">
+                    <DollarSign className="h-4 w-4 sm:h-6 sm:w-6 text-green-600" />
                   </div>
                 </div>
-                <div className="ml-4">
-                  <div className="text-sm font-medium text-gray-500">Total Earnings</div>
-                  <div className="text-2xl font-bold text-gray-900">${influencerStats.totalEarnings.toLocaleString()}</div>
+                <div className="sm:ml-4 text-center sm:text-left min-w-0">
+                  <div className="text-xs sm:text-sm font-medium text-gray-500 truncate">Total Earnings</div>
+                  <div className="text-lg sm:text-2xl font-bold text-gray-900">${influencerStats.totalEarnings.toLocaleString()}</div>
                 </div>
               </div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-brand-100 rounded-lg flex items-center justify-center">
-                    <TrendingUp className="h-6 w-6 text-brand-600" />
+            <CardContent className="p-3 sm:p-6">
+              <div className="flex flex-col sm:flex-row sm:items-center">
+                <div className="flex-shrink-0 mb-2 sm:mb-0">
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 bg-brand-100 rounded-lg flex items-center justify-center mx-auto sm:mx-0">
+                    <TrendingUp className="h-4 w-4 sm:h-6 sm:w-6 text-brand-600" />
                   </div>
                 </div>
-                <div className="ml-4">
-                  <div className="text-sm font-medium text-gray-500">Active Campaigns</div>
-                  <div className="text-2xl font-bold text-gray-900">{influencerStats.activeCampaigns}</div>
+                <div className="sm:ml-4 text-center sm:text-left min-w-0">
+                  <div className="text-xs sm:text-sm font-medium text-gray-500 truncate">Active Campaigns</div>
+                  <div className="text-lg sm:text-2xl font-bold text-gray-900">{influencerStats.activeCampaigns}</div>
                 </div>
               </div>
             </CardContent>
@@ -388,17 +424,17 @@ export default function InfluencerDashboard() {
         </div>
 
         {/* Main Content */}
-        <Tabs defaultValue="opportunities" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="opportunities">Available Opportunities</TabsTrigger>
-            <TabsTrigger value="my-bids">My Bids</TabsTrigger>
-            <TabsTrigger value="active-campaigns">Active Campaigns</TabsTrigger>
+        <Tabs defaultValue="opportunities" className="space-y-4 sm:space-y-6">
+          <TabsList className="grid w-full grid-cols-3 h-auto">
+            <TabsTrigger value="opportunities" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">Available</TabsTrigger>
+            <TabsTrigger value="my-bids" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">My Bids</TabsTrigger>
+            <TabsTrigger value="active-campaigns" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">Active</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="opportunities" className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-gray-900">Available Campaigns</h2>
-              <Button variant="outline" className="flex items-center gap-2">
+          <TabsContent value="opportunities" className="space-y-4 sm:space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Available Campaigns</h2>
+              <Button variant="outline" className="flex items-center gap-2 self-start sm:self-auto">
                 <Filter className="h-4 w-4" />
                 Filter
               </Button>
