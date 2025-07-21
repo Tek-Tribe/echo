@@ -661,16 +661,16 @@ export default function InfluencerDashboard() {
 
       {/* Bid Submission Modal */}
       {showBidModal && selectedCampaign && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <CardHeader>
-              <CardTitle>Submit Bid for {selectedCampaign.title}</CardTitle>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-3 sm:p-4 z-50">
+          <Card className="w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg sm:text-xl pr-8">Submit Bid for {selectedCampaign.title}</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-900 mb-2">Campaign Details</h4>
-                <p className="text-sm text-gray-600 mb-2">{selectedCampaign.description}</p>
-                <div className="flex items-center justify-between text-sm">
+            <CardContent className="space-y-4 sm:space-y-6">
+              <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
+                <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">Campaign Details</h4>
+                <p className="text-xs sm:text-sm text-gray-600 mb-2">{selectedCampaign.description}</p>
+                <div className="flex items-center justify-between text-xs sm:text-sm">
                   <span>Budget Range:</span>
                   <span className="font-semibold">
                     ${selectedCampaign.budgetRange.min} - ${selectedCampaign.budgetRange.max}
@@ -678,33 +678,35 @@ export default function InfluencerDashboard() {
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="bidAmount">Your Bid Amount ($)</Label>
+                  <Label htmlFor="bidAmount" className="text-sm sm:text-base">Your Bid Amount ($)</Label>
                   <Input
                     id="bidAmount"
                     type="number"
                     placeholder={`Between ${selectedCampaign.budgetRange.min} - ${selectedCampaign.budgetRange.max}`}
                     value={bidAmount}
                     onChange={(e) => setBidAmount(e.target.value)}
+                    className="text-sm sm:text-base"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="proposal">Your Proposal</Label>
+                  <Label htmlFor="proposal" className="text-sm sm:text-base">Your Proposal</Label>
                   <Textarea
                     id="proposal"
                     placeholder="Explain why you're the perfect fit for this campaign. Include your audience demographics, engagement rates, and relevant experience..."
-                    rows={6}
+                    rows={4}
                     value={bidProposal}
                     onChange={(e) => setBidProposal(e.target.value)}
+                    className="text-sm sm:text-base resize-none"
                   />
                 </div>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
                 <Button
                   onClick={handleSubmitBid}
-                  className="flex-1 bg-brand-600 hover:bg-brand-700 text-white"
+                  className="w-full sm:flex-1 bg-brand-600 hover:bg-brand-700 text-white"
                 >
                   Submit Bid
                 </Button>
@@ -716,7 +718,7 @@ export default function InfluencerDashboard() {
                     setBidAmount('');
                     setBidProposal('');
                   }}
-                  className="flex-1"
+                  className="w-full sm:flex-1"
                 >
                   Cancel
                 </Button>
@@ -728,70 +730,72 @@ export default function InfluencerDashboard() {
 
       {/* Evidence Submission Modal */}
       {showEvidenceModal && selectedActiveCampaign && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <CardHeader>
-              <CardTitle>Submit Evidence for {selectedActiveCampaign.title}</CardTitle>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-3 sm:p-4 z-50">
+          <Card className="w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg sm:text-xl pr-8">Submit Evidence for {selectedActiveCampaign.title}</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-900 mb-2">Campaign Requirements</h4>
-                <p className="text-sm text-gray-600 mb-2">{selectedActiveCampaign.requirements}</p>
-                <div className="flex items-center justify-between text-sm">
+            <CardContent className="space-y-4 sm:space-y-6">
+              <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
+                <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">Campaign Requirements</h4>
+                <p className="text-xs sm:text-sm text-gray-600 mb-2">{selectedActiveCampaign.requirements}</p>
+                <div className="flex items-center justify-between text-xs sm:text-sm">
                   <span>Payment:</span>
                   <span className="font-semibold text-green-600">${selectedActiveCampaign.amount}</span>
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="screenshots">Screenshots</Label>
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-brand-400 transition-colors">
-                    <Camera className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                    <p className="text-sm text-gray-600 mb-2">Upload screenshots of your posts</p>
-                    <Button variant="outline" size="sm">
+                  <Label htmlFor="screenshots" className="text-sm sm:text-base">Screenshots</Label>
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 text-center hover:border-brand-400 transition-colors">
+                    <Camera className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400 mx-auto mb-2" />
+                    <p className="text-xs sm:text-sm text-gray-600 mb-2">Upload screenshots of your posts</p>
+                    <Button variant="outline" size="sm" className="text-xs sm:text-sm">
                       Choose Files
                     </Button>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="evidenceLinks">Post Links</Label>
+                  <Label htmlFor="evidenceLinks" className="text-sm sm:text-base">Post Links</Label>
                   <Input
                     id="evidenceLinks"
                     placeholder="https://instagram.com/p/your-post-url"
                     value={evidenceLinks}
                     onChange={(e) => setEvidenceLinks(e.target.value)}
+                    className="text-sm sm:text-base"
                   />
                   <p className="text-xs text-gray-500">Provide direct links to your posts for verification</p>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="evidenceDescription">Description</Label>
+                  <Label htmlFor="evidenceDescription" className="text-sm sm:text-base">Description</Label>
                   <Textarea
                     id="evidenceDescription"
                     placeholder="Describe how you completed the campaign requirements, any special approaches you took, and the response from your audience..."
-                    rows={4}
+                    rows={3}
                     value={evidenceDescription}
                     onChange={(e) => setEvidenceDescription(e.target.value)}
+                    className="text-sm sm:text-base resize-none"
                   />
                 </div>
               </div>
 
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4">
                 <div className="flex items-center gap-2 text-blue-800">
-                  <AlertCircle className="h-5 w-5" />
-                  <span className="font-medium">Important</span>
+                  <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span className="font-medium text-sm sm:text-base">Important</span>
                 </div>
-                <p className="text-sm text-blue-700 mt-1">
+                <p className="text-xs sm:text-sm text-blue-700 mt-1">
                   Once submitted, your evidence will be reviewed by the business. Payment will be processed upon approval.
                 </p>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
                 <Button
                   onClick={handleSubmitEvidence}
-                  className="flex-1 bg-brand-600 hover:bg-brand-700 text-white"
+                  className="w-full sm:flex-1 bg-brand-600 hover:bg-brand-700 text-white"
                 >
                   Submit Evidence
                 </Button>
@@ -803,7 +807,7 @@ export default function InfluencerDashboard() {
                     setEvidenceLinks('');
                     setEvidenceDescription('');
                   }}
-                  className="flex-1"
+                  className="w-full sm:flex-1"
                 >
                   Cancel
                 </Button>
