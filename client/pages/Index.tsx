@@ -1,19 +1,24 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  Users, 
-  TrendingUp, 
-  Shield, 
-  Zap, 
-  Smartphone, 
+import {
+  Users,
+  TrendingUp,
+  Shield,
+  Zap,
+  Smartphone,
   DollarSign,
   Star,
   ArrowRight,
-  CheckCircle
+  CheckCircle,
+  Menu,
+  X
 } from "lucide-react";
+import { useState } from "react";
 
 export default function Index() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -28,6 +33,8 @@ export default function Index() {
                 <span className="text-xl font-bold text-gray-900">Echo</span>
               </div>
             </div>
+
+            {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 <a href="#features" className="text-gray-600 hover:text-brand-600 px-3 py-2 text-sm font-medium">
@@ -41,7 +48,9 @@ export default function Index() {
                 </a>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
+
+            {/* Desktop Auth Buttons */}
+            <div className="hidden md:flex items-center space-x-4">
               <Link to="/influencer-login">
                 <Button variant="ghost" className="text-brand-600 hover:text-brand-700">
                   Influencer Login
@@ -53,151 +62,192 @@ export default function Index() {
                 </Button>
               </Link>
             </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-gray-600"
+              >
+                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </Button>
+            </div>
           </div>
+
+          {/* Mobile Navigation Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden border-t border-gray-100 bg-white">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                <a href="#features" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-brand-600">
+                  Features
+                </a>
+                <a href="#how-it-works" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-brand-600">
+                  How it Works
+                </a>
+                <a href="#pricing" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-brand-600">
+                  Pricing
+                </a>
+                <div className="pt-4 pb-2 space-y-2">
+                  <Link to="/influencer-login" className="block">
+                    <Button variant="ghost" className="w-full justify-start text-brand-600 hover:text-brand-700">
+                      Influencer Login
+                    </Button>
+                  </Link>
+                  <Link to="/business-dashboard" className="block">
+                    <Button className="w-full bg-brand-600 hover:bg-brand-700 text-white">
+                      Business Dashboard
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-50 to-gradient-to/10 py-20 lg:py-32">
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-50 to-gradient-to/10 py-12 sm:py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                Connect with 
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="text-center lg:text-left">
+              <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                Connect with
                 <span className="bg-gradient-to-r from-brand-600 to-gradient-to bg-clip-text text-transparent">
                   {" "}Influencers
                 </span>
                 <br />
                 Who Amplify Your Brand
               </h1>
-              <p className="mt-6 text-xl text-gray-600 leading-relaxed">
-                Echo bridges businesses and influencers through a seamless platform for social media collaborations. 
+              <p className="mt-4 sm:mt-6 text-lg sm:text-xl text-gray-600 leading-relaxed">
+                Echo bridges businesses and influencers through a seamless platform for social media collaborations.
                 Post jobs, get bids, and watch your brand reach new heights.
               </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Link to="/business-dashboard">
-                  <Button size="lg" className="bg-brand-600 hover:bg-brand-700 text-white px-8 py-6 text-lg">
+              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <Link to="/business-dashboard" className="w-full sm:w-auto">
+                  <Button size="lg" className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg">
                     Start Hiring Influencers
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </Link>
-                <Link to="/influencer-login">
-                  <Button size="lg" variant="outline" className="border-brand-200 text-brand-700 hover:bg-brand-50 px-8 py-6 text-lg">
+                <Link to="/influencer-login" className="w-full sm:w-auto">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto border-brand-200 text-brand-700 hover:bg-brand-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg">
                     Join as Influencer
                   </Button>
                 </Link>
               </div>
             </div>
-            <div className="relative">
-              <div className="relative z-10 bg-white rounded-2xl shadow-2xl p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center">
-                    <TrendingUp className="h-5 w-5 text-brand-600" />
+            <div className="relative mt-8 lg:mt-0">
+              <div className="relative z-10 bg-white rounded-2xl shadow-2xl p-6 sm:p-8 mx-4 sm:mx-0">
+                <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-brand-100 rounded-full flex items-center justify-center">
+                    <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-brand-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">New Campaign</h3>
-                    <p className="text-sm text-gray-500">Instagram Story Repost</p>
+                    <h3 className="font-semibold text-gray-900 text-sm sm:text-base">New Campaign</h3>
+                    <p className="text-xs sm:text-sm text-gray-500">Instagram Story Repost</p>
                   </div>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Budget</span>
-                    <span className="font-semibold text-gray-900">$2,500</span>
+                    <span className="text-xs sm:text-sm text-gray-600">Budget</span>
+                    <span className="font-semibold text-gray-900 text-sm sm:text-base">$2,500</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Influencers Needed</span>
-                    <span className="font-semibold text-gray-900">5</span>
+                    <span className="text-xs sm:text-sm text-gray-600">Influencers Needed</span>
+                    <span className="font-semibold text-gray-900 text-sm sm:text-base">5</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Bids Received</span>
-                    <span className="font-semibold text-brand-600">23</span>
+                    <span className="text-xs sm:text-sm text-gray-600">Bids Received</span>
+                    <span className="font-semibold text-brand-600 text-sm sm:text-base">23</span>
                   </div>
-                  <Button className="w-full bg-brand-600 hover:bg-brand-700 text-white mt-4">
+                  <Button className="w-full bg-brand-600 hover:bg-brand-700 text-white mt-3 sm:mt-4 text-sm sm:text-base py-2 sm:py-3">
                     View Bidders
                   </Button>
                 </div>
               </div>
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-brand-400 to-gradient-to rounded-full opacity-20"></div>
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-br from-gradient-to to-brand-400 rounded-full opacity-10"></div>
+              <div className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-16 h-16 sm:w-24 sm:h-24 bg-gradient-to-br from-brand-400 to-gradient-to rounded-full opacity-20"></div>
+              <div className="absolute -bottom-2 -left-2 sm:-bottom-4 sm:-left-4 w-20 h-20 sm:w-32 sm:h-32 bg-gradient-to-br from-gradient-to to-brand-400 rounded-full opacity-10"></div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-gray-50">
+      <section id="features" className="py-12 sm:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
               Everything You Need for Successful Collaborations
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
               From job posting to payment processing, Echo handles every aspect of influencer marketing
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Users className="h-8 w-8 text-brand-600" />
+              <CardContent className="p-6 sm:p-8 text-center">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                  <Users className="h-6 w-6 sm:h-8 sm:w-8 text-brand-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Smart Matching</h3>
-                <p className="text-gray-600">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">Smart Matching</h3>
+                <p className="text-sm sm:text-base text-gray-600">
                   Our algorithm connects you with influencers who match your brand values and target audience
                 </p>
               </CardContent>
             </Card>
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <CardContent className="p-6 sm:p-8 text-center">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <Shield className="h-8 w-8 text-brand-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">Verified Content</h3>
-                <p className="text-gray-600">
+                <p className="text-sm sm:text-base text-gray-600">
                   Every campaign includes proof of posting with screenshots and links for complete transparency
                 </p>
               </CardContent>
             </Card>
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <CardContent className="p-6 sm:p-8 text-center">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <DollarSign className="h-8 w-8 text-brand-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">Secure Payments</h3>
-                <p className="text-gray-600">
+                <p className="text-sm sm:text-base text-gray-600">
                   Built-in wallet system ensures influencers get paid quickly after campaign completion
                 </p>
               </CardContent>
             </Card>
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <CardContent className="p-6 sm:p-8 text-center">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <Zap className="h-8 w-8 text-brand-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">Quick Setup</h3>
-                <p className="text-gray-600">
+                <p className="text-sm sm:text-base text-gray-600">
                   Launch your first campaign in minutes with our intuitive job posting interface
                 </p>
               </CardContent>
             </Card>
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <CardContent className="p-6 sm:p-8 text-center">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <Smartphone className="h-8 w-8 text-brand-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">Mobile First</h3>
-                <p className="text-gray-600">
+                <p className="text-sm sm:text-base text-gray-600">
                   Designed for the mobile generation - influencers can bid and manage campaigns on the go
                 </p>
               </CardContent>
             </Card>
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <CardContent className="p-6 sm:p-8 text-center">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <Star className="h-8 w-8 text-brand-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">Quality Control</h3>
-                <p className="text-gray-600">
+                <p className="text-sm sm:text-base text-gray-600">
                   Rate and review system helps maintain high standards and build long-term partnerships
                 </p>
               </CardContent>
