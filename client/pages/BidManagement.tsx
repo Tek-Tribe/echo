@@ -706,9 +706,9 @@ export default function BidManagement() {
 
                   <div className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Amount:</span>
+                      <span className="text-gray-500">Echo Coins:</span>
                       <span className="font-medium text-green-600">
-                        ${selectedEvidence.amount}
+                        {selectedEvidence.echoCoins} EC
                       </span>
                     </div>
                     <div className="flex justify-between">
