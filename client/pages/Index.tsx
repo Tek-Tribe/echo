@@ -12,7 +12,7 @@ import {
   ArrowRight,
   CheckCircle,
   Menu,
-  X
+  X,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -37,13 +37,22 @@ export default function Index() {
             {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
-                <a href="#features" className="text-gray-600 hover:text-brand-600 px-3 py-2 text-sm font-medium">
+                <a
+                  href="#features"
+                  className="text-gray-600 hover:text-brand-600 px-3 py-2 text-sm font-medium"
+                >
                   Features
                 </a>
-                <a href="#how-it-works" className="text-gray-600 hover:text-brand-600 px-3 py-2 text-sm font-medium">
+                <a
+                  href="#how-it-works"
+                  className="text-gray-600 hover:text-brand-600 px-3 py-2 text-sm font-medium"
+                >
                   How it Works
                 </a>
-                <a href="#pricing" className="text-gray-600 hover:text-brand-600 px-3 py-2 text-sm font-medium">
+                <a
+                  href="#pricing"
+                  className="text-gray-600 hover:text-brand-600 px-3 py-2 text-sm font-medium"
+                >
                   Pricing
                 </a>
               </div>
@@ -52,7 +61,10 @@ export default function Index() {
             {/* Desktop Auth Buttons */}
             <div className="hidden md:flex items-center space-x-4">
               <Link to="/influencer-login">
-                <Button variant="ghost" className="text-brand-600 hover:text-brand-700">
+                <Button
+                  variant="ghost"
+                  className="text-brand-600 hover:text-brand-700"
+                >
                   Influencer Login
                 </Button>
               </Link>
@@ -71,7 +83,11 @@ export default function Index() {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="text-gray-600"
               >
-                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {mobileMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
               </Button>
             </div>
           </div>
@@ -80,18 +96,30 @@ export default function Index() {
           {mobileMenuOpen && (
             <div className="md:hidden border-t border-gray-100 bg-white">
               <div className="px-2 pt-2 pb-3 space-y-1">
-                <a href="#features" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-brand-600">
+                <a
+                  href="#features"
+                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-brand-600"
+                >
                   Features
                 </a>
-                <a href="#how-it-works" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-brand-600">
+                <a
+                  href="#how-it-works"
+                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-brand-600"
+                >
                   How it Works
                 </a>
-                <a href="#pricing" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-brand-600">
+                <a
+                  href="#pricing"
+                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-brand-600"
+                >
                   Pricing
                 </a>
                 <div className="pt-4 pb-2 space-y-2">
                   <Link to="/influencer-login" className="block">
-                    <Button variant="ghost" className="w-full justify-start text-brand-600 hover:text-brand-700">
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-brand-600 hover:text-brand-700"
+                    >
                       Influencer Login
                     </Button>
                   </Link>
@@ -115,24 +143,33 @@ export default function Index() {
               <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
                 Connect with
                 <span className="bg-gradient-to-r from-brand-600 to-gradient-to bg-clip-text text-transparent">
-                  {" "}Influencers
+                  {" "}
+                  Influencers
                 </span>
                 <br />
                 Who Amplify Your Brand
               </h1>
               <p className="mt-4 sm:mt-6 text-lg sm:text-xl text-gray-600 leading-relaxed">
-                Echo bridges businesses and influencers through a seamless platform for social media collaborations.
-                Post jobs, get bids, and watch your brand reach new heights.
+                Echo bridges businesses and influencers through a seamless
+                platform for social media collaborations. Post jobs, get bids,
+                and watch your brand reach new heights.
               </p>
               <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <Link to="/business-dashboard" className="w-full sm:w-auto">
-                  <Button size="lg" className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg">
+                  <Button
+                    size="lg"
+                    className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
+                  >
                     Start Hiring Influencers
                     <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </Link>
                 <Link to="/influencer-login" className="w-full sm:w-auto">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto border-brand-200 text-brand-700 hover:bg-brand-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full sm:w-auto border-brand-200 text-brand-700 hover:bg-brand-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
+                  >
                     Join as Influencer
                   </Button>
                 </Link>
@@ -145,22 +182,38 @@ export default function Index() {
                     <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-brand-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 text-sm sm:text-base">New Campaign</h3>
-                    <p className="text-xs sm:text-sm text-gray-500">Instagram Story Repost</p>
+                    <h3 className="font-semibold text-gray-900 text-sm sm:text-base">
+                      New Campaign
+                    </h3>
+                    <p className="text-xs sm:text-sm text-gray-500">
+                      Instagram Story Repost
+                    </p>
                   </div>
                 </div>
                 <div className="space-y-3 sm:space-y-4">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs sm:text-sm text-gray-600">Budget</span>
-                    <span className="font-semibold text-gray-900 text-sm sm:text-base">$2,500</span>
+                    <span className="text-xs sm:text-sm text-gray-600">
+                      Budget
+                    </span>
+                    <span className="font-semibold text-gray-900 text-sm sm:text-base">
+                      $2,500
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-xs sm:text-sm text-gray-600">Influencers Needed</span>
-                    <span className="font-semibold text-gray-900 text-sm sm:text-base">5</span>
+                    <span className="text-xs sm:text-sm text-gray-600">
+                      Influencers Needed
+                    </span>
+                    <span className="font-semibold text-gray-900 text-sm sm:text-base">
+                      5
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-xs sm:text-sm text-gray-600">Bids Received</span>
-                    <span className="font-semibold text-brand-600 text-sm sm:text-base">23</span>
+                    <span className="text-xs sm:text-sm text-gray-600">
+                      Bids Received
+                    </span>
+                    <span className="font-semibold text-brand-600 text-sm sm:text-base">
+                      23
+                    </span>
                   </div>
                   <Button className="w-full bg-brand-600 hover:bg-brand-700 text-white mt-3 sm:mt-4 text-sm sm:text-base py-2 sm:py-3">
                     View Bidders
@@ -182,7 +235,8 @@ export default function Index() {
               Everything You Need for Successful Collaborations
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-              From job posting to payment processing, Echo handles every aspect of influencer marketing
+              From job posting to payment processing, Echo handles every aspect
+              of influencer marketing
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -191,9 +245,12 @@ export default function Index() {
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <Users className="h-6 w-6 sm:h-8 sm:w-8 text-brand-600" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">Smart Matching</h3>
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
+                  Smart Matching
+                </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Our algorithm connects you with influencers who match your brand values and target audience
+                  Our algorithm connects you with influencers who match your
+                  brand values and target audience
                 </p>
               </CardContent>
             </Card>
@@ -202,9 +259,12 @@ export default function Index() {
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <Shield className="h-8 w-8 text-brand-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Verified Content</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  Verified Content
+                </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Every campaign includes proof of posting with screenshots and links for complete transparency
+                  Every campaign includes proof of posting with screenshots and
+                  links for complete transparency
                 </p>
               </CardContent>
             </Card>
@@ -213,9 +273,12 @@ export default function Index() {
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <DollarSign className="h-8 w-8 text-brand-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Secure Payments</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  Secure Payments
+                </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Built-in wallet system ensures influencers get paid quickly after campaign completion
+                  Built-in wallet system ensures influencers get paid quickly
+                  after campaign completion
                 </p>
               </CardContent>
             </Card>
@@ -224,9 +287,12 @@ export default function Index() {
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <Zap className="h-8 w-8 text-brand-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Quick Setup</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  Quick Setup
+                </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Launch your first campaign in minutes with our intuitive job posting interface
+                  Launch your first campaign in minutes with our intuitive job
+                  posting interface
                 </p>
               </CardContent>
             </Card>
@@ -235,9 +301,12 @@ export default function Index() {
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <Smartphone className="h-8 w-8 text-brand-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Mobile First</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  Mobile First
+                </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Designed for the mobile generation - influencers can bid and manage campaigns on the go
+                  Designed for the mobile generation - influencers can bid and
+                  manage campaigns on the go
                 </p>
               </CardContent>
             </Card>
@@ -246,9 +315,12 @@ export default function Index() {
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <Star className="h-8 w-8 text-brand-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Quality Control</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  Quality Control
+                </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Rate and review system helps maintain high standards and build long-term partnerships
+                  Rate and review system helps maintain high standards and build
+                  long-term partnerships
                 </p>
               </CardContent>
             </Card>
@@ -270,38 +342,57 @@ export default function Index() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             <div className="text-center">
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-brand-500 to-gradient-to rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                <span className="text-xl sm:text-2xl font-bold text-white">1</span>
+                <span className="text-xl sm:text-2xl font-bold text-white">
+                  1
+                </span>
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">Post Your Campaign</h3>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
+                Post Your Campaign
+              </h3>
               <p className="text-sm sm:text-base text-gray-600">
-                Create a campaign with details about your brand, requirements, and budget
+                Create a campaign with details about your brand, requirements,
+                and budget
               </p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-brand-500 to-gradient-to rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                <span className="text-xl sm:text-2xl font-bold text-white">2</span>
+                <span className="text-xl sm:text-2xl font-bold text-white">
+                  2
+                </span>
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">Receive Bids</h3>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
+                Receive Bids
+              </h3>
               <p className="text-gray-600">
                 Qualified influencers submit their proposals with custom pricing
               </p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-brand-500 to-gradient-to rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                <span className="text-xl sm:text-2xl font-bold text-white">3</span>
+                <span className="text-xl sm:text-2xl font-bold text-white">
+                  3
+                </span>
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">Select & Confirm</h3>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
+                Select & Confirm
+              </h3>
               <p className="text-gray-600">
-                Choose your preferred influencers and they confirm their participation
+                Choose your preferred influencers and they confirm their
+                participation
               </p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-brand-500 to-gradient-to rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                <span className="text-xl sm:text-2xl font-bold text-white">4</span>
+                <span className="text-xl sm:text-2xl font-bold text-white">
+                  4
+                </span>
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">Verify & Pay</h3>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
+                Verify & Pay
+              </h3>
               <p className="text-gray-600">
-                Review proof of posting, approve the work, and payments are processed automatically
+                Review proof of posting, approve the work, and payments are
+                processed automatically
               </p>
             </div>
           </div>
@@ -315,16 +406,24 @@ export default function Index() {
             Ready to Amplify Your Brand?
           </h2>
           <p className="text-lg sm:text-xl text-brand-100 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-            Join thousands of businesses and influencers who trust Echo for their marketing collaborations
+            Join thousands of businesses and influencers who trust Echo for
+            their marketing collaborations
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Link to="/business-dashboard" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto bg-white text-brand-600 hover:bg-gray-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg">
+              <Button
+                size="lg"
+                className="w-full sm:w-auto bg-white text-brand-600 hover:bg-gray-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
+              >
                 Start Your First Campaign
               </Button>
             </Link>
             <Link to="/influencer-login" className="w-full sm:w-auto">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto border-white text-white hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg">
+              <Button
+                size="lg"
+                variant="outline"
+                className="w-full sm:w-auto border-white text-white hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
+              >
                 Join as Influencer
               </Button>
             </Link>
@@ -339,41 +438,88 @@ export default function Index() {
             <div className="sm:col-span-2 md:col-span-1">
               <div className="flex items-center gap-2 mb-3 sm:mb-4">
                 <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-base sm:text-lg">E</span>
+                  <span className="text-white font-bold text-base sm:text-lg">
+                    E
+                  </span>
                 </div>
                 <span className="text-lg sm:text-xl font-bold">Echo</span>
               </div>
               <p className="text-sm sm:text-base text-gray-400">
-                Connecting businesses with influencers for authentic social media collaborations.
+                Connecting businesses with influencers for authentic social
+                media collaborations.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Platform</h3>
+              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
+                Platform
+              </h3>
               <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
-                <li><Link to="/business-dashboard" className="hover:text-white">For Businesses</Link></li>
-                <li><Link to="/influencer-login" className="hover:text-white">For Influencers</Link></li>
-                <li><a href="#pricing" className="hover:text-white">Pricing</a></li>
+                <li>
+                  <Link to="/business-dashboard" className="hover:text-white">
+                    For Businesses
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/influencer-login" className="hover:text-white">
+                    For Influencers
+                  </Link>
+                </li>
+                <li>
+                  <a href="#pricing" className="hover:text-white">
+                    Pricing
+                  </a>
+                </li>
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Support</h3>
+              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
+                Support
+              </h3>
               <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
-                <li><a href="#" className="hover:text-white">Help Center</a></li>
-                <li><a href="#" className="hover:text-white">Contact Us</a></li>
-                <li><a href="#" className="hover:text-white">API Docs</a></li>
+                <li>
+                  <a href="#" className="hover:text-white">
+                    Help Center
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white">
+                    Contact Us
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white">
+                    API Docs
+                  </a>
+                </li>
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Company</h3>
+              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
+                Company
+              </h3>
               <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
-                <li><a href="#" className="hover:text-white">About</a></li>
-                <li><a href="#" className="hover:text-white">Privacy</a></li>
-                <li><a href="#" className="hover:text-white">Terms</a></li>
+                <li>
+                  <a href="#" className="hover:text-white">
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white">
+                    Privacy
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white">
+                    Terms
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-gray-400">
-            <p className="text-sm sm:text-base">&copy; 2024 Echo. All rights reserved.</p>
+            <p className="text-sm sm:text-base">
+              &copy; 2024 Echo. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
