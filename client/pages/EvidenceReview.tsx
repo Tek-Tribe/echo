@@ -191,7 +191,7 @@ export default function EvidenceReview() {
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <div className="w-12 h-12 bg-brand-100 rounded-lg flex items-center justify-center">
-                    <DollarSign className="h-6 w-6 text-brand-600" />
+                    <EchoCoinIcon className="h-6 w-6 text-brand-600" />
                   </div>
                 </div>
                 <div className="ml-4">
