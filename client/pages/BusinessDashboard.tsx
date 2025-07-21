@@ -51,7 +51,7 @@ interface Job {
 export default function BusinessDashboard() {
   const [showCreateJob, setShowCreateJob] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [jobs] = useState<Job[]>([
+  const [jobs, setJobs] = useState<Job[]>([
     {
       id: "1",
       title: "Instagram Story Repost Campaign",
@@ -61,8 +61,9 @@ export default function BusinessDashboard() {
       budget: 2500,
       maxInfluencers: 5,
       bidCount: 23,
-      status: "active",
+      status: "published",
       createdAt: "2024-01-15",
+      publishedAt: "2024-01-16",
     },
     {
       id: "2",
@@ -73,8 +74,9 @@ export default function BusinessDashboard() {
       budget: 5000,
       maxInfluencers: 3,
       bidCount: 12,
-      status: "active",
+      status: "published",
       createdAt: "2024-01-12",
+      publishedAt: "2024-01-13",
     },
     {
       id: "3",
@@ -86,8 +88,34 @@ export default function BusinessDashboard() {
       bidCount: 0,
       status: "completed",
       createdAt: "2024-01-08",
+      publishedAt: "2024-01-09",
+    },
+    {
+      id: "4",
+      title: "Summer Collection Launch",
+      description: "Promote our new summer collection with lifestyle shots",
+      type: "Feed Post",
+      budget: 3000,
+      maxInfluencers: 7,
+      bidCount: 0,
+      status: "draft",
+      createdAt: "2024-01-20",
     },
   ]);
+
+  const handlePublishCampaign = (jobId: string) => {
+    setJobs(prevJobs =>
+      prevJobs.map(job =>
+        job.id === jobId
+          ? { ...job, status: "published" as const, publishedAt: new Date().toISOString().split('T')[0] }
+          : job
+      )
+    );
+  };
+
+  const handleDeleteCampaign = (jobId: string) => {
+    setJobs(prevJobs => prevJobs.filter(job => job.id !== jobId));
+  };
 
   const totalBudget = jobs.reduce((sum, job) => sum + job.budget, 0);
   const activeCampaigns = jobs.filter((job) => job.status === "active").length;
