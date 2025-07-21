@@ -440,60 +440,60 @@ export default function InfluencerDashboard() {
               </Button>
             </div>
 
-            <div className="grid gap-6">
+            <div className="grid gap-4 sm:gap-6">
               {campaigns.map((campaign) => (
                 <Card key={campaign.id} className="hover:shadow-lg transition-shadow">
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center gap-4">
-                        <Avatar className="h-12 w-12">
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4 mb-4">
+                      <div className="flex items-center gap-3 sm:gap-4">
+                        <Avatar className="h-10 w-10 sm:h-12 sm:w-12">
                           <AvatarImage src={campaign.businessLogo} />
                           <AvatarFallback>{campaign.businessName.charAt(0)}</AvatarFallback>
                         </Avatar>
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900">{campaign.title}</h3>
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">{campaign.title}</h3>
                           <p className="text-sm text-gray-500">{campaign.businessName}</p>
                         </div>
                       </div>
-                      <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+                      <Badge className="bg-green-100 text-green-800 hover:bg-green-100 self-start">
                         <Target className="h-3 w-3 mr-1" />
                         {campaign.type}
                       </Badge>
                     </div>
 
-                    <p className="text-gray-600 mb-4">{campaign.description}</p>
+                    <p className="text-sm sm:text-base text-gray-600 mb-4">{campaign.description}</p>
 
-                    <div className="grid md:grid-cols-2 gap-4 mb-4">
+                    <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-4">
                       <div className="space-y-2">
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-xs sm:text-sm">
                           <span className="text-gray-500">Budget Range:</span>
                           <span className="font-semibold text-gray-900">
                             ${campaign.budgetRange.min} - ${campaign.budgetRange.max}
                           </span>
                         </div>
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-xs sm:text-sm">
                           <span className="text-gray-500">Max Influencers:</span>
                           <span className="font-semibold text-gray-900">{campaign.maxInfluencers}</span>
                         </div>
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-xs sm:text-sm">
                           <span className="text-gray-500">Current Bids:</span>
                           <span className="font-semibold text-brand-600">{campaign.currentBids}</span>
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-xs sm:text-sm">
                           <span className="text-gray-500">Min Followers:</span>
                           <span className="font-semibold text-gray-900">
                             {(campaign.requirements.minFollowers / 1000).toFixed(0)}K
                           </span>
                         </div>
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-xs sm:text-sm">
                           <span className="text-gray-500">Deadline:</span>
                           <span className="font-semibold text-gray-900">
                             {new Date(campaign.deadline).toLocaleDateString()}
                           </span>
                         </div>
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-xs sm:text-sm">
                           <span className="text-gray-500">Platforms:</span>
                           <div className="flex gap-1">
                             {campaign.requirements.platforms.map((platform) => (
@@ -506,20 +506,20 @@ export default function InfluencerDashboard() {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between">
-                      <div className="flex gap-2">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                      <div className="flex flex-wrap gap-1 sm:gap-2">
                         {campaign.requirements.categories.map((category) => (
                           <Badge key={category} variant="secondary" className="text-xs">
                             {category}
                           </Badge>
                         ))}
                       </div>
-                      <Button 
+                      <Button
                         onClick={() => {
                           setSelectedCampaign(campaign);
                           setShowBidModal(true);
                         }}
-                        className="bg-brand-600 hover:bg-brand-700 text-white"
+                        className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white text-sm"
                       >
                         Submit Bid
                         <ArrowRight className="h-4 w-4 ml-2" />
@@ -531,15 +531,15 @@ export default function InfluencerDashboard() {
             </div>
           </TabsContent>
 
-          <TabsContent value="my-bids" className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-900">My Submitted Bids</h2>
+          <TabsContent value="my-bids" className="space-y-4 sm:space-y-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">My Submitted Bids</h2>
             
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {myBids.map((bid) => (
                 <Card key={bid.id}>
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-gray-900">{bid.campaignTitle}</h3>
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900">{bid.campaignTitle}</h3>
                       <Badge 
                         variant={bid.status === 'accepted' ? 'default' : bid.status === 'rejected' ? 'destructive' : 'secondary'}
                         className={
@@ -556,8 +556,8 @@ export default function InfluencerDashboard() {
                         {bid.status.charAt(0).toUpperCase() + bid.status.slice(1)}
                       </Badge>
                     </div>
-                    <p className="text-gray-600 mb-4">{bid.proposal}</p>
-                    <div className="flex items-center justify-between text-sm">
+                    <p className="text-sm sm:text-base text-gray-600 mb-4">{bid.proposal}</p>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 text-xs sm:text-sm">
                       <span className="font-semibold text-gray-900">Bid Amount: ${bid.amount}</span>
                       <span className="text-gray-500">
                         Submitted {new Date(bid.submittedAt).toLocaleDateString()}
@@ -569,8 +569,8 @@ export default function InfluencerDashboard() {
             </div>
           </TabsContent>
 
-          <TabsContent value="active-campaigns" className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-900">Active Campaigns</h2>
+          <TabsContent value="active-campaigns" className="space-y-4 sm:space-y-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Active Campaigns</h2>
 
             {activeCampaigns.length === 0 ? (
               <Card>
