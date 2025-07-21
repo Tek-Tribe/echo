@@ -74,6 +74,25 @@ export default function BidManagement() {
     maxInfluencers: 5
   });
 
+  const [evidenceSubmissions] = useState<EvidenceSubmission[]>([
+    {
+      id: '1',
+      bidId: '3',
+      influencerId: 'inf3',
+      influencerName: 'Emma Wellness',
+      influencerAvatar: '/placeholder.svg',
+      influencerHandle: '@emmawellness',
+      amount: 320,
+      submittedAt: '2024-01-20',
+      evidence: {
+        screenshots: ['/placeholder.svg', '/placeholder.svg'],
+        links: ['https://instagram.com/p/example123', 'https://instagram.com/stories/highlights/123'],
+        description: 'Posted on my main feed with authentic review. Received great engagement from my fitness community. The post shows me using the product during my morning routine and includes honest feedback about taste and effectiveness.'
+      },
+      status: 'pending'
+    }
+  ]);
+
   const [bids] = useState<InfluencerBid[]>([
     {
       id: '1',
