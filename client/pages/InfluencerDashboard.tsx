@@ -751,7 +751,7 @@ export default function InfluencerDashboard() {
                         </div>
                         <div className="text-right">
                           <div className="text-xl font-bold text-green-600">
-                            ${campaign.amount}
+                            {campaign.echoCoins} EC
                           </div>
                           <Badge
                             variant={
