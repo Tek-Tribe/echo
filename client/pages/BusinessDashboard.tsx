@@ -43,12 +43,13 @@ interface Job {
   title: string;
   description: string;
   type: string;
-  budget: number;
+  echoCoins: number;
   maxInfluencers: number;
   bidCount: number;
   status: "draft" | "published" | "completed";
   createdAt: string;
   publishedAt?: string;
+  endDate: string;
 }
 
 export default function BusinessDashboard() {
@@ -61,12 +62,13 @@ export default function BusinessDashboard() {
       description:
         "Repost our new product launch story to reach fitness enthusiasts",
       type: "Story Repost",
-      budget: 2500,
+      echoCoins: 2500,
       maxInfluencers: 5,
       bidCount: 23,
       status: "published",
       createdAt: "2024-01-15",
       publishedAt: "2024-01-16",
+      endDate: "2024-02-15",
     },
     {
       id: "2",
@@ -74,35 +76,38 @@ export default function BusinessDashboard() {
       description:
         "Create an authentic unboxing and review video for our new smartwatch",
       type: "Video Creation",
-      budget: 5000,
+      echoCoins: 5000,
       maxInfluencers: 3,
       bidCount: 12,
       status: "published",
       createdAt: "2024-01-12",
       publishedAt: "2024-01-13",
+      endDate: "2024-02-12",
     },
     {
       id: "3",
       title: "Brand Awareness Post",
       description: "Share our brand story with your audience using our hashtag",
       type: "Feed Post",
-      budget: 1500,
+      echoCoins: 1500,
       maxInfluencers: 8,
       bidCount: 0,
       status: "completed",
       createdAt: "2024-01-08",
       publishedAt: "2024-01-09",
+      endDate: "2024-02-08",
     },
     {
       id: "4",
       title: "Summer Collection Launch",
       description: "Promote our new summer collection with lifestyle shots",
       type: "Feed Post",
-      budget: 3000,
+      echoCoins: 3000,
       maxInfluencers: 7,
       bidCount: 0,
       status: "draft",
       createdAt: "2024-01-20",
+      endDate: "2024-03-20",
     },
   ]);
 
@@ -120,7 +125,7 @@ export default function BusinessDashboard() {
     setJobs(prevJobs => prevJobs.filter(job => job.id !== jobId));
   };
 
-  const totalBudget = jobs.reduce((sum, job) => sum + job.budget, 0);
+  const totalEchoCoins = jobs.reduce((sum, job) => sum + job.echoCoins, 0);
   const publishedCampaigns = jobs.filter((job) => job.status === "published").length;
   const totalBids = jobs.reduce((sum, job) => sum + job.bidCount, 0);
 
@@ -211,16 +216,16 @@ export default function BusinessDashboard() {
 
               <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="budget">Total Budget ($)</Label>
-                  <Input id="budget" type="number" placeholder="2500" />
+                  <Label htmlFor="echoCoins">Echo Coins</Label>
+                  <Input id="echoCoins" type="number" placeholder="2500" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="maxInfluencers">Max Influencers</Label>
                   <Input id="maxInfluencers" type="number" placeholder="5" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="deadline">Deadline</Label>
-                  <Input id="deadline" type="date" />
+                  <Label htmlFor="endDate">End Date</Label>
+                  <Input id="endDate" type="date" />
                 </div>
               </div>
 
@@ -451,10 +456,10 @@ export default function BusinessDashboard() {
                 </div>
                 <div className="ml-3 sm:ml-4 min-w-0">
                   <div className="text-xs sm:text-sm font-medium text-gray-500 truncate">
-                    Total Budget
+                    Total Echo Coins
                   </div>
                   <div className="text-lg sm:text-2xl font-bold text-gray-900">
-                    ${totalBudget.toLocaleString()}
+                    {totalEchoCoins.toLocaleString()} EC
                   </div>
                 </div>
               </div>
@@ -554,8 +559,8 @@ export default function BusinessDashboard() {
                       </p>
                       <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 sm:gap-6 text-xs sm:text-sm text-gray-500">
                         <span className="flex items-center gap-1">
-                          <DollarSign className="h-3 w-3 sm:h-4 sm:w-4" />$
-                          {job.budget.toLocaleString()}
+                          <DollarSign className="h-3 w-3 sm:h-4 sm:w-4" />
+                          {job.echoCoins.toLocaleString()} EC
                         </span>
                         <span className="flex items-center gap-1">
                           <Users className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -566,7 +571,7 @@ export default function BusinessDashboard() {
                           {job.bidCount} bids
                         </span>
                         <span className="col-span-2 sm:col-span-1">
-                          Created {new Date(job.createdAt).toLocaleDateString()}
+                          End Date {new Date(job.endDate).toLocaleDateString()}
                         </span>
                       </div>
                     </div>
