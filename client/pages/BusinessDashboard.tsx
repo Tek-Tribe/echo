@@ -33,6 +33,9 @@ import {
   ChevronDown,
   Menu,
   X,
+  Trash2,
+  Send,
+  Edit3,
 } from "lucide-react";
 
 interface Job {
