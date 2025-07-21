@@ -571,10 +571,9 @@ export default function InfluencerDashboard() {
                     <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-4">
                       <div className="space-y-2">
                         <div className="flex items-center justify-between text-xs sm:text-sm">
-                          <span className="text-gray-500">Budget Range:</span>
+                          <span className="text-gray-500">Echo Coin Range:</span>
                           <span className="font-semibold text-gray-900">
-                            ${campaign.budgetRange.min} - $
-                            {campaign.budgetRange.max}
+                            {campaign.echoCoinRange.min} - {campaign.echoCoinRange.max} EC
                           </span>
                         </div>
                         <div className="flex items-center justify-between text-xs sm:text-sm">
