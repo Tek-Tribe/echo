@@ -279,17 +279,17 @@ export default function BusinessDashboard() {
               </nav>
 
               {/* Mobile menu button */}
-              <div className="md:hidden ml-4">
+              <div className="md:hidden">
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="text-gray-600"
+                  className="text-gray-600 p-2"
                 >
                   {mobileMenuOpen ? (
-                    <X className="h-5 w-5" />
+                    <X className="h-6 w-6" />
                   ) : (
-                    <Menu className="h-5 w-5" />
+                    <Menu className="h-6 w-6" />
                   )}
                 </Button>
               </div>
