@@ -566,25 +566,54 @@ export default function BusinessDashboard() {
                       </div>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                      <Link
-                        to={`/bid-management/${job.id}`}
-                        className="w-full sm:w-auto"
-                      >
+                      {job.status === "published" && (
+                        <Link
+                          to={`/bid-management/${job.id}`}
+                          className="w-full sm:w-auto"
+                        >
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-full sm:w-auto text-xs sm:text-sm"
+                          >
+                            <Eye className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                            View Bids ({job.bidCount})
+                          </Button>
+                        </Link>
+                      )}
+
+                      {job.status === "draft" && (
+                        <>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-full sm:w-auto text-xs sm:text-sm"
+                          >
+                            <Edit3 className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                            Edit
+                          </Button>
+                          <Button
+                            onClick={() => handlePublishCampaign(job.id)}
+                            size="sm"
+                            className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm"
+                          >
+                            <Send className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                            Publish
+                          </Button>
+                        </>
+                      )}
+
+                      {job.status === "published" && (
                         <Button
+                          onClick={() => handleDeleteCampaign(job.id)}
                           variant="outline"
                           size="sm"
-                          className="w-full sm:w-auto text-xs sm:text-sm"
+                          className="w-full sm:w-auto text-xs sm:text-sm text-red-600 border-red-200 hover:bg-red-50"
                         >
-                          View Bids ({job.bidCount})
+                          <Trash2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                          Delete
                         </Button>
-                      </Link>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="w-full sm:w-auto text-xs sm:text-sm"
-                      >
-                        Edit
-                      </Button>
+                      )}
                     </div>
                   </div>
                 </div>
