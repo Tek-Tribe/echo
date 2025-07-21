@@ -107,7 +107,7 @@ export default function InfluencerDashboard() {
       description:
         "We need fitness influencers to repost our new protein powder launch story. Must include our branded hashtag #FuelYourGoals and tag our account @FitnessNutrition.",
       type: "Story Repost",
-      budgetRange: { min: 200, max: 500 },
+      echoCoinRange: { min: 200, max: 500 },
       maxInfluencers: 5,
       currentBids: 23,
       deadline: "2024-01-25",
@@ -126,7 +126,7 @@ export default function InfluencerDashboard() {
       description:
         "Create an authentic unboxing and review video for our new smartwatch. Video should be 60-90 seconds, highlight key features, and show genuine reactions.",
       type: "Video Creation",
-      budgetRange: { min: 800, max: 1500 },
+      echoCoinRange: { min: 800, max: 1500 },
       maxInfluencers: 3,
       currentBids: 12,
       deadline: "2024-01-30",
@@ -145,7 +145,7 @@ export default function InfluencerDashboard() {
       description:
         "Long-term partnership opportunity for fashion influencers. Monthly posts featuring our sustainable clothing line with creative freedom in styling.",
       type: "Brand Partnership",
-      budgetRange: { min: 1000, max: 2000 },
+      echoCoinRange: { min: 1000, max: 2000 },
       maxInfluencers: 8,
       currentBids: 45,
       deadline: "2024-02-05",
@@ -165,7 +165,7 @@ export default function InfluencerDashboard() {
       id: "1",
       campaignId: "1",
       campaignTitle: "Instagram Story Repost Campaign",
-      amount: 350,
+      echoCoins: 350,
       proposal:
         "I have 15K engaged followers in the fitness niche with 8% avg engagement. My audience is 70% female, ages 18-35, perfect for your target market.",
       status: "pending",
@@ -175,7 +175,7 @@ export default function InfluencerDashboard() {
       id: "2",
       campaignId: "2",
       campaignTitle: "Product Review Video",
-      amount: 1200,
+      echoCoins: 1200,
       proposal:
         "Tech reviewer with 65K followers. I specialize in honest product reviews and have worked with similar brands like Apple and Samsung.",
       status: "accepted",
