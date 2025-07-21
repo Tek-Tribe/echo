@@ -30,7 +30,7 @@ interface InfluencerBid {
   followers: number;
   engagement: number;
   rating: number;
-  bidAmount: number;
+  bidEchoCoins: number;
   proposal: string;
   submittedAt: string;
   status: "pending" | "accepted" | "rejected";
@@ -49,7 +49,7 @@ interface EvidenceSubmission {
   influencerName: string;
   influencerAvatar: string;
   influencerHandle: string;
-  amount: number;
+  echoCoins: number;
   submittedAt: string;
   evidence: {
     screenshots: string[];
@@ -72,7 +72,7 @@ export default function BidManagement() {
     title: "Instagram Story Repost Campaign",
     description:
       "Repost our new product launch story to reach fitness enthusiasts",
-    budget: 2500,
+    echoCoins: 2500,
     maxInfluencers: 5,
   });
 
@@ -84,7 +84,7 @@ export default function BidManagement() {
       influencerName: "Emma Wellness",
       influencerAvatar: "/placeholder.svg",
       influencerHandle: "@emmawellness",
-      amount: 320,
+      echoCoins: 320,
       submittedAt: "2024-01-20",
       evidence: {
         screenshots: ["/placeholder.svg", "/placeholder.svg"],
@@ -109,7 +109,7 @@ export default function BidManagement() {
       followers: 45000,
       engagement: 6.2,
       rating: 4.9,
-      bidAmount: 350,
+      bidEchoCoins: 350,
       proposal:
         "I have 45K engaged followers in the fitness niche with 6.2% avg engagement. My audience is 70% female, ages 18-35, perfect for your target market. I regularly promote health and wellness products with authentic reviews.",
       submittedAt: "2024-01-18",
@@ -134,7 +134,7 @@ export default function BidManagement() {
       followers: 32000,
       engagement: 8.1,
       rating: 4.7,
-      bidAmount: 280,
+      bidEchoCoins: 280,
       proposal:
         "Fitness enthusiast with 32K highly engaged followers. I specialize in workout routines and nutrition content. My audience trusts my product recommendations, leading to high conversion rates.",
       submittedAt: "2024-01-17",
@@ -155,7 +155,7 @@ export default function BidManagement() {
       followers: 28000,
       engagement: 7.3,
       rating: 4.8,
-      bidAmount: 320,
+      bidEchoCoins: 320,
       proposal:
         "Wellness coach with authentic engagement from health-conscious followers. I create genuine content that resonates with my community and drives real results for brands.",
       submittedAt: "2024-01-16",
@@ -245,7 +245,7 @@ export default function BidManagement() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 mt-4">
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
               <DollarSign className="h-4 w-4" />
-              <span>Budget: ${campaign.budget}</span>
+              <span>Echo Coins: {campaign.echoCoins} EC</span>
             </div>
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
               <Users className="h-4 w-4" />
@@ -336,7 +336,7 @@ export default function BidManagement() {
                             </div>
                             <div className="flex sm:flex-col sm:text-right items-center sm:items-end justify-between sm:justify-start gap-2 sm:gap-1">
                               <div className="text-base sm:text-lg font-bold text-green-600">
-                                ${bid.bidAmount}
+                                {bid.bidEchoCoins} EC
                               </div>
                               <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
                                 <CheckCircle className="h-3 w-3 mr-1" />
@@ -487,7 +487,7 @@ export default function BidManagement() {
 
                           <div className="mb-3 sm:mb-4">
                             <div className="text-xl sm:text-2xl font-bold text-brand-600">
-                              ${bid.bidAmount}
+                              {bid.bidEchoCoins} EC
                             </div>
                             <div className="text-xs sm:text-sm text-gray-500">
                               Submitted{" "}
