@@ -271,7 +271,7 @@ export default function Index() {
             <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
               <CardContent className="p-6 sm:p-8 text-center">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                  <DollarSign className="h-8 w-8 text-brand-600" />
+                  <EchoCoinIcon className="h-8 w-8 text-brand-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Secure Payments
