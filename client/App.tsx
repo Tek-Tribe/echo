@@ -10,6 +10,8 @@ import Index from "./pages/Index";
 import BusinessDashboard from "./pages/BusinessDashboard";
 import InfluencerLogin from "./pages/InfluencerLogin";
 import InfluencerDashboard from "./pages/InfluencerDashboard";
+import BidManagement from "./pages/BidManagement";
+import EvidenceReview from "./pages/EvidenceReview";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +27,8 @@ const App = () => (
           <Route path="/business-dashboard" element={<BusinessDashboard />} />
           <Route path="/influencer-login" element={<InfluencerLogin />} />
           <Route path="/influencer-dashboard" element={<InfluencerDashboard />} />
+          <Route path="/bid-management/:campaignId" element={<BidManagement />} />
+          <Route path="/evidence-review" element={<EvidenceReview />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
