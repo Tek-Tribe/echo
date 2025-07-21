@@ -429,9 +429,9 @@ export default function EvidenceReview() {
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Amount:</span>
+                      <span className="text-gray-500">Echo Coins:</span>
                       <span className="font-medium text-green-600">
-                        ${selectedSubmission.amount}
+                        {selectedSubmission.echoCoins} EC
                       </span>
                     </div>
                     <div className="flex justify-between">
