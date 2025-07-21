@@ -24,8 +24,11 @@ import {
   CheckCircle,
   AlertCircle,
   LogOut,
-  ChevronDown
+  ChevronDown,
+  Menu,
+  X
 } from "lucide-react";
+import { useState } from "react";
 
 interface Job {
   id: string;
@@ -41,6 +44,7 @@ interface Job {
 
 export default function BusinessDashboard() {
   const [showCreateJob, setShowCreateJob] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [jobs] = useState<Job[]>([
     {
       id: '1',
@@ -237,8 +241,20 @@ export default function BusinessDashboard() {
                   Payments
                 </a>
               </nav>
+
+              {/* Mobile menu button */}
+              <div className="md:hidden ml-4">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="text-gray-600"
+                >
+                  {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                </Button>
+              </div>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4">
               <Button
                 onClick={() => setShowCreateJob(true)}
                 className="bg-brand-600 hover:bg-brand-700 text-white flex items-center gap-2"
@@ -273,74 +289,103 @@ export default function BusinessDashboard() {
               </DropdownMenu>
             </div>
           </div>
+
+          {/* Mobile Navigation Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden border-t border-gray-200 bg-white">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                <a href="#" className="block px-3 py-2 text-base font-medium text-brand-600">
+                  Dashboard
+                </a>
+                <Link to="/evidence-review" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700">
+                  Evidence Review
+                </Link>
+                <a href="#" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700">
+                  Analytics
+                </a>
+                <a href="#" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700">
+                  Payments
+                </a>
+                <div className="pt-2 pb-2">
+                  <Button
+                    onClick={() => setShowCreateJob(true)}
+                    className="w-full bg-brand-600 hover:bg-brand-700 text-white flex items-center justify-center gap-2"
+                  >
+                    <Plus className="h-4 w-4" />
+                    New Campaign
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Dashboard Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Business Dashboard</h1>
-          <p className="text-gray-600 mt-2">Manage your influencer marketing campaigns</p>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Business Dashboard</h1>
+          <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Manage your influencer marketing campaigns</p>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
           <Card>
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-brand-100 rounded-lg flex items-center justify-center">
-                    <TrendingUp className="h-6 w-6 text-brand-600" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-brand-100 rounded-lg flex items-center justify-center">
+                    <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-brand-600" />
                   </div>
                 </div>
-                <div className="ml-4">
-                  <div className="text-sm font-medium text-gray-500">Active Campaigns</div>
-                  <div className="text-2xl font-bold text-gray-900">{activeCampaigns}</div>
+                <div className="ml-3 sm:ml-4 min-w-0">
+                  <div className="text-xs sm:text-sm font-medium text-gray-500 truncate">Active Campaigns</div>
+                  <div className="text-lg sm:text-2xl font-bold text-gray-900">{activeCampaigns}</div>
                 </div>
               </div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                    <DollarSign className="h-6 w-6 text-green-600" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                    <DollarSign className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
                   </div>
                 </div>
-                <div className="ml-4">
-                  <div className="text-sm font-medium text-gray-500">Total Budget</div>
-                  <div className="text-2xl font-bold text-gray-900">${totalBudget.toLocaleString()}</div>
+                <div className="ml-3 sm:ml-4 min-w-0">
+                  <div className="text-xs sm:text-sm font-medium text-gray-500 truncate">Total Budget</div>
+                  <div className="text-lg sm:text-2xl font-bold text-gray-900">${totalBudget.toLocaleString()}</div>
                 </div>
               </div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Users className="h-6 w-6 text-blue-600" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <Users className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
                   </div>
                 </div>
-                <div className="ml-4">
-                  <div className="text-sm font-medium text-gray-500">Total Bids</div>
-                  <div className="text-2xl font-bold text-gray-900">{totalBids}</div>
+                <div className="ml-3 sm:ml-4 min-w-0">
+                  <div className="text-xs sm:text-sm font-medium text-gray-500 truncate">Total Bids</div>
+                  <div className="text-lg sm:text-2xl font-bold text-gray-900">{totalBids}</div>
                 </div>
               </div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <Clock className="h-6 w-6 text-purple-600" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
                   </div>
                 </div>
-                <div className="ml-4">
-                  <div className="text-sm font-medium text-gray-500">Avg. Response</div>
-                  <div className="text-2xl font-bold text-gray-900">2.4h</div>
+                <div className="ml-3 sm:ml-4 min-w-0">
+                  <div className="text-xs sm:text-sm font-medium text-gray-500 truncate">Avg. Response</div>
+                  <div className="text-lg sm:text-2xl font-bold text-gray-900">2.4h</div>
                 </div>
               </div>
             </CardContent>
@@ -350,16 +395,16 @@ export default function BusinessDashboard() {
         {/* Campaigns Table */}
         <Card>
           <CardHeader>
-            <CardTitle>Your Campaigns</CardTitle>
+            <CardTitle className="text-lg sm:text-xl">Your Campaigns</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {jobs.map((job) => (
-                <div key={job.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-lg font-semibold text-gray-900">{job.title}</h3>
+                <div key={job.id} className="border border-gray-200 rounded-lg p-4 sm:p-6 hover:shadow-md transition-shadow">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-3">
+                        <h3 className="text-base sm:text-lg font-semibold text-gray-900">{job.title}</h3>
                         <Badge 
                           variant={job.status === 'active' ? 'default' : job.status === 'completed' ? 'secondary' : 'outline'}
                           className={
@@ -375,30 +420,30 @@ export default function BusinessDashboard() {
                           {job.status.charAt(0).toUpperCase() + job.status.slice(1)}
                         </Badge>
                       </div>
-                      <p className="text-gray-600 mb-3">{job.description}</p>
-                      <div className="flex items-center gap-6 text-sm text-gray-500">
+                      <p className="text-sm sm:text-base text-gray-600 mb-3">{job.description}</p>
+                      <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 sm:gap-6 text-xs sm:text-sm text-gray-500">
                         <span className="flex items-center gap-1">
-                          <DollarSign className="h-4 w-4" />
+                          <DollarSign className="h-3 w-3 sm:h-4 sm:w-4" />
                           ${job.budget.toLocaleString()}
                         </span>
                         <span className="flex items-center gap-1">
-                          <Users className="h-4 w-4" />
-                          {job.maxInfluencers} max influencers
+                          <Users className="h-3 w-3 sm:h-4 sm:w-4" />
+                          {job.maxInfluencers} max
                         </span>
                         <span className="flex items-center gap-1">
-                          <Eye className="h-4 w-4" />
+                          <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
                           {job.bidCount} bids
                         </span>
-                        <span>Created {new Date(job.createdAt).toLocaleDateString()}</span>
+                        <span className="col-span-2 sm:col-span-1">Created {new Date(job.createdAt).toLocaleDateString()}</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Link to={`/bid-management/${job.id}`}>
-                        <Button variant="outline" size="sm">
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                      <Link to={`/bid-management/${job.id}`} className="w-full sm:w-auto">
+                        <Button variant="outline" size="sm" className="w-full sm:w-auto text-xs sm:text-sm">
                           View Bids ({job.bidCount})
                         </Button>
                       </Link>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" className="w-full sm:w-auto text-xs sm:text-sm">
                         Edit
                       </Button>
                     </div>
