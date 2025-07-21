@@ -35,13 +35,6 @@ import {
   Trash2,
   Send,
   Edit3,
-  BarChart3,
-  PieChart,
-  CreditCard,
-  Receipt,
-  Download,
-  Filter,
-  Calendar,
 } from "lucide-react";
 import { EchoCoinIcon } from "@/components/EchoCoinIcon";
 
