@@ -121,7 +121,7 @@ export default function BusinessDashboard() {
   };
 
   const totalBudget = jobs.reduce((sum, job) => sum + job.budget, 0);
-  const activeCampaigns = jobs.filter((job) => job.status === "active").length;
+  const publishedCampaigns = jobs.filter((job) => job.status === "published").length;
   const totalBids = jobs.reduce((sum, job) => sum + job.bidCount, 0);
 
   if (showCreateJob) {
