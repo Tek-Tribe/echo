@@ -32,7 +32,10 @@ import {
   Calendar,
   Target,
   LogOut,
-  ChevronDown
+  ChevronDown,
+  Upload,
+  Camera,
+  Link as LinkIcon
 } from "lucide-react";
 
 interface Campaign {
@@ -64,11 +67,32 @@ interface Bid {
   submittedAt: string;
 }
 
+interface ActiveCampaign {
+  id: string;
+  title: string;
+  businessName: string;
+  type: string;
+  amount: number;
+  deadline: string;
+  requirements: string;
+  status: 'in-progress' | 'awaiting-review' | 'completed';
+  evidenceSubmitted?: {
+    screenshots: string[];
+    links: string[];
+    description: string;
+    submittedAt: string;
+  };
+}
+
 export default function InfluencerDashboard() {
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
   const [showBidModal, setShowBidModal] = useState(false);
   const [bidAmount, setBidAmount] = useState('');
   const [bidProposal, setBidProposal] = useState('');
+  const [showEvidenceModal, setShowEvidenceModal] = useState(false);
+  const [selectedActiveCampaign, setSelectedActiveCampaign] = useState<ActiveCampaign | null>(null);
+  const [evidenceLinks, setEvidenceLinks] = useState('');
+  const [evidenceDescription, setEvidenceDescription] = useState('');
 
   const [campaigns] = useState<Campaign[]>([
     {
@@ -148,6 +172,35 @@ export default function InfluencerDashboard() {
     }
   ]);
 
+  const [activeCampaigns] = useState<ActiveCampaign[]>([
+    {
+      id: '2',
+      title: 'Product Review Video',
+      businessName: 'TechWear',
+      type: 'Video Creation',
+      amount: 1200,
+      deadline: '2024-01-30',
+      requirements: 'Create a 60-90 second unboxing and review video highlighting key features',
+      status: 'in-progress'
+    },
+    {
+      id: '3',
+      title: 'Fitness Supplement Review',
+      businessName: 'FitnessNutrition Co.',
+      type: 'Feed Post',
+      amount: 450,
+      deadline: '2024-01-28',
+      requirements: 'Create an authentic post about your experience with our protein powder',
+      status: 'awaiting-review',
+      evidenceSubmitted: {
+        screenshots: ['/placeholder.svg'],
+        links: ['https://instagram.com/p/example123'],
+        description: 'Posted on my main feed with authentic review. Received great engagement from my fitness community.',
+        submittedAt: '2024-01-20'
+      }
+    }
+  ]);
+
   const handleSubmitBid = () => {
     // Handle bid submission logic here
     setShowBidModal(false);
@@ -156,9 +209,17 @@ export default function InfluencerDashboard() {
     setSelectedCampaign(null);
   };
 
+  const handleSubmitEvidence = () => {
+    // Handle evidence submission logic here
+    setShowEvidenceModal(false);
+    setEvidenceLinks('');
+    setEvidenceDescription('');
+    setSelectedActiveCampaign(null);
+  };
+
   const influencerStats = {
     totalEarnings: 8500,
-    activeCampaigns: 2,
+    activeCampaigns: activeCampaigns.length,
     completedCampaigns: 12,
     averageRating: 4.8,
     followers: 45000,
@@ -474,15 +535,90 @@ export default function InfluencerDashboard() {
 
           <TabsContent value="active-campaigns" className="space-y-6">
             <h2 className="text-xl font-semibold text-gray-900">Active Campaigns</h2>
-            <Card>
-              <CardContent className="p-8 text-center">
-                <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No Active Campaigns</h3>
-                <p className="text-gray-600">
-                  Once your bids are accepted, you'll see active campaigns here to manage and submit proof of completion.
-                </p>
-              </CardContent>
-            </Card>
+
+            {activeCampaigns.length === 0 ? (
+              <Card>
+                <CardContent className="p-8 text-center">
+                  <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No Active Campaigns</h3>
+                  <p className="text-gray-600">
+                    Once your bids are accepted, you'll see active campaigns here to manage and submit proof of completion.
+                  </p>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="space-y-4">
+                {activeCampaigns.map((campaign) => (
+                  <Card key={campaign.id}>
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900">{campaign.title}</h3>
+                          <p className="text-sm text-gray-500">{campaign.businessName}</p>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-xl font-bold text-green-600">${campaign.amount}</div>
+                          <Badge
+                            variant={campaign.status === 'completed' ? 'default' : campaign.status === 'awaiting-review' ? 'secondary' : 'outline'}
+                            className={
+                              campaign.status === 'completed'
+                                ? 'bg-green-100 text-green-800 hover:bg-green-100'
+                                : campaign.status === 'awaiting-review'
+                                ? 'bg-yellow-100 text-yellow-800 hover:bg-yellow-100'
+                                : 'bg-blue-100 text-blue-800 hover:bg-blue-100'
+                            }
+                          >
+                            {campaign.status === 'completed' && <CheckCircle className="h-3 w-3 mr-1" />}
+                            {campaign.status === 'awaiting-review' && <Clock className="h-3 w-3 mr-1" />}
+                            {campaign.status === 'in-progress' && <AlertCircle className="h-3 w-3 mr-1" />}
+                            {campaign.status.replace('-', ' ')}
+                          </Badge>
+                        </div>
+                      </div>
+
+                      <p className="text-gray-600 mb-4">{campaign.requirements}</p>
+
+                      <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="h-4 w-4" />
+                          Deadline: {new Date(campaign.deadline).toLocaleDateString()}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Target className="h-4 w-4" />
+                          {campaign.type}
+                        </span>
+                      </div>
+
+                      {campaign.evidenceSubmitted ? (
+                        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <CheckCircle className="h-5 w-5 text-green-600" />
+                            <span className="font-medium text-green-800">Evidence Submitted</span>
+                          </div>
+                          <p className="text-sm text-green-700 mb-2">{campaign.evidenceSubmitted.description}</p>
+                          <div className="flex items-center gap-4 text-xs text-green-600">
+                            <span>{campaign.evidenceSubmitted.screenshots.length} screenshots</span>
+                            <span>{campaign.evidenceSubmitted.links.length} links</span>
+                            <span>Submitted {new Date(campaign.evidenceSubmitted.submittedAt).toLocaleDateString()}</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <Button
+                          onClick={() => {
+                            setSelectedActiveCampaign(campaign);
+                            setShowEvidenceModal(true);
+                          }}
+                          className="w-full bg-brand-600 hover:bg-brand-700 text-white"
+                        >
+                          <Upload className="h-4 w-4 mr-2" />
+                          Submit Evidence
+                        </Button>
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
           </TabsContent>
         </Tabs>
       </div>
