@@ -218,7 +218,7 @@ export default function InfluencerDashboard() {
   const handleSubmitBid = () => {
     // Handle bid submission logic here
     setShowBidModal(false);
-    setBidAmount("");
+    setBidEchoCoins("");
     setBidProposal("");
     setSelectedCampaign(null);
   };
