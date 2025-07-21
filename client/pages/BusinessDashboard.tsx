@@ -62,7 +62,6 @@ interface Job {
 export default function BusinessDashboard() {
   const [showCreateJob, setShowCreateJob] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'analytics' | 'payments'>('dashboard');
   const [jobs, setJobs] = useState<Job[]>([
     {
       id: "1",
