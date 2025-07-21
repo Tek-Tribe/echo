@@ -600,36 +600,21 @@ export default function BusinessDashboard() {
                 <span className="text-xl font-bold text-gray-900">Echo</span>
               </Link>
               <nav className="hidden md:flex ml-8 space-x-8">
-                <button
-                  onClick={() => setActiveTab('dashboard')}
-                  className={`pb-4 text-sm font-medium transition-colors ${
-                    activeTab === 'dashboard'
-                      ? 'text-brand-600 border-b-2 border-brand-600'
-                      : 'text-gray-500 hover:text-gray-700'
-                  }`}
-                >
+                <span className="text-brand-600 border-b-2 border-brand-600 pb-4 text-sm font-medium">
                   Dashboard
-                </button>
-                <button
-                  onClick={() => setActiveTab('analytics')}
-                  className={`pb-4 text-sm font-medium transition-colors ${
-                    activeTab === 'analytics'
-                      ? 'text-brand-600 border-b-2 border-brand-600'
-                      : 'text-gray-500 hover:text-gray-700'
-                  }`}
+                </span>
+                <Link
+                  to="/analytics"
+                  className="text-gray-500 hover:text-gray-700 pb-4 text-sm font-medium transition-colors"
                 >
                   Analytics
-                </button>
-                <button
-                  onClick={() => setActiveTab('payments')}
-                  className={`pb-4 text-sm font-medium transition-colors ${
-                    activeTab === 'payments'
-                      ? 'text-brand-600 border-b-2 border-brand-600'
-                      : 'text-gray-500 hover:text-gray-700'
-                  }`}
+                </Link>
+                <Link
+                  to="/payments"
+                  className="text-gray-500 hover:text-gray-700 pb-4 text-sm font-medium transition-colors"
                 >
                   Payments
-                </button>
+                </Link>
               </nav>
             </div>
 
