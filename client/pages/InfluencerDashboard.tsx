@@ -865,10 +865,9 @@ export default function InfluencerDashboard() {
                   {selectedCampaign.description}
                 </p>
                 <div className="flex items-center justify-between text-xs sm:text-sm">
-                  <span>Budget Range:</span>
+                  <span>Echo Coin Range:</span>
                   <span className="font-semibold">
-                    ${selectedCampaign.budgetRange.min} - $
-                    {selectedCampaign.budgetRange.max}
+                    {selectedCampaign.echoCoinRange.min} - {selectedCampaign.echoCoinRange.max} EC
                   </span>
                 </div>
               </div>
