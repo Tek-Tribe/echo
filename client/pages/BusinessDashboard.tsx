@@ -683,39 +683,23 @@ export default function BusinessDashboard() {
           {mobileMenuOpen && (
             <div className="md:hidden border-t border-gray-200 bg-white">
               <div className="px-2 pt-2 pb-3 space-y-1">
-                <button
-                  onClick={() => {
-                    setActiveTab('dashboard');
-                    setMobileMenuOpen(false);
-                  }}
-                  className={`block w-full text-left px-3 py-2 text-base font-medium ${
-                    activeTab === 'dashboard' ? 'text-brand-600' : 'text-gray-600 hover:text-gray-700'
-                  }`}
-                >
+                <span className="block px-3 py-2 text-base font-medium text-brand-600">
                   Dashboard
-                </button>
-                <button
-                  onClick={() => {
-                    setActiveTab('analytics');
-                    setMobileMenuOpen(false);
-                  }}
-                  className={`block w-full text-left px-3 py-2 text-base font-medium ${
-                    activeTab === 'analytics' ? 'text-brand-600' : 'text-gray-600 hover:text-gray-700'
-                  }`}
+                </span>
+                <Link
+                  to="/analytics"
+                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   Analytics
-                </button>
-                <button
-                  onClick={() => {
-                    setActiveTab('payments');
-                    setMobileMenuOpen(false);
-                  }}
-                  className={`block w-full text-left px-3 py-2 text-base font-medium ${
-                    activeTab === 'payments' ? 'text-brand-600' : 'text-gray-600 hover:text-gray-700'
-                  }`}
+                </Link>
+                <Link
+                  to="/payments"
+                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   Payments
-                </button>
+                </Link>
                 <div className="pt-2 pb-2">
                   <Button
                     onClick={() => setShowCreateJob(true)}
