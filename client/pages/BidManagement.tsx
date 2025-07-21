@@ -166,8 +166,22 @@ export default function BidManagement() {
     setSelectedBids(selectedBids.filter(id => id !== bidId));
   };
 
+  const handleApproveEvidence = (evidenceId: string) => {
+    console.log('Approved evidence:', evidenceId);
+    setSelectedEvidence(null);
+    setReviewNotes('');
+  };
+
+  const handleRejectEvidence = (evidenceId: string) => {
+    console.log('Rejected evidence:', evidenceId, 'Notes:', reviewNotes);
+    setSelectedEvidence(null);
+    setReviewNotes('');
+  };
+
   const pendingBids = bids.filter(bid => bid.status === 'pending');
   const acceptedBids = bids.filter(bid => bid.status === 'accepted' || selectedBids.includes(bid.id));
+  const pendingEvidence = evidenceSubmissions.filter(sub => sub.status === 'pending');
+  const hasEvidence = evidenceSubmissions.length > 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
