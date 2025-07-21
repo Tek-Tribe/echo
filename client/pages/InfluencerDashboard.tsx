@@ -189,7 +189,7 @@ export default function InfluencerDashboard() {
       title: "Product Review Video",
       businessName: "TechWear",
       type: "Video Creation",
-      amount: 1200,
+      echoCoins: 1200,
       deadline: "2024-01-30",
       requirements:
         "Create a 60-90 second unboxing and review video highlighting key features",
@@ -200,7 +200,7 @@ export default function InfluencerDashboard() {
       title: "Fitness Supplement Review",
       businessName: "FitnessNutrition Co.",
       type: "Feed Post",
-      amount: 450,
+      echoCoins: 450,
       deadline: "2024-01-28",
       requirements:
         "Create an authentic post about your experience with our protein powder",
