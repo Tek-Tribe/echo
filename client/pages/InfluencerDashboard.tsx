@@ -246,7 +246,7 @@ export default function InfluencerDashboard() {
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
+            <div className="flex items-center flex-1 min-w-0">
               <Link to="/" className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-lg">E</span>
@@ -279,22 +279,22 @@ export default function InfluencerDashboard() {
                   Profile
                 </a>
               </nav>
+            </div>
 
-              {/* Mobile menu button */}
-              <div className="md:hidden">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="text-gray-600 p-2"
-                >
-                  {mobileMenuOpen ? (
-                    <X className="h-6 w-6" />
-                  ) : (
-                    <Menu className="h-6 w-6" />
-                  )}
-                </Button>
-              </div>
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-gray-600 p-2"
+              >
+                {mobileMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
+              </Button>
             </div>
             <div className="flex items-center space-x-4">
               <DropdownMenu>
