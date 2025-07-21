@@ -24,7 +24,7 @@ interface EvidenceSubmission {
   influencerName: string;
   influencerAvatar: string;
   influencerHandle: string;
-  amount: number;
+  echoCoins: number;
   submittedAt: string;
   evidence: {
     screenshots: string[];
