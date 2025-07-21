@@ -7,13 +7,13 @@ import {
   Shield,
   Zap,
   Smartphone,
-  DollarSign,
   Star,
   ArrowRight,
   CheckCircle,
   Menu,
   X,
 } from "lucide-react";
+import { EchoCoinIcon } from "@/components/EchoCoinIcon";
 import { useState } from "react";
 
 export default function Index() {
