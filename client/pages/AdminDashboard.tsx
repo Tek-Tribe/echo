@@ -445,17 +445,17 @@ export default function AdminDashboard() {
             </div>
           </TabsContent>
 
-          <TabsContent value="creators" className="space-y-6">
+          <TabsContent value="creators" className="space-y-4">
             <Card>
               <CardHeader>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <CardTitle className="text-lg sm:text-xl">Content Creator Management</CardTitle>
-                  <div className="flex gap-2">
-                    <div className="relative">
+                  <CardTitle className="text-base sm:text-lg">Content Creator Management</CardTitle>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <div className="relative flex-1">
                       <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                      <Input placeholder="Search creators..." className="pl-9" />
+                      <Input placeholder="Search creators..." className="pl-9 h-9" />
                     </div>
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline" size="sm" className="h-9">
                       <Filter className="h-4 w-4 mr-2" />
                       Filter
                     </Button>
@@ -463,51 +463,53 @@ export default function AdminDashboard() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {pendingCreators.map((creator) => (
-                    <div key={creator.id} className="border border-gray-200 rounded-lg p-4">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                        <div className="flex items-center gap-4">
-                          <Avatar className="h-12 w-12">
-                            <AvatarImage src="/placeholder.svg" />
-                            <AvatarFallback>{creator.name.charAt(0)}</AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <h4 className="font-semibold text-gray-900">{creator.name}</h4>
-                            <p className="text-sm text-gray-600">{creator.handle}</p>
-                            <div className="flex items-center gap-4 text-xs text-gray-500 mt-1">
-                              <span className="flex items-center gap-1">
-                                <Mail className="h-3 w-3" />
-                                {creator.email}
-                              </span>
-                              <span>{creator.followers.toLocaleString()} followers</span>
-                              <span>{creator.engagement}% engagement</span>
+                    <div key={creator.id} className="border border-gray-200 rounded-lg p-3">
+                      <div className="flex items-start gap-3">
+                        <Avatar className="h-10 w-10 flex-shrink-0">
+                          <AvatarImage src="/placeholder.svg" />
+                          <AvatarFallback>{creator.name.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-semibold text-gray-900 text-sm truncate">{creator.name}</h4>
+                              <p className="text-xs text-gray-600 truncate">{creator.handle}</p>
+                              <div className="flex flex-wrap gap-2 text-xs text-gray-500 mt-1">
+                                <span className="flex items-center gap-1">
+                                  <Mail className="h-3 w-3" />
+                                  <span className="truncate max-w-24">{creator.email}</span>
+                                </span>
+                                <span>{(creator.followers / 1000).toFixed(0)}K followers</span>
+                                <span>{creator.engagement}% engagement</span>
+                              </div>
+                              <div className="flex items-center gap-2 mt-2">
+                                <Badge className="text-xs">{creator.category}</Badge>
+                              </div>
                             </div>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                  <MoreHorizontal className="h-4 w-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuItem>
+                                  <Eye className="h-4 w-4 mr-2" />
+                                  View Profile
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleApproveCreator(creator.id)}>
+                                  <CheckCircle className="h-4 w-4 mr-2" />
+                                  Approve
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleRejectCreator(creator.id)}>
+                                  <XCircle className="h-4 w-4 mr-2" />
+                                  Reject
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
                           </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge>{creator.category}</Badge>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="sm">
-                                <MoreHorizontal className="h-4 w-4" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuItem>
-                                <Eye className="h-4 w-4 mr-2" />
-                                View Profile
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => handleApproveCreator(creator.id)}>
-                                <CheckCircle className="h-4 w-4 mr-2" />
-                                Approve
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => handleRejectCreator(creator.id)}>
-                                <XCircle className="h-4 w-4 mr-2" />
-                                Reject
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
                         </div>
                       </div>
                     </div>
@@ -517,17 +519,17 @@ export default function AdminDashboard() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="campaigns" className="space-y-6">
+          <TabsContent value="campaigns" className="space-y-4">
             <Card>
               <CardHeader>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <CardTitle className="text-lg sm:text-xl">Campaign Monitoring</CardTitle>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm">
+                  <CardTitle className="text-base sm:text-lg">Campaign Monitoring</CardTitle>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <Button variant="outline" size="sm" className="flex-1 sm:flex-none h-9">
                       <Calendar className="h-4 w-4 mr-2" />
                       Date Range
                     </Button>
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline" size="sm" className="flex-1 sm:flex-none h-9">
                       <Download className="h-4 w-4 mr-2" />
                       Export
                     </Button>
@@ -535,32 +537,32 @@ export default function AdminDashboard() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {recentCampaigns.map((campaign) => (
-                    <div key={campaign.id} className="border border-gray-200 rounded-lg p-4">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                        <div className="flex-1">
-                          <h4 className="font-semibold text-gray-900">{campaign.title}</h4>
-                          <p className="text-sm text-gray-600">by {campaign.business}</p>
-                          <div className="flex items-center gap-4 text-xs text-gray-500 mt-2">
-                            <span>{campaign.echoCoins} EC budget</span>
+                    <div key={campaign.id} className="border border-gray-200 rounded-lg p-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold text-gray-900 text-sm truncate">{campaign.title}</h4>
+                          <p className="text-xs text-gray-600 truncate">by {campaign.business}</p>
+                          <div className="flex flex-wrap gap-2 text-xs text-gray-500 mt-1">
+                            <span>{(campaign.echoCoins / 1000).toFixed(1)}K EC</span>
                             <span>{campaign.influencers} influencers</span>
                             <span>Created {campaign.createdAt}</span>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Badge 
+                        <div className="flex flex-col items-end gap-2">
+                          <Badge
                             variant={campaign.status === "active" ? "default" : "secondary"}
-                            className={
-                              campaign.status === "active" 
-                                ? "bg-green-100 text-green-800" 
+                            className={`text-xs ${
+                              campaign.status === "active"
+                                ? "bg-green-100 text-green-800"
                                 : "bg-gray-100 text-gray-800"
-                            }
+                            }`}
                           >
                             {campaign.status}
                           </Badge>
-                          <Button variant="outline" size="sm">
-                            <Eye className="h-4 w-4 mr-1" />
+                          <Button variant="outline" size="sm" className="h-7 text-xs">
+                            <Eye className="h-3 w-3 mr-1" />
                             View
                           </Button>
                         </div>
@@ -572,22 +574,22 @@ export default function AdminDashboard() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="earnings" className="space-y-6">
+          <TabsContent value="earnings" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg sm:text-xl">Platform Earnings</CardTitle>
+                <CardTitle className="text-base sm:text-lg">Platform Earnings</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {earningsData.map((data, index) => (
-                    <div key={index} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-                      <div>
-                        <h4 className="font-semibold text-gray-900">{data.month}</h4>
-                        <p className="text-sm text-gray-600">Platform Revenue</p>
+                    <div key={index} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-900 text-sm">{data.month}</h4>
+                        <p className="text-xs text-gray-600">Platform Revenue</p>
                       </div>
                       <div className="text-right">
-                        <div className="font-semibold text-gray-900">{data.revenue.toLocaleString()} EC</div>
-                        <div className="text-sm text-gray-600">Commission: {data.commissions.toLocaleString()} EC</div>
+                        <div className="font-semibold text-gray-900 text-sm">{(data.revenue / 1000).toFixed(0)}K EC</div>
+                        <div className="text-xs text-gray-600">Commission: {(data.commissions / 1000).toFixed(1)}K EC</div>
                         <div className="text-xs text-green-600">{data.growth}</div>
                       </div>
                     </div>
@@ -597,27 +599,27 @@ export default function AdminDashboard() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="reports" className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
+          <TabsContent value="reports" className="space-y-4">
+            <div className="grid sm:grid-cols-2 gap-4">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg sm:text-xl">System Reports</CardTitle>
+                  <CardTitle className="text-base sm:text-lg">System Reports</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3">
-                    <Button variant="outline" className="w-full justify-start">
+                  <div className="space-y-2">
+                    <Button variant="outline" className="w-full justify-start h-10 text-sm">
                       <BarChart3 className="h-4 w-4 mr-2" />
                       User Activity Report
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start h-10 text-sm">
                       <TrendingUp className="h-4 w-4 mr-2" />
                       Revenue Analytics
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start h-10 text-sm">
                       <Users className="h-4 w-4 mr-2" />
                       Creator Performance
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start h-10 text-sm">
                       <Shield className="h-4 w-4 mr-2" />
                       Security Audit
                     </Button>
@@ -627,23 +629,23 @@ export default function AdminDashboard() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg sm:text-xl">Quick Actions</CardTitle>
+                  <CardTitle className="text-base sm:text-lg">Quick Actions</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3">
-                    <Button className="w-full justify-start bg-brand-600 hover:bg-brand-700 text-white">
+                  <div className="space-y-2">
+                    <Button className="w-full justify-start bg-brand-600 hover:bg-brand-700 text-white h-10 text-sm">
                       <UserPlus className="h-4 w-4 mr-2" />
                       Bulk Approve Creators
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start h-10 text-sm">
                       <Mail className="h-4 w-4 mr-2" />
                       Send Platform Update
                     </Button>
-                    <Button variant="outline" className="w-full justify-start">
+                    <Button variant="outline" className="w-full justify-start h-10 text-sm">
                       <Settings className="h-4 w-4 mr-2" />
                       System Maintenance
                     </Button>
-                    <Button variant="outline" className="w-full justify-start text-red-600 border-red-200 hover:bg-red-50">
+                    <Button variant="outline" className="w-full justify-start text-red-600 border-red-200 hover:bg-red-50 h-10 text-sm">
                       <AlertTriangle className="h-4 w-4 mr-2" />
                       Emergency Actions
                     </Button>
