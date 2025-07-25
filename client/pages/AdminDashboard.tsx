@@ -158,53 +158,38 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-gray-600 p-2"
-              >
-                {mobileMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
-              </Button>
-            </div>
-
-            <div className="hidden md:flex items-center space-x-4">
+            {/* Mobile-optimized user menu */}
+            <div className="flex items-center space-x-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="flex items-center space-x-2 hover:bg-gray-50"
+                    className="flex items-center space-x-1 sm:space-x-2 hover:bg-gray-50 h-8 sm:h-10 px-2 sm:px-3"
                   >
-                    <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                      <span className="text-sm font-medium text-red-600">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-red-100 rounded-full flex items-center justify-center">
+                      <span className="text-xs sm:text-sm font-medium text-red-600">
                         AD
                       </span>
                     </div>
-                    <span className="hidden md:block text-sm font-medium text-gray-700">
+                    <span className="hidden sm:block text-sm font-medium text-gray-700">
                       Admin User
                     </span>
-                    <ChevronDown className="h-4 w-4 text-gray-500" />
+                    <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4 text-gray-500" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem className="flex items-center gap-2">
+                  <DropdownMenuItem className="flex items-center gap-2 h-10">
                     <Settings className="h-4 w-4" />
                     <span>Admin Settings</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="flex items-center gap-2">
+                  <DropdownMenuItem className="flex items-center gap-2 h-10">
                     <Shield className="h-4 w-4" />
                     <span>Security</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link
                       to="/"
-                      className="flex items-center gap-2 text-red-600"
+                      className="flex items-center gap-2 text-red-600 h-10"
                     >
                       <LogOut className="h-4 w-4" />
                       <span>Logout</span>
