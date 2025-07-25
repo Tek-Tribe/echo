@@ -42,7 +42,6 @@ import {
 import { EchoCoinIcon } from "@/components/EchoCoinIcon";
 
 export default function AdminDashboard() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'creators' | 'campaigns' | 'earnings' | 'reports'>('overview');
 
   // Sample data
