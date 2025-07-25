@@ -31,8 +31,6 @@ import {
   MoreHorizontal,
   LogOut,
   ChevronDown,
-  Menu,
-  X,
   Mail,
   Phone,
   MapPin,
