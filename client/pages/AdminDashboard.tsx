@@ -200,16 +200,7 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {/* Mobile Navigation Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden border-t border-gray-200 bg-white">
-              <div className="px-2 pt-2 pb-3 space-y-1">
-                <span className="block px-3 py-2 text-base font-medium text-brand-600">
-                  Admin Dashboard
-                </span>
-              </div>
-            </div>
-          )}
+
         </div>
       </header>
 
