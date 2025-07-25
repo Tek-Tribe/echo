@@ -139,20 +139,20 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+      {/* Header - Mobile App Optimized */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16">
             <div className="flex items-center flex-1 min-w-0">
               <Link to="/" className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">E</span>
+                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-sm sm:text-lg">E</span>
                 </div>
-                <span className="text-xl font-bold text-gray-900">Echo</span>
+                <span className="text-lg sm:text-xl font-bold text-gray-900">Echo</span>
               </Link>
-              <div className="ml-4">
-                <Badge className="bg-red-100 text-red-800 hover:bg-red-100">
-                  <Shield className="h-3 w-3 mr-1" />
+              <div className="ml-2 sm:ml-4">
+                <Badge className="bg-red-100 text-red-800 hover:bg-red-100 text-xs">
+                  <Shield className="h-2 w-2 sm:h-3 sm:w-3 mr-1" />
                   Admin
                 </Badge>
               </div>
