@@ -128,6 +128,11 @@ export default function Index() {
                       Business Dashboard
                     </Button>
                   </Link>
+                  <Link to="/admin-dashboard" className="block">
+                    <Button variant="outline" className="w-full border-red-200 text-red-600 hover:bg-red-50">
+                      Admin Dashboard
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
