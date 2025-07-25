@@ -35,6 +35,7 @@ import {
   Trash2,
   Send,
   Edit3,
+  MapPin,
 } from "lucide-react";
 import { EchoCoinIcon } from "@/components/EchoCoinIcon";
 
@@ -50,11 +51,47 @@ interface Job {
   createdAt: string;
   publishedAt?: string;
   endDate: string;
+  gender?: string;
+  targetArea?: {
+    name: string;
+    latitude: number;
+    longitude: number;
+  };
+}
+
+interface CampaignForm {
+  title: string;
+  type: string;
+  description: string;
+  echoCoins: string;
+  maxInfluencers: string;
+  endDate: string;
+  minFollowers: string;
+  category: string;
+  gender: string;
+  targetArea?: {
+    name: string;
+    latitude: number;
+    longitude: number;
+  };
 }
 
 export default function BusinessDashboard() {
   const [showCreateJob, setShowCreateJob] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showMapSelector, setShowMapSelector] = useState(false);
+  const [formData, setFormData] = useState<CampaignForm>({
+    title: '',
+    type: '',
+    description: '',
+    echoCoins: '',
+    maxInfluencers: '',
+    endDate: '',
+    minFollowers: '',
+    category: '',
+    gender: '',
+    targetArea: undefined
+  });
   const [jobs, setJobs] = useState<Job[]>([
     {
       id: "1",
@@ -185,12 +222,14 @@ export default function BusinessDashboard() {
                   <Label htmlFor="title">Campaign Title</Label>
                   <Input
                     id="title"
+                    value={formData.title}
+                    onChange={(e) => setFormData({...formData, title: e.target.value})}
                     placeholder="e.g., Instagram Story Repost Campaign"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="type">Campaign Type</Label>
-                  <Select>
+                  <Select value={formData.type} onValueChange={(value) => setFormData({...formData, type: value})}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select campaign type" />
                     </SelectTrigger>
@@ -215,6 +254,8 @@ export default function BusinessDashboard() {
                 <Label htmlFor="description">Campaign Description</Label>
                 <Textarea
                   id="description"
+                  value={formData.description}
+                  onChange={(e) => setFormData({...formData, description: e.target.value})}
                   placeholder="Describe your campaign goals, requirements, and any specific instructions for influencers..."
                   rows={4}
                 />
@@ -223,15 +264,32 @@ export default function BusinessDashboard() {
               <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="echoCoins">Echo Coins</Label>
-                  <Input id="echoCoins" type="number" placeholder="2500" />
+                  <Input
+                    id="echoCoins"
+                    type="number"
+                    value={formData.echoCoins}
+                    onChange={(e) => setFormData({...formData, echoCoins: e.target.value})}
+                    placeholder="2500"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="maxInfluencers">Max Influencers</Label>
-                  <Input id="maxInfluencers" type="number" placeholder="5" />
+                  <Input
+                    id="maxInfluencers"
+                    type="number"
+                    value={formData.maxInfluencers}
+                    onChange={(e) => setFormData({...formData, maxInfluencers: e.target.value})}
+                    placeholder="5"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="endDate">End Date</Label>
-                  <Input id="endDate" type="date" />
+                  <Input
+                    id="endDate"
+                    type="date"
+                    value={formData.endDate}
+                    onChange={(e) => setFormData({...formData, endDate: e.target.value})}
+                  />
                 </div>
               </div>
 
@@ -240,11 +298,17 @@ export default function BusinessDashboard() {
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="minFollowers">Minimum Followers</Label>
-                    <Input id="minFollowers" type="number" placeholder="1000" />
+                    <Input
+                      id="minFollowers"
+                      type="number"
+                      value={formData.minFollowers}
+                      onChange={(e) => setFormData({...formData, minFollowers: e.target.value})}
+                      placeholder="1000"
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="categories">Categories</Label>
-                    <Select>
+                    <Select value={formData.category} onValueChange={(value) => setFormData({...formData, category: value})}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select category" />
                       </SelectTrigger>
@@ -265,16 +329,156 @@ export default function BusinessDashboard() {
                 </div>
               </div>
 
+              {/* Gender and Target Area Selection */}
+              <div className="space-y-4">
+                <Label>Target Demographics & Location</Label>
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="gender">Target Gender</Label>
+                    <Select value={formData.gender} onValueChange={(value) => setFormData({...formData, gender: value})}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select target gender" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Genders</SelectItem>
+                        <SelectItem value="male">Male</SelectItem>
+                        <SelectItem value="female">Female</SelectItem>
+                        <SelectItem value="non-binary">Non-Binary</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="targetArea">Target Area</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        id="targetArea"
+                        placeholder={formData.targetArea ? `${formData.targetArea.name} (${formData.targetArea.latitude.toFixed(4)}, ${formData.targetArea.longitude.toFixed(4)})` : "Click to select area on map"}
+                        readOnly
+                        className="flex-1"
+                        value={formData.targetArea ? `${formData.targetArea.name}` : ''}
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setShowMapSelector(true)}
+                        className="flex items-center gap-2"
+                      >
+                        <MapPin className="h-4 w-4" />
+                        Map
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Map Selector Modal */}
+              {showMapSelector && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                  <div className="bg-white rounded-lg max-w-md w-full p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-semibold">Select Target Area</h3>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setShowMapSelector(false)}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+
+                    {/* Mock Map Interface */}
+                    <div className="border border-gray-300 rounded-lg h-64 bg-gray-100 flex items-center justify-center mb-4">
+                      <div className="text-center">
+                        <MapPin className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                        <p className="text-gray-600 text-sm">Interactive Map</p>
+                        <p className="text-gray-500 text-xs">Click to select location</p>
+                      </div>
+                    </div>
+
+                    {/* Quick Location Options */}
+                    <div className="space-y-2 mb-4">
+                      <Label className="text-sm font-medium">Quick Select:</Label>
+                      <div className="grid grid-cols-2 gap-2">
+                        {[
+                          { name: 'New York', lat: 40.7128, lng: -74.0060 },
+                          { name: 'Los Angeles', lat: 34.0522, lng: -118.2437 },
+                          { name: 'Chicago', lat: 41.8781, lng: -87.6298 },
+                          { name: 'Miami', lat: 25.7617, lng: -80.1918 },
+                          { name: 'London', lat: 51.5074, lng: -0.1278 },
+                          { name: 'Dubai', lat: 25.2048, lng: 55.2708 }
+                        ].map((city) => (
+                          <Button
+                            key={city.name}
+                            variant="outline"
+                            size="sm"
+                            className="text-xs"
+                            onClick={() => {
+                              setFormData({
+                                ...formData,
+                                targetArea: {
+                                  name: city.name,
+                                  latitude: city.lat,
+                                  longitude: city.lng
+                                }
+                              });
+                              setShowMapSelector(false);
+                            }}
+                          >
+                            {city.name}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        onClick={() => setShowMapSelector(false)}
+                        className="flex-1"
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          if (!formData.targetArea) {
+                            setFormData({
+                              ...formData,
+                              targetArea: {
+                                name: 'Custom Location',
+                                latitude: 40.7128,
+                                longitude: -74.0060
+                              }
+                            });
+                          }
+                          setShowMapSelector(false);
+                        }}
+                        className="flex-1 bg-brand-600 hover:bg-brand-700 text-white"
+                      >
+                        Confirm
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 sm:pt-6">
                 <Button
-                  onClick={() => setShowCreateJob(false)}
+                  onClick={() => {
+                    // Add validation and save logic here
+                    console.log('Campaign Data:', formData);
+                    setShowCreateJob(false);
+                  }}
                   className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white"
                 >
                   Post Campaign
                 </Button>
                 <Button
                   variant="outline"
-                  onClick={() => setShowCreateJob(false)}
+                  onClick={() => {
+                    // Save as draft logic here
+                    console.log('Saving as draft:', formData);
+                    setShowCreateJob(false);
+                  }}
                   className="w-full sm:w-auto"
                 >
                   Save as Draft
