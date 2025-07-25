@@ -297,21 +297,21 @@ export default function AdminDashboard() {
 
         {/* Main Content Tabs - Mobile Optimized */}
         <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as any)} className="space-y-4">
-          <div className="overflow-x-auto">
-            <TabsList className="grid w-full grid-cols-5 h-12 min-w-max">
-              <TabsTrigger value="overview" className="text-xs px-3 py-2 whitespace-nowrap">
+          <div className="overflow-x-auto -mx-3 px-3">
+            <TabsList className="grid w-full grid-cols-5 h-12 min-w-max bg-gray-100">
+              <TabsTrigger value="overview" className="text-xs px-2 sm:px-3 py-3 whitespace-nowrap touch-manipulation">
                 Overview
               </TabsTrigger>
-              <TabsTrigger value="creators" className="text-xs px-3 py-2 whitespace-nowrap">
+              <TabsTrigger value="creators" className="text-xs px-2 sm:px-3 py-3 whitespace-nowrap touch-manipulation">
                 Creators
               </TabsTrigger>
-              <TabsTrigger value="campaigns" className="text-xs px-3 py-2 whitespace-nowrap">
+              <TabsTrigger value="campaigns" className="text-xs px-2 sm:px-3 py-3 whitespace-nowrap touch-manipulation">
                 Campaigns
               </TabsTrigger>
-              <TabsTrigger value="earnings" className="text-xs px-3 py-2 whitespace-nowrap">
+              <TabsTrigger value="earnings" className="text-xs px-2 sm:px-3 py-3 whitespace-nowrap touch-manipulation">
                 Earnings
               </TabsTrigger>
-              <TabsTrigger value="reports" className="text-xs px-3 py-2 whitespace-nowrap">
+              <TabsTrigger value="reports" className="text-xs px-2 sm:px-3 py-3 whitespace-nowrap touch-manipulation">
                 Reports
               </TabsTrigger>
             </TabsList>
