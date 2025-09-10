@@ -518,7 +518,7 @@ export default function AdminDashboard() {
                           </div>
                           <div className="flex gap-2">
                             <Button className="flex-1">Save Account</Button>
-                            <Button variant="outline" className="flex-1">Reset</Button>
+                            <Button variant="outline" className="flex-1" onClick={() => setShowResetPassword(true)}>Reset Password</Button>
                           </div>
                         </div>
                       </CardContent>
