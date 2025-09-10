@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -115,10 +115,19 @@ export default function AdminDashboard() {
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null);
   const [showBusinessModal, setShowBusinessModal] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   const [newManager, setNewManager] = useState({ name: "", email: "", role: "Admin Manager", password: "" });
   const [newInfluencer, setNewInfluencer] = useState<any>({ name: "", email: "", phone: "", place: "", latitude: "", longitude: "", profiles: [], categories: "" });
   const [newJob, setNewJob] = useState<any>({ type: "", platform: "", postUrl: "", business: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days", status: "Draft" });
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
 
   const totalBusinesses = businesses.length;
   const totalInfluencers = influencers.length;
@@ -541,22 +550,6 @@ export default function AdminDashboard() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Integrations</CardTitle>
-                      </CardHeader>
-                      <CardContent className="p-4">
-                        <div className="space-y-3">
-                          <p className="text-sm text-gray-600">Connect external services for deployment, error monitoring, and design sync. You can connect MCP servers from the "MCP Servers" menu.</p>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-                            <Button variant="outline" className="w-full">Netlify</Button>
-                            <Button variant="outline" className="w-full">Sentry</Button>
-                            <Button variant="outline" className="w-full">Figma</Button>
-                            <Button variant="outline" className="w-full">Neon</Button>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
 
                     <Card>
                       <CardHeader>
@@ -567,18 +560,14 @@ export default function AdminDashboard() {
                           <div className="flex items-center justify-between">
                             <div>
                               <div className="font-medium">Theme</div>
-                              <div className="text-xs text-gray-500">Choose light or dark</div>
+                              <div className="text-xs text-gray-500">Choose light or dark — changes apply immediately</div>
                             </div>
                             <div>
-                              <select className="border rounded h-10 px-2">
-                                <option>Light</option>
-                                <option>Dark</option>
+                              <select className="border rounded h-10 px-2" value={theme} onChange={(e) => setTheme(e.target.value as 'light' | 'dark')}>
+                                <option value="light">Light</option>
+                                <option value="dark">Dark</option>
                               </select>
                             </div>
-                          </div>
-                          <div className="flex gap-2">
-                            <Button className="flex-1">Save Appearance</Button>
-                            <Button variant="outline" className="flex-1">Reset</Button>
                           </div>
                         </div>
                       </CardContent>
