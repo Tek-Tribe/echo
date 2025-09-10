@@ -29,6 +29,8 @@ import {
   Eye,
   ChevronLeft,
   ChevronRight,
+  Menu,
+  X,
 } from "lucide-react";
 
 type Role = "super_admin" | "admin_manager";
