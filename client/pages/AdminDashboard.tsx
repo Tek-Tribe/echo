@@ -505,7 +505,7 @@ export default function AdminDashboard() {
 
       {showAddInfluencer && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-          <div className="bg-white max-w-2xl w-full rounded shadow p-6">
+          <div className="bg-white max-w-2xl w-full rounded shadow p-6 max-h-[80vh] overflow-y-auto">
             <h3 className="text-lg font-semibold mb-4">Add Influencer</h3>
             <div className="space-y-3">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -540,16 +540,16 @@ export default function AdminDashboard() {
                 <div className="space-y-2">
                   {(newInfluencer.profiles || []).map((p: any, idx: number) => (
                     <div key={idx} className="grid grid-cols-12 gap-2 items-center">
-                      <Input className="col-span-3" placeholder="Platform (Instagram)" value={p.platform} onChange={(e) => {
+                      <Input className="col-span-3 min-w-0" placeholder="Platform (Instagram)" value={p.platform} onChange={(e) => {
                         const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], platform: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
                       }} />
-                      <Input className="col-span-3" placeholder="Username" value={p.username} onChange={(e) => {
+                      <Input className="col-span-3 min-w-0" placeholder="Username" value={p.username} onChange={(e) => {
                         const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], username: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
                       }} />
-                      <Input className="col-span-4" placeholder="Profile URL" value={p.url} onChange={(e) => {
+                      <Input className="col-span-4 min-w-0" placeholder="Profile URL" value={p.url} onChange={(e) => {
                         const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], url: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
                       }} />
-                      <Input className="col-span-1" placeholder="Followers" value={p.followers} onChange={(e) => {
+                      <Input className="col-span-1 min-w-0" placeholder="Followers" value={p.followers} onChange={(e) => {
                         const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], followers: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
                       }} />
                       <div className="col-span-1">
@@ -577,7 +577,7 @@ export default function AdminDashboard() {
 
       {showCreateJob && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-          <div className="bg-white max-w-2xl w-full rounded shadow p-6">
+          <div className="bg-white max-w-2xl w-full rounded shadow p-6 max-h-[80vh] overflow-y-auto">
             <h3 className="text-lg font-semibold mb-4">Create Job</h3>
             <div className="space-y-3">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -636,16 +636,6 @@ export default function AdminDashboard() {
                   </div>
                 </div>
 
-                <div>
-                  <Label>Status</Label>
-                  <select value={newJob.status} onChange={(e) => setNewJob({ ...newJob, status: e.target.value })} className="w-full border rounded h-9 px-2">
-                    <option value="Draft">Draft</option>
-                    <option value="Bid">Bid</option>
-                    <option value="Doing">Doing</option>
-                    <option value="Review">Review</option>
-                    <option value="Done">Done</option>
-                  </select>
-                </div>
               </div>
             </div>
             <div className="flex items-center justify-end gap-2 mt-4">
