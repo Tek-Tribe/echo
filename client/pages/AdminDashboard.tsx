@@ -472,6 +472,113 @@ export default function AdminDashboard() {
               </div>
             )}
 
+            {section === "settings" && (
+              <div className="p-4 pt-6">
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Account Settings</CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-4">
+                        <div className="space-y-3">
+                          <div>
+                            <Label>Name</Label>
+                            <Input placeholder="Admin name" className="w-full h-10" />
+                          </div>
+                          <div>
+                            <Label>Email</Label>
+                            <Input placeholder="admin@example.com" className="w-full h-10" />
+                          </div>
+                          <div>
+                            <Label>Password</Label>
+                            <Input type="password" placeholder="••••••••" className="w-full h-10" />
+                          </div>
+                          <div className="flex gap-2">
+                            <Button className="flex-1">Save Account</Button>
+                            <Button variant="outline" className="flex-1">Reset</Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Platform</CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-4">
+                        <div className="space-y-3">
+                          <div>
+                            <Label>Default Currency</Label>
+                            <select className="w-full border rounded h-10 px-2">
+                              <option>Echo Coin (EC)</option>
+                              <option>USD</option>
+                            </select>
+                          </div>
+                          <div>
+                            <Label>Timezone</Label>
+                            <select className="w-full border rounded h-10 px-2">
+                              <option>UTC</option>
+                              <option>America/New_York</option>
+                            </select>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button className="flex-1">Save Platform</Button>
+                            <Button variant="outline" className="flex-1">Reset</Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Integrations</CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-4">
+                        <div className="space-y-3">
+                          <p className="text-sm text-gray-600">Connect external services for deployment, error monitoring, and design sync. You can connect MCP servers from the "MCP Servers" menu.</p>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+                            <Button variant="outline" className="w-full">Netlify</Button>
+                            <Button variant="outline" className="w-full">Sentry</Button>
+                            <Button variant="outline" className="w-full">Figma</Button>
+                            <Button variant="outline" className="w-full">Neon</Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Appearance</CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-4">
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="font-medium">Theme</div>
+                              <div className="text-xs text-gray-500">Choose light or dark</div>
+                            </div>
+                            <div>
+                              <select className="border rounded h-10 px-2">
+                                <option>Light</option>
+                                <option>Dark</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button className="flex-1">Save Appearance</Button>
+                            <Button variant="outline" className="flex-1">Reset</Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              </div>
+            )}
+
           </main>
         </div>
       </div>
