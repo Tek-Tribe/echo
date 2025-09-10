@@ -350,7 +350,7 @@ export default function AdminDashboard() {
 
             {section === "managers" && role === "super_admin" && (
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                   <h3 className="text-lg font-semibold">Admin Managers</h3>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
                     <Input placeholder="Search managers..." className="h-9 w-full sm:w-auto flex-1" />
@@ -384,7 +384,7 @@ export default function AdminDashboard() {
 
             {section === "influencers" && (
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                   <h3 className="text-lg font-semibold">Influencers</h3>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
                     <Input placeholder="Search influencers..." className="h-9 w-full sm:w-auto flex-1" />
@@ -418,7 +418,7 @@ export default function AdminDashboard() {
 
             {section === "businesses" && (
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                   <h3 className="text-lg font-semibold">Businesses</h3>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
                     <Input placeholder="Search businesses..." className="h-9 w-full sm:w-auto flex-1" />
@@ -448,7 +448,7 @@ export default function AdminDashboard() {
 
             {section === "jobs" && (
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                   <h3 className="text-lg font-semibold">Job Management</h3>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
                     <Input placeholder="Filter by business, status..." className="h-9 w-full sm:w-auto flex-1" />
@@ -562,7 +562,7 @@ export default function AdminDashboard() {
                       </CardHeader>
                       <CardContent className="p-4">
                         <div className="space-y-3">
-                          <div className="flex items-center justify-between">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                             <div>
                               <div className="font-medium">Theme</div>
                               <div className="text-xs text-gray-500">Choose light or dark — changes apply immediately</div>
