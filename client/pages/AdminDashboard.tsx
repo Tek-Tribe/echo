@@ -541,27 +541,30 @@ export default function AdminDashboard() {
                   {(newInfluencer.profiles || []).map((p: any, idx: number) => (
                     <div key={idx} className="border rounded p-2">
                       <div className="grid grid-cols-12 gap-2">
-                        <div className="col-span-12 sm:col-span-3">
-                          <Input className="w-full" placeholder="Platform (Instagram)" value={p.platform} onChange={(e) => {
+                        {/* First row: Platform, Username, Followers */}
+                        <div className="col-span-12 sm:col-span-4">
+                          <Input className="w-full min-w-0" placeholder="Platform (Instagram)" value={p.platform} onChange={(e) => {
                             const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], platform: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
                           }} />
                         </div>
-                        <div className="col-span-12 sm:col-span-3">
-                          <Input className="w-full" placeholder="Username" value={p.username} onChange={(e) => {
+                        <div className="col-span-12 sm:col-span-4">
+                          <Input className="w-full min-w-0" placeholder="Username" value={p.username} onChange={(e) => {
                             const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], username: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
                           }} />
                         </div>
                         <div className="col-span-12 sm:col-span-4">
-                          <Input className="w-full" placeholder="Profile URL" value={p.url} onChange={(e) => {
-                            const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], url: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
-                          }} />
-                        </div>
-                        <div className="col-span-8 sm:col-span-1">
-                          <Input className="w-full" placeholder="Followers" value={p.followers} onChange={(e) => {
+                          <Input className="w-full min-w-0" placeholder="Followers" value={p.followers} onChange={(e) => {
                             const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], followers: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
                           }} />
                         </div>
-                        <div className="col-span-4 sm:col-span-1 flex items-center justify-end">
+
+                        {/* Second row: Profile URL and Remove button */}
+                        <div className="col-span-12 sm:col-span-10">
+                          <Input className="w-full min-w-0" placeholder="Profile URL" value={p.url} onChange={(e) => {
+                            const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], url: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
+                          }} />
+                        </div>
+                        <div className="col-span-12 sm:col-span-2 flex items-center justify-end">
                           <Button variant="ghost" size="sm" onClick={() => { const profiles = [...newInfluencer.profiles]; profiles.splice(idx, 1); setNewInfluencer({ ...newInfluencer, profiles }); }}>Remove</Button>
                         </div>
                       </div>
