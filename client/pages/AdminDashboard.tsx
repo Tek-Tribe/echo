@@ -117,6 +117,8 @@ export default function AdminDashboard() {
   const [showBusinessModal, setShowBusinessModal] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [showResetPassword, setShowResetPassword] = useState(false);
+  const [resetPassword, setResetPassword] = useState({ newPassword: '', confirmPassword: '' });
 
   const [newManager, setNewManager] = useState({ name: "", email: "", role: "Admin Manager", password: "" });
   const [newInfluencer, setNewInfluencer] = useState<any>({ name: "", email: "", phone: "", place: "", latitude: "", longitude: "", profiles: [], categories: "" });
