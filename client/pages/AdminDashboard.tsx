@@ -243,7 +243,7 @@ export default function AdminDashboard() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setSection('settings')}>
                     <Settings className="h-4 w-4 mr-2" /> Settings
                   </DropdownMenuItem>
                   <DropdownMenuItem>
