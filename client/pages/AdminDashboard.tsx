@@ -589,6 +589,33 @@ export default function AdminDashboard() {
         </div>
       </div>
 
+      {/* Mobile Navigation Drawer */}
+      {mobileNavOpen && (
+        <div className="fixed inset-0 z-50 flex md:hidden">
+          <div className="fixed inset-0 bg-black/40" onClick={() => setMobileNavOpen(false)} />
+          <aside className="relative w-64 bg-white border-r border-gray-200 p-4">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-brand-700 rounded flex items-center justify-center text-white font-bold">E</div>
+                <div>
+                  <div className="text-sm font-bold">Echo Admin</div>
+                  <div className="text-xs text-gray-500">{role === "super_admin" ? "Super Admin" : "Admin Manager"}</div>
+                </div>
+              </div>
+              <button className="p-2" onClick={() => setMobileNavOpen(false)} aria-label="Close menu"><X className="h-5 w-5" /></button>
+            </div>
+            <nav className="space-y-2">
+              <button onClick={() => { setSection("dashboard"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Dashboard</button>
+              <button onClick={() => { setSection("businesses"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Businesses</button>
+              <button onClick={() => { setSection("influencers"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Influencers</button>
+              <button onClick={() => { setSection("jobs"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Jobs</button>
+              {role === "super_admin" && <button onClick={() => { setSection("managers"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Managers</button>}
+              <button onClick={() => { setSection("settings"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Settings</button>
+            </nav>
+          </aside>
+        </div>
+      )}
+
       {/* Modals - simple inline modal implementations */}
       {showAddManager && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
