@@ -110,6 +110,8 @@ export default function AdminDashboard() {
   const [showInfluencerModal, setShowInfluencerModal] = useState(false);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [showJobModal, setShowJobModal] = useState(false);
+  const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null);
+  const [showBusinessModal, setShowBusinessModal] = useState(false);
 
   const [newManager, setNewManager] = useState({ name: "", email: "", role: "Admin Manager", password: "" });
   const [newInfluencer, setNewInfluencer] = useState<any>({ name: "", email: "", phone: "", place: "", latitude: "", longitude: "", profiles: [], categories: "" });
@@ -403,7 +405,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <Card>
-                  <CardContent>
+                  <CardContent className="p-6 pt-6">
                     <div className="space-y-2">
                       {businesses.map((b) => (
                         <div key={b.id} className="flex items-center justify-between p-3 border rounded">
@@ -412,7 +414,7 @@ export default function AdminDashboard() {
                             <div className="text-xs text-gray-500">{b.industry} • {b.address}</div>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Button variant="outline" size="sm" onClick={() => alert(`View business ${b.name}`)}>View</Button>
+                            <Button variant="outline" size="sm" onClick={() => { setSelectedBusiness(b); setShowBusinessModal(true); }}>View</Button>
                           </div>
                         </div>
                       ))}
@@ -596,6 +598,44 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-end gap-2 mt-4">
               <Button variant="outline" onClick={() => setShowAddInfluencer(false)}>Cancel</Button>
               <Button onClick={addInfluencer}>Create Influencer</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Business Detail Modal */}
+      {showBusinessModal && selectedBusiness && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white max-w-2xl w-full rounded shadow p-6 max-h-[80vh] overflow-y-auto">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold">{selectedBusiness.name}</h3>
+                <div className="text-sm text-gray-600">{selectedBusiness.email} • {selectedBusiness.phone}</div>
+                <div className="text-sm text-gray-500">{selectedBusiness.address} • {selectedBusiness.industry}</div>
+              </div>
+              <div>
+                <Button variant="outline" onClick={() => setShowBusinessModal(false)}>Close</Button>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-2">Jobs by this Business</h4>
+              <div className="space-y-2">
+                {jobs.filter((j) => j.business === selectedBusiness.name).map((j) => (
+                  <div key={j.id} className="flex items-center justify-between p-2 border rounded">
+                    <div>
+                      <div className="font-medium">{j.type} • {j.platform}</div>
+                      <div className="text-xs text-gray-500">{j.status} • {j.budget} EC</div>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm" onClick={() => { setSelectedJob(j); setShowJobModal(true); }}>View Job</Button>
+                    </div>
+                  </div>
+                ))}
+                {jobs.filter((j) => j.business === selectedBusiness.name).length === 0 && (
+                  <div className="text-sm text-gray-500">No jobs found for this business.</div>
+                )}
+              </div>
             </div>
           </div>
         </div>
