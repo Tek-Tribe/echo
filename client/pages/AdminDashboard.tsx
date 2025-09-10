@@ -216,6 +216,9 @@ export default function AdminDashboard() {
         <div className="flex-1">
           <header className="bg-white border-b p-3 flex items-center justify-between">
             <div className="flex items-center gap-4">
+              <button className="md:hidden inline-flex items-center p-2" onClick={() => setMobileNavOpen(true)} aria-label="Open menu">
+                <Menu className="h-5 w-5" />
+              </button>
               <div className="text-sm text-gray-500">Admin Console</div>
             </div>
             <div className="flex items-center gap-3">
