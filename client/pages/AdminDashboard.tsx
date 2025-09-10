@@ -521,6 +521,7 @@ export default function AdminDashboard() {
                             <select className="w-full border rounded h-10 px-2">
                               <option>Echo Coin (EC)</option>
                               <option>USD</option>
+                              <option>INR</option>
                             </select>
                           </div>
                           <div>
