@@ -543,9 +543,17 @@ export default function AdminDashboard() {
                       <div className="grid grid-cols-12 gap-2">
                         {/* First row: Platform, Username, Followers */}
                         <div className="col-span-12 sm:col-span-4">
-                          <Input className="w-full min-w-0" placeholder="Platform (Instagram)" value={p.platform} onChange={(e) => {
+                          <select className="w-full border rounded h-9 px-2" value={p.platform} onChange={(e) => {
                             const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], platform: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
-                          }} />
+                          }}>
+                            <option value="">Select platform</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="TikTok">TikTok</option>
+                            <option value="YouTube">YouTube</option>
+                            <option value="Twitter">Twitter</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="LinkedIn">LinkedIn</option>
+                          </select>
                         </div>
                         <div className="col-span-12 sm:col-span-4">
                           <Input className="w-full min-w-0" placeholder="Username" value={p.username} onChange={(e) => {
