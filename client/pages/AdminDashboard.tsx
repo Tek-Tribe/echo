@@ -27,6 +27,8 @@ import {
   CheckCircle,
   XCircle,
   Eye,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 type Role = "super_admin" | "admin_manager";
@@ -69,6 +71,7 @@ interface Job {
 export default function AdminDashboard() {
   const [role, setRole] = useState<Role>("super_admin");
   const [section, setSection] = useState<"dashboard" | "businesses" | "influencers" | "jobs" | "managers">("dashboard");
+  const [collapsed, setCollapsed] = useState(false);
 
   const [managers, setManagers] = useState<Manager[]>([
     { id: "m1", name: "Priya Singh", email: "priya@echo.io", role: "Admin Manager", active: true },
@@ -136,42 +139,52 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="flex">
+      <div className="flex min-h-screen">
         {/* Sidebar */}
-        <aside className="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
-          <div className="p-4 border-b">
-            <Link to="/" className="flex items-center gap-3">
+        <aside className={`${collapsed ? 'w-20' : 'w-64'} bg-white border-r border-gray-200 hidden md:flex flex-col h-screen transition-all duration-200`}>
+          <div className="p-4 border-b flex items-center justify-between">
+            <Link to="/" className={`flex items-center gap-3 ${collapsed ? 'justify-center w-full' : ''}`}>
               <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-brand-700 rounded flex items-center justify-center">E</div>
-              <div>
-                <div className="text-sm font-bold">Echo Admin</div>
-                <div className="text-xs text-gray-500">{role === "super_admin" ? "Super Admin" : "Admin Manager"}</div>
-              </div>
+              {!collapsed && (
+                <div>
+                  <div className="text-sm font-bold">Echo Admin</div>
+                  <div className="text-xs text-gray-500">{role === "super_admin" ? "Super Admin" : "Admin Manager"}</div>
+                </div>
+              )}
             </Link>
+            <Button variant="ghost" size="sm" onClick={() => setCollapsed(!collapsed)} className="hidden md:inline-flex h-8 w-8 p-0">
+              {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+            </Button>
           </div>
 
           <nav className="flex-1 p-4 space-y-2 text-sm">
-            <button onClick={() => setSection("dashboard")} className={`w-full text-left px-3 py-2 rounded ${section === "dashboard" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
-              <Grid className="inline-block mr-2" /> Dashboard
+            <button onClick={() => setSection("dashboard")} className={`w-full flex items-center ${collapsed ? 'justify-center px-2' : 'text-left px-3 py-2'} rounded ${section === "dashboard" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
+              <Grid className="inline-block" />
+              {!collapsed && <span className="ml-2">Dashboard</span>}
             </button>
-            <button onClick={() => setSection("businesses")} className={`w-full text-left px-3 py-2 rounded ${section === "businesses" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
-              <Store className="inline-block mr-2" /> Businesses
+            <button onClick={() => setSection("businesses")} className={`w-full flex items-center ${collapsed ? 'justify-center px-2' : 'text-left px-3 py-2'} rounded ${section === "businesses" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
+              <Store className="inline-block" />
+              {!collapsed && <span className="ml-2">Businesses</span>}
             </button>
-            <button onClick={() => setSection("influencers")} className={`w-full text-left px-3 py-2 rounded ${section === "influencers" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
-              <Users className="inline-block mr-2" /> Influencers
+            <button onClick={() => setSection("influencers")} className={`w-full flex items-center ${collapsed ? 'justify-center px-2' : 'text-left px-3 py-2'} rounded ${section === "influencers" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
+              <Users className="inline-block" />
+              {!collapsed && <span className="ml-2">Influencers</span>}
             </button>
-            <button onClick={() => setSection("jobs")} className={`w-full text-left px-3 py-2 rounded ${section === "jobs" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
-              <FileText className="inline-block mr-2" /> Jobs
+            <button onClick={() => setSection("jobs")} className={`w-full flex items-center ${collapsed ? 'justify-center px-2' : 'text-left px-3 py-2'} rounded ${section === "jobs" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
+              <FileText className="inline-block" />
+              {!collapsed && <span className="ml-2">Jobs</span>}
             </button>
             {role === "super_admin" && (
-              <button onClick={() => setSection("managers")} className={`w-full text-left px-3 py-2 rounded ${section === "managers" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
-                <UserPlus className="inline-block mr-2" /> Managers
+              <button onClick={() => setSection("managers")} className={`w-full flex items-center ${collapsed ? 'justify-center px-2' : 'text-left px-3 py-2'} rounded ${section === "managers" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
+                <UserPlus className="inline-block" />
+                {!collapsed && <span className="ml-2">Managers</span>}
               </button>
             )}
           </nav>
 
           <div className="p-4 border-t">
-            <div className="text-xs text-gray-500 mb-2">Switch Role (dev)</div>
-            <div className="flex gap-2">
+            <div className={`text-xs text-gray-500 mb-2 ${collapsed ? 'hidden' : ''}`}>Switch Role (dev)</div>
+            <div className={`flex gap-2 ${collapsed ? 'justify-center' : ''}`}>
               <Button variant={role === "super_admin" ? undefined : "outline" as any} size="sm" onClick={() => setRole("super_admin")}>Super Admin</Button>
               <Button variant={role === "admin_manager" ? undefined : "outline" as any} size="sm" onClick={() => setRole("admin_manager")}>Admin Manager</Button>
             </div>
@@ -186,7 +199,7 @@ export default function AdminDashboard() {
               <div className="text-sm text-gray-500">Admin Console</div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="hidden sm:block text-sm text-gray-600">{role === "super_admin" ? "Signed in as Super Admin" : "Signed in as Admin Manager"}</div>
+              <div className={`hidden sm:block text-sm text-gray-600 ${collapsed ? 'hidden' : ''}`}>{role === "super_admin" ? "Signed in as Super Admin" : "Signed in as Admin Manager"}</div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="flex items-center gap-2">
@@ -207,7 +220,7 @@ export default function AdminDashboard() {
             </div>
           </header>
 
-          <main className="p-4">
+          <main className="p-4 pt-6">
             {section === "dashboard" && (
               <div className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4">
