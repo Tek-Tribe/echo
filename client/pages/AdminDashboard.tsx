@@ -1,634 +1,551 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Users,
-  TrendingUp,
-  Shield,
+  Briefcase,
+  Grid,
+  FileText,
   Settings,
-  BarChart3,
   UserPlus,
-  Eye,
-  CheckCircle,
-  XCircle,
-  AlertTriangle,
-  Calendar,
-  Filter,
-  Download,
   Search,
   MoreHorizontal,
-  LogOut,
   ChevronDown,
+  LogOut,
   Mail,
   Phone,
   MapPin,
-  Globe,
-  Clock,
+  Store,
+  DollarSign,
+  CheckCircle,
+  XCircle,
+  Eye,
 } from "lucide-react";
-import { EchoCoinIcon } from "@/components/EchoCoinIcon";
+
+type Role = "super_admin" | "admin_manager";
+
+interface Manager {
+  id: string;
+  name: string;
+  email: string;
+  role: "Admin Manager" | "Super Admin";
+  active: boolean;
+}
+
+interface Influencer {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  categories: string[];
+  profiles: { platform: string; handle: string }[];
+}
+
+interface Business {
+  id: string;
+  name: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  industry?: string;
+}
+
+interface Job {
+  id: string;
+  type: string;
+  platform: string;
+  business: string;
+  status: string;
+  budget: number;
+}
 
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'creators' | 'campaigns' | 'earnings' | 'reports'>('overview');
+  const [role, setRole] = useState<Role>("super_admin");
+  const [section, setSection] = useState<"dashboard" | "businesses" | "influencers" | "jobs" | "managers">("dashboard");
 
-  // Sample data
-  const platformStats = {
-    totalUsers: 12547,
-    totalCreators: 3421,
-    totalBusinesses: 892,
-    activeCampaigns: 156,
-    totalEarnings: 2847356,
-    monthlyGrowth: 15.3,
-    pendingApprovals: 23,
+  const [managers, setManagers] = useState<Manager[]>([
+    { id: "m1", name: "Priya Singh", email: "priya@echo.io", role: "Admin Manager", active: true },
+    { id: "m2", name: "Sam Carter", email: "sam@echo.io", role: "Admin Manager", active: true },
+  ]);
+
+  const [influencers, setInfluencers] = useState<Influencer[]>([
+    { id: "i1", name: "Alex Johnson", email: "alex@example.com", phone: "+1 555 1234", categories: ["Fitness"], profiles: [{ platform: "Instagram", handle: "@alex" }] },
+    { id: "i2", name: "Maya Rodriguez", email: "maya@example.com", categories: ["Fashion"], profiles: [{ platform: "TikTok", handle: "@maya" }] },
+  ]);
+
+  const [businesses, setBusinesses] = useState<Business[]>([
+    { id: "b1", name: "FitnessNutrition Co.", email: "contact@fitnessnut.com", phone: "+1 555 5678", address: "New York, NY", industry: "Fitness" },
+    { id: "b2", name: "TechWear", email: "hello@techwear.com", phone: "+1 555 9012", address: "San Francisco, CA", industry: "Technology" },
+  ]);
+
+  const [jobs, setJobs] = useState<Job[]>([
+    { id: "j1", type: "Feed Post", platform: "Instagram", business: "FitnessNutrition Co.", status: "Doing", budget: 2500 },
+    { id: "j2", type: "Video Creation", platform: "YouTube", business: "TechWear", status: "Bid", budget: 5000 },
+  ]);
+
+  // UI state for modals & forms
+  const [showAddManager, setShowAddManager] = useState(false);
+  const [showAddInfluencer, setShowAddInfluencer] = useState(false);
+  const [showCreateJob, setShowCreateJob] = useState(false);
+
+  const [newManager, setNewManager] = useState({ name: "", email: "", role: "Admin Manager", password: "" });
+  const [newInfluencer, setNewInfluencer] = useState({ name: "", email: "", phone: "", profiles: "", categories: "" });
+  const [newJob, setNewJob] = useState({ type: "", platform: "", business: "", budget: "" });
+
+  const totalBusinesses = businesses.length;
+  const totalInfluencers = influencers.length;
+  const activeJobs = jobs.filter((j) => j.status === "Doing" || j.status === "Bid").length;
+  const pendingSubmissions = 4; // sample
+
+  const addManager = () => {
+    const id = `m${Date.now()}`;
+    setManagers([...managers, { id, name: newManager.name, email: newManager.email, role: newManager.role as any, active: true }]);
+    setShowAddManager(false);
+    setNewManager({ name: "", email: "", role: "Admin Manager", password: "" });
   };
 
-  const pendingCreators = [
-    {
-      id: "1",
-      name: "Alex Johnson",
-      handle: "@alexjohnson",
-      email: "alex@example.com",
-      followers: 45000,
-      engagement: 6.8,
-      category: "Fitness",
-      submittedAt: "2024-01-22",
-      status: "pending",
-    },
-    {
-      id: "2", 
-      name: "Maya Rodriguez",
-      handle: "@mayarodriguez",
-      email: "maya@example.com",
-      followers: 78000,
-      engagement: 8.2,
-      category: "Fashion",
-      submittedAt: "2024-01-21",
-      status: "pending",
-    },
-    {
-      id: "3",
-      name: "David Chen",
-      handle: "@davidchen",
-      email: "david@example.com",
-      followers: 32000,
-      engagement: 5.4,
-      category: "Tech",
-      submittedAt: "2024-01-20",
-      status: "pending",
-    },
-  ];
-
-  const recentCampaigns = [
-    {
-      id: "1",
-      title: "Instagram Story Repost Campaign",
-      business: "FitnessNutrition Co.",
-      echoCoins: 2500,
-      influencers: 5,
-      status: "active",
-      createdAt: "2024-01-20",
-    },
-    {
-      id: "2",
-      title: "Product Review Video",
-      business: "TechWear",
-      echoCoins: 5000,
-      influencers: 3,
-      status: "completed",
-      createdAt: "2024-01-18",
-    },
-    {
-      id: "3",
-      title: "Brand Ambassador Program",
-      business: "EcoStyle",
-      echoCoins: 8000,
-      influencers: 8,
-      status: "active",
-      createdAt: "2024-01-15",
-    },
-  ];
-
-  const earningsData = [
-    { month: "January", revenue: 245000, commissions: 12250, growth: "+12%" },
-    { month: "December", revenue: 218000, commissions: 10900, growth: "+8%" },
-    { month: "November", revenue: 201000, commissions: 10050, growth: "+15%" },
-    { month: "October", revenue: 175000, commissions: 8750, growth: "+9%" },
-  ];
-
-  const handleApproveCreator = (creatorId: string) => {
-    console.log("Approved creator:", creatorId);
+  const toggleManagerActive = (id: string) => {
+    setManagers(managers.map((m) => (m.id === id ? { ...m, active: !m.active } : m)));
   };
 
-  const handleRejectCreator = (creatorId: string) => {
-    console.log("Rejected creator:", creatorId);
+  const addInfluencer = () => {
+    const id = `i${Date.now()}`;
+    const categories = newInfluencer.categories.split(",").map((s) => s.trim()).filter(Boolean);
+    const profiles = newInfluencer.profiles.split(",").map((s) => {
+      const [platform, handle] = s.split(":").map((p) => p.trim());
+      return platform && handle ? { platform, handle } : { platform: "Unknown", handle: s.trim() };
+    });
+    setInfluencers([...influencers, { id, name: newInfluencer.name, email: newInfluencer.email, phone: newInfluencer.phone, categories, profiles }]);
+    setShowAddInfluencer(false);
+    setNewInfluencer({ name: "", email: "", phone: "", profiles: "", categories: "" });
+  };
+
+  const createJob = () => {
+    const id = `j${Date.now()}`;
+    setJobs([...jobs, { id, type: newJob.type, platform: newJob.platform, business: newJob.business, status: "Draft", budget: Number(newJob.budget || 0) }]);
+    setShowCreateJob(false);
+    setNewJob({ type: "", platform: "", business: "", budget: "" });
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header - Mobile App Optimized */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 sm:h-16">
-            <div className="flex items-center flex-1 min-w-0">
-              <Link to="/" className="flex items-center gap-2">
-                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm sm:text-lg">E</span>
-                </div>
-                <span className="text-lg sm:text-xl font-bold text-gray-900">Echo</span>
-              </Link>
-              <div className="ml-2 sm:ml-4">
-                <Badge className="bg-red-100 text-red-800 hover:bg-red-100 text-xs">
-                  <Shield className="h-2 w-2 sm:h-3 sm:w-3 mr-1" />
-                  Admin
-                </Badge>
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
+          <div className="p-4 border-b">
+            <Link to="/" className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-brand-700 rounded flex items-center justify-center">E</div>
+              <div>
+                <div className="text-sm font-bold">Echo Admin</div>
+                <div className="text-xs text-gray-500">{role === "super_admin" ? "Super Admin" : "Admin Manager"}</div>
               </div>
-            </div>
+            </Link>
+          </div>
 
-            {/* Mobile-optimized user menu */}
-            <div className="flex items-center space-x-2">
+          <nav className="flex-1 p-4 space-y-2 text-sm">
+            <button onClick={() => setSection("dashboard")} className={`w-full text-left px-3 py-2 rounded ${section === "dashboard" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
+              <Grid className="inline-block mr-2" /> Dashboard
+            </button>
+            <button onClick={() => setSection("businesses")} className={`w-full text-left px-3 py-2 rounded ${section === "businesses" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
+              <Store className="inline-block mr-2" /> Businesses
+            </button>
+            <button onClick={() => setSection("influencers")} className={`w-full text-left px-3 py-2 rounded ${section === "influencers" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
+              <Users className="inline-block mr-2" /> Influencers
+            </button>
+            <button onClick={() => setSection("jobs")} className={`w-full text-left px-3 py-2 rounded ${section === "jobs" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
+              <FileText className="inline-block mr-2" /> Jobs
+            </button>
+            {role === "super_admin" && (
+              <button onClick={() => setSection("managers")} className={`w-full text-left px-3 py-2 rounded ${section === "managers" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
+                <UserPlus className="inline-block mr-2" /> Managers
+              </button>
+            )}
+          </nav>
+
+          <div className="p-4 border-t">
+            <div className="text-xs text-gray-500 mb-2">Switch Role (dev)</div>
+            <div className="flex gap-2">
+              <Button variant={role === "super_admin" ? undefined : "outline" as any} size="sm" onClick={() => setRole("super_admin")}>Super Admin</Button>
+              <Button variant={role === "admin_manager" ? undefined : "outline" as any} size="sm" onClick={() => setRole("admin_manager")}>Admin Manager</Button>
+            </div>
+          </div>
+        </aside>
+
+        {/* Main area */}
+        <div className="flex-1">
+          <header className="bg-white border-b p-3 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <h2 className="text-lg font-semibold">{section === "dashboard" ? "Overview" : section.charAt(0).toUpperCase() + section.slice(1)}</h2>
+              <div className="text-sm text-gray-500">Admin Console</div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="hidden sm:block text-sm text-gray-600">{role === "super_admin" ? "Signed in as Super Admin" : "Signed in as Admin Manager"}</div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="flex items-center space-x-1 sm:space-x-2 hover:bg-gray-50 h-8 sm:h-10 px-2 sm:px-3"
-                  >
-                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-red-100 rounded-full flex items-center justify-center">
-                      <span className="text-xs sm:text-sm font-medium text-red-600">
-                        AD
-                      </span>
-                    </div>
-                    <span className="hidden sm:block text-sm font-medium text-gray-700">
-                      Admin User
-                    </span>
-                    <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4 text-gray-500" />
+                  <Button variant="ghost" className="flex items-center gap-2">
+                    <Avatar className="h-7 w-7"><AvatarImage src="/placeholder.svg" /><AvatarFallback>AD</AvatarFallback></Avatar>
+                    <span className="hidden sm:block">Admin User</span>
+                    <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem className="flex items-center gap-2 h-10">
-                    <Settings className="h-4 w-4" />
-                    <span>Admin Settings</span>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>
+                    <Settings className="h-4 w-4 mr-2" /> Settings
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="flex items-center gap-2 h-10">
-                    <Shield className="h-4 w-4" />
-                    <span>Security</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link
-                      to="/"
-                      className="flex items-center gap-2 text-red-600 h-10"
-                    >
-                      <LogOut className="h-4 w-4" />
-                      <span>Logout</span>
-                    </Link>
+                  <DropdownMenuItem>
+                    <LogOut className="h-4 w-4 mr-2" /> Logout
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-          </div>
+          </header>
 
-
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
-        {/* Dashboard Header - Mobile Optimized */}
-        <div className="mb-4 sm:mb-6">
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">
-            Admin Dashboard
-          </h1>
-          <p className="text-gray-600 mt-1 text-sm">
-            Monitor and manage the Echo platform
-          </p>
-        </div>
-
-        {/* Overview Stats - Mobile First Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-5 sm:mb-6">
-          <Card>
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:text-left">
-                <div className="flex-shrink-0 mb-2 sm:mb-0">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-lg flex items-center justify-center mx-auto sm:mx-0">
-                    <Users className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
-                  </div>
+          <main className="p-4">
+            {section === "dashboard" && (
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="text-xs text-gray-500">Total Businesses</div>
+                      <div className="text-xl font-bold">{totalBusinesses}</div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="text-xs text-gray-500">Total Influencers</div>
+                      <div className="text-xl font-bold">{totalInfluencers}</div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="text-xs text-gray-500">Active Jobs</div>
+                      <div className="text-xl font-bold">{activeJobs}</div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="text-xs text-gray-500">Pending Submissions</div>
+                      <div className="text-xl font-bold">{pendingSubmissions}</div>
+                    </CardContent>
+                  </Card>
                 </div>
-                <div className="sm:ml-3">
-                  <div className="text-xs font-medium text-gray-500 truncate">
-                    Total Users
-                  </div>
-                  <div className="text-base sm:text-lg font-bold text-gray-900">
-                    {(platformStats.totalUsers / 1000).toFixed(1)}K
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
 
-          <Card>
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:text-left">
-                <div className="flex-shrink-0 mb-2 sm:mb-0">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-lg flex items-center justify-center mx-auto sm:mx-0">
-                    <UserPlus className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
-                  </div>
-                </div>
-                <div className="sm:ml-3">
-                  <div className="text-xs font-medium text-gray-500 truncate">
-                    Creators
-                  </div>
-                  <div className="text-base sm:text-lg font-bold text-gray-900">
-                    {(platformStats.totalCreators / 1000).toFixed(1)}K
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:text-left">
-                <div className="flex-shrink-0 mb-2 sm:mb-0">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 rounded-lg flex items-center justify-center mx-auto sm:mx-0">
-                    <BarChart3 className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600" />
-                  </div>
-                </div>
-                <div className="sm:ml-3">
-                  <div className="text-xs font-medium text-gray-500 truncate">
-                    Campaigns
-                  </div>
-                  <div className="text-base sm:text-lg font-bold text-gray-900">
-                    {platformStats.activeCampaigns}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:text-left">
-                <div className="flex-shrink-0 mb-2 sm:mb-0">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-yellow-100 rounded-lg flex items-center justify-center mx-auto sm:mx-0">
-                    <EchoCoinIcon className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-600" />
-                  </div>
-                </div>
-                <div className="sm:ml-3">
-                  <div className="text-xs font-medium text-gray-500 truncate">
-                    Earnings
-                  </div>
-                  <div className="text-base sm:text-lg font-bold text-gray-900">
-                    {(platformStats.totalEarnings / 1000000).toFixed(1)}M EC
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Main Content Tabs - Mobile Optimized */}
-        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as any)} className="space-y-4">
-          <div className="overflow-x-auto -mx-3 px-3">
-            <TabsList className="grid w-full grid-cols-5 h-12 min-w-max bg-gray-100">
-              <TabsTrigger value="overview" className="text-xs px-2 sm:px-3 py-3 whitespace-nowrap touch-manipulation">
-                Overview
-              </TabsTrigger>
-              <TabsTrigger value="creators" className="text-xs px-2 sm:px-3 py-3 whitespace-nowrap touch-manipulation">
-                Creators
-              </TabsTrigger>
-              <TabsTrigger value="campaigns" className="text-xs px-2 sm:px-3 py-3 whitespace-nowrap touch-manipulation">
-                Campaigns
-              </TabsTrigger>
-              <TabsTrigger value="earnings" className="text-xs px-2 sm:px-3 py-3 whitespace-nowrap touch-manipulation">
-                Earnings
-              </TabsTrigger>
-              <TabsTrigger value="reports" className="text-xs px-2 sm:px-3 py-3 whitespace-nowrap touch-manipulation">
-                Reports
-              </TabsTrigger>
-            </TabsList>
-          </div>
-
-          <TabsContent value="overview" className="space-y-4">
-            {/* Pending Approvals */}
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-base sm:text-lg">
-                    Pending Approvals
-                  </CardTitle>
-                  <Badge className="bg-orange-100 text-orange-800">
-                    {platformStats.pendingApprovals} pending
-                  </Badge>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {pendingCreators.slice(0, 3).map((creator) => (
-                    <div key={creator.id} className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 border border-gray-200 rounded-lg">
-                      <div className="flex items-center gap-3 flex-1">
-                        <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
-                          <AvatarImage src="/placeholder.svg" />
-                          <AvatarFallback>{creator.name.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-gray-900 text-sm truncate">{creator.name}</h4>
-                          <p className="text-xs text-gray-600 truncate">{creator.handle} • {creator.category}</p>
-                          <p className="text-xs text-gray-500">{(creator.followers / 1000).toFixed(0)}K followers</p>
-                        </div>
-                      </div>
-                      <div className="flex gap-2 w-full sm:w-auto">
-                        <Button
-                          size="sm"
-                          onClick={() => handleApproveCreator(creator.id)}
-                          className="flex-1 sm:flex-none bg-green-600 hover:bg-green-700 text-white text-xs h-8"
-                        >
-                          <CheckCircle className="h-3 w-3 mr-1" />
-                          Approve
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleRejectCreator(creator.id)}
-                          className="flex-1 sm:flex-none text-red-600 border-red-200 hover:bg-red-50 text-xs h-8"
-                        >
-                          <XCircle className="h-3 w-3 mr-1" />
-                          Reject
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Recent Activity */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base sm:text-lg">Recent Campaigns</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                  {recentCampaigns.map((campaign) => (
-                    <div key={campaign.id} className="flex items-center justify-between">
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-gray-900 text-xs truncate">{campaign.title}</h4>
-                        <p className="text-xs text-gray-600 truncate">{campaign.business}</p>
-                      </div>
-                      <div className="text-right ml-2">
-                        <div className="font-semibold text-xs">{(campaign.echoCoins / 1000).toFixed(1)}K EC</div>
-                        <Badge
-                          variant={campaign.status === "active" ? "default" : "secondary"}
-                          className={`text-xs ${campaign.status === "active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}`}
-                        >
-                          {campaign.status}
-                        </Badge>
-                      </div>
-                    </div>
-                  ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base sm:text-lg">Platform Growth</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Monthly Growth</span>
-                      <span className="font-semibold text-green-600">+{platformStats.monthlyGrowth}%</span>
-                    </div>
-                    <div className="h-24 sm:h-32 bg-gray-50 rounded-lg flex items-center justify-center">
-                      <TrendingUp className="h-8 w-8 text-gray-400" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="creators" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <CardTitle className="text-base sm:text-lg">Content Creator Management</CardTitle>
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <div className="relative flex-1">
-                      <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                      <Input placeholder="Search creators..." className="pl-9 h-9" />
-                    </div>
-                    <Button variant="outline" size="sm" className="h-9">
-                      <Filter className="h-4 w-4 mr-2" />
-                      Filter
-                    </Button>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {pendingCreators.map((creator) => (
-                    <div key={creator.id} className="border border-gray-200 rounded-lg p-3">
-                      <div className="flex items-start gap-3">
-                        <Avatar className="h-10 w-10 flex-shrink-0">
-                          <AvatarImage src="/placeholder.svg" />
-                          <AvatarFallback>{creator.name.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1 min-w-0">
-                              <h4 className="font-semibold text-gray-900 text-sm truncate">{creator.name}</h4>
-                              <p className="text-xs text-gray-600 truncate">{creator.handle}</p>
-                              <div className="flex flex-wrap gap-2 text-xs text-gray-500 mt-1">
-                                <span className="flex items-center gap-1">
-                                  <Mail className="h-3 w-3" />
-                                  <span className="truncate max-w-24">{creator.email}</span>
-                                </span>
-                                <span>{(creator.followers / 1000).toFixed(0)}K followers</span>
-                                <span>{creator.engagement}% engagement</span>
-                              </div>
-                              <div className="flex items-center gap-2 mt-2">
-                                <Badge className="text-xs">{creator.category}</Badge>
-                              </div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Recent Jobs</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-2">
+                        {jobs.slice(0, 5).map((j) => (
+                          <div key={j.id} className="flex items-center justify-between p-2 border rounded">
+                            <div>
+                              <div className="font-medium">{j.type}</div>
+                              <div className="text-xs text-gray-500">{j.business} • {j.platform}</div>
                             </div>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                                  <MoreHorizontal className="h-4 w-4" />
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuItem>
-                                  <Eye className="h-4 w-4 mr-2" />
-                                  View Profile
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => handleApproveCreator(creator.id)}>
-                                  <CheckCircle className="h-4 w-4 mr-2" />
-                                  Approve
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => handleRejectCreator(creator.id)}>
-                                  <XCircle className="h-4 w-4 mr-2" />
-                                  Reject
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
+                            <div className="text-right">
+                              <div className="font-semibold">{j.budget} EC</div>
+                              <Badge className="text-xs">{j.status}</Badge>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Recent Influencer Signups</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-2">
+                        {influencers.slice(0, 5).map((inf) => (
+                          <div key={inf.id} className="flex items-center gap-3 p-2 border rounded">
+                            <Avatar className="h-8 w-8"><AvatarImage src="/placeholder.svg" /><AvatarFallback>{inf.name.charAt(0)}</AvatarFallback></Avatar>
+                            <div className="flex-1 min-w-0">
+                              <div className="font-medium text-sm truncate">{inf.name}</div>
+                              <div className="text-xs text-gray-500 truncate">{inf.email}</div>
+                            </div>
+                            <Button variant="outline" size="sm" onClick={() => alert(JSON.stringify(inf))}><Eye className="h-4 w-4 mr-1" />View</Button>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Quick Actions</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-col gap-2">
+                        <Button onClick={() => setShowCreateJob(true)}>Create Job</Button>
+                        <Button variant="outline" onClick={() => setShowAddInfluencer(true)}>Add Influencer</Button>
+                        {role === "super_admin" && <Button variant="outline" onClick={() => setShowAddManager(true)}>Add Manager</Button>}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            )}
+
+            {section === "managers" && role === "super_admin" && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">Admin Managers</h3>
+                  <div className="flex items-center gap-2">
+                    <Input placeholder="Search managers..." className="h-9" />
+                    <Button onClick={() => setShowAddManager(true)}>Add Manager</Button>
+                  </div>
+                </div>
+
+                <Card>
+                  <CardContent>
+                    <div className="space-y-2">
+                      {managers.map((m) => (
+                        <div key={m.id} className="flex items-center justify-between p-3 border rounded">
+                          <div className="flex items-center gap-3">
+                            <Avatar className="h-8 w-8"><AvatarImage src="/placeholder.svg" /><AvatarFallback>{m.name.charAt(0)}</AvatarFallback></Avatar>
+                            <div>
+                              <div className="font-medium">{m.name}</div>
+                              <div className="text-xs text-gray-500">{m.email}</div>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Badge className="text-xs">{m.role}</Badge>
+                            <Button size="sm" variant={m.active ? undefined : "outline" as any} onClick={() => toggleManagerActive(m.id)}>{m.active ? "Deactivate" : "Reactivate"}</Button>
                           </div>
                         </div>
-                      </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
 
-          <TabsContent value="campaigns" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <CardTitle className="text-base sm:text-lg">Campaign Monitoring</CardTitle>
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <Button variant="outline" size="sm" className="flex-1 sm:flex-none h-9">
-                      <Calendar className="h-4 w-4 mr-2" />
-                      Date Range
-                    </Button>
-                    <Button variant="outline" size="sm" className="flex-1 sm:flex-none h-9">
-                      <Download className="h-4 w-4 mr-2" />
-                      Export
-                    </Button>
+            {section === "influencers" && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">Influencers</h3>
+                  <div className="flex items-center gap-2">
+                    <Input placeholder="Search influencers..." className="h-9" />
+                    <Button onClick={() => setShowAddInfluencer(true)}>Add Influencer</Button>
                   </div>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {recentCampaigns.map((campaign) => (
-                    <div key={campaign.id} className="border border-gray-200 rounded-lg p-3">
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-gray-900 text-sm truncate">{campaign.title}</h4>
-                          <p className="text-xs text-gray-600 truncate">by {campaign.business}</p>
-                          <div className="flex flex-wrap gap-2 text-xs text-gray-500 mt-1">
-                            <span>{(campaign.echoCoins / 1000).toFixed(1)}K EC</span>
-                            <span>{campaign.influencers} influencers</span>
-                            <span>Created {campaign.createdAt}</span>
+
+                <Card>
+                  <CardContent>
+                    <div className="space-y-2">
+                      {influencers.map((inf) => (
+                        <div key={inf.id} className="flex items-center justify-between p-3 border rounded">
+                          <div className="flex items-center gap-3">
+                            <Avatar className="h-8 w-8"><AvatarImage src="/placeholder.svg" /><AvatarFallback>{inf.name.charAt(0)}</AvatarFallback></Avatar>
+                            <div>
+                              <div className="font-medium">{inf.name}</div>
+                              <div className="text-xs text-gray-500">{inf.email}</div>
+                              <div className="text-xs text-gray-400">{inf.categories.join(", ")}</div>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button variant="outline" size="sm" onClick={() => alert(JSON.stringify(inf))}>View</Button>
                           </div>
                         </div>
-                        <div className="flex flex-col items-end gap-2">
-                          <Badge
-                            variant={campaign.status === "active" ? "default" : "secondary"}
-                            className={`text-xs ${
-                              campaign.status === "active"
-                                ? "bg-green-100 text-green-800"
-                                : "bg-gray-100 text-gray-800"
-                            }`}
-                          >
-                            {campaign.status}
-                          </Badge>
-                          <Button variant="outline" size="sm" className="h-7 text-xs">
-                            <Eye className="h-3 w-3 mr-1" />
-                            View
-                          </Button>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+
+            {section === "businesses" && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">Businesses</h3>
+                  <div className="flex items-center gap-2">
+                    <Input placeholder="Search businesses..." className="h-9" />
+                    <Button onClick={() => alert('Add business modal would open')}>Add Business</Button>
+                  </div>
+                </div>
+
+                <Card>
+                  <CardContent>
+                    <div className="space-y-2">
+                      {businesses.map((b) => (
+                        <div key={b.id} className="flex items-center justify-between p-3 border rounded">
+                          <div>
+                            <div className="font-medium">{b.name}</div>
+                            <div className="text-xs text-gray-500">{b.industry} • {b.address}</div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button variant="outline" size="sm" onClick={() => alert(`View business ${b.name}`)}>View</Button>
+                          </div>
                         </div>
-                      </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
 
-          <TabsContent value="earnings" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base sm:text-lg">Platform Earnings</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {earningsData.map((data, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900 text-sm">{data.month}</h4>
-                        <p className="text-xs text-gray-600">Platform Revenue</p>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-semibold text-gray-900 text-sm">{(data.revenue / 1000).toFixed(0)}K EC</div>
-                        <div className="text-xs text-gray-600">Commission: {(data.commissions / 1000).toFixed(1)}K EC</div>
-                        <div className="text-xs text-green-600">{data.growth}</div>
-                      </div>
+            {section === "jobs" && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">Job Management</h3>
+                  <div className="flex items-center gap-2">
+                    <Input placeholder="Filter by business, status..." className="h-9" />
+                    <Button onClick={() => setShowCreateJob(true)}>Create Job</Button>
+                  </div>
+                </div>
+
+                <Card>
+                  <CardContent>
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full text-sm">
+                        <thead className="text-left text-xs text-gray-500">
+                          <tr>
+                            <th className="px-3 py-2">Job Type</th>
+                            <th className="px-3 py-2">Platform</th>
+                            <th className="px-3 py-2">Business</th>
+                            <th className="px-3 py-2">Status</th>
+                            <th className="px-3 py-2">Budget</th>
+                            <th className="px-3 py-2">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="text-gray-700">
+                          {jobs.map((j) => (
+                            <tr key={j.id} className="border-t">
+                              <td className="px-3 py-2">{j.type}</td>
+                              <td className="px-3 py-2">{j.platform}</td>
+                              <td className="px-3 py-2">{j.business}</td>
+                              <td className="px-3 py-2"><Badge className="text-xs">{j.status}</Badge></td>
+                              <td className="px-3 py-2">{j.budget} EC</td>
+                              <td className="px-3 py-2">
+                                <div className="flex items-center gap-2">
+                                  <Button size="sm" variant="outline" onClick={() => alert(`View job ${j.id}`)}>View</Button>
+                                  <Button size="sm" onClick={() => alert(`Mark job ${j.id} done`)}>Mark Done</Button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
 
-          <TabsContent value="reports" className="space-y-4">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base sm:text-lg">System Reports</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <Button variant="outline" className="w-full justify-start h-10 text-sm">
-                      <BarChart3 className="h-4 w-4 mr-2" />
-                      User Activity Report
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start h-10 text-sm">
-                      <TrendingUp className="h-4 w-4 mr-2" />
-                      Revenue Analytics
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start h-10 text-sm">
-                      <Users className="h-4 w-4 mr-2" />
-                      Creator Performance
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start h-10 text-sm">
-                      <Shield className="h-4 w-4 mr-2" />
-                      Security Audit
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base sm:text-lg">Quick Actions</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <Button className="w-full justify-start bg-brand-600 hover:bg-brand-700 text-white h-10 text-sm">
-                      <UserPlus className="h-4 w-4 mr-2" />
-                      Bulk Approve Creators
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start h-10 text-sm">
-                      <Mail className="h-4 w-4 mr-2" />
-                      Send Platform Update
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start h-10 text-sm">
-                      <Settings className="h-4 w-4 mr-2" />
-                      System Maintenance
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start text-red-600 border-red-200 hover:bg-red-50 h-10 text-sm">
-                      <AlertTriangle className="h-4 w-4 mr-2" />
-                      Emergency Actions
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-        </Tabs>
+          </main>
+        </div>
       </div>
+
+      {/* Modals - simple inline modal implementations */}
+      {showAddManager && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white max-w-md w-full rounded shadow p-6">
+            <h3 className="text-lg font-semibold mb-4">Add Admin Manager</h3>
+            <div className="space-y-3">
+              <div>
+                <Label>Name</Label>
+                <Input value={newManager.name} onChange={(e) => setNewManager({ ...newManager, name: e.target.value })} />
+              </div>
+              <div>
+                <Label>Email</Label>
+                <Input value={newManager.email} onChange={(e) => setNewManager({ ...newManager, email: e.target.value })} />
+              </div>
+              <div>
+                <Label>Role</Label>
+                <select value={newManager.role} onChange={(e) => setNewManager({ ...newManager, role: e.target.value })} className="w-full border rounded h-9 px-2">
+                  <option>Admin Manager</option>
+                  <option>Super Admin</option>
+                </select>
+              </div>
+              <div>
+                <Label>Password</Label>
+                <Input type="password" value={newManager.password} onChange={(e) => setNewManager({ ...newManager, password: e.target.value })} />
+              </div>
+            </div>
+            <div className="flex items-center justify-end gap-2 mt-4">
+              <Button variant="outline" onClick={() => setShowAddManager(false)}>Cancel</Button>
+              <Button onClick={addManager}>Create Manager</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showAddInfluencer && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white max-w-md w-full rounded shadow p-6">
+            <h3 className="text-lg font-semibold mb-4">Add Influencer</h3>
+            <div className="space-y-3">
+              <div>
+                <Label>Name</Label>
+                <Input value={newInfluencer.name} onChange={(e) => setNewInfluencer({ ...newInfluencer, name: e.target.value })} />
+              </div>
+              <div>
+                <Label>Email</Label>
+                <Input value={newInfluencer.email} onChange={(e) => setNewInfluencer({ ...newInfluencer, email: e.target.value })} />
+              </div>
+              <div>
+                <Label>Phone</Label>
+                <Input value={newInfluencer.phone} onChange={(e) => setNewInfluencer({ ...newInfluencer, phone: e.target.value })} />
+              </div>
+              <div>
+                <Label>Social Profiles (format: Platform:handle, comma separated)</Label>
+                <Input value={newInfluencer.profiles} onChange={(e) => setNewInfluencer({ ...newInfluencer, profiles: e.target.value })} />
+              </div>
+              <div>
+                <Label>Categories (comma separated)</Label>
+                <Input value={newInfluencer.categories} onChange={(e) => setNewInfluencer({ ...newInfluencer, categories: e.target.value })} />
+              </div>
+            </div>
+            <div className="flex items-center justify-end gap-2 mt-4">
+              <Button variant="outline" onClick={() => setShowAddInfluencer(false)}>Cancel</Button>
+              <Button onClick={addInfluencer}>Create Influencer</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showCreateJob && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white max-w-lg w-full rounded shadow p-6">
+            <h3 className="text-lg font-semibold mb-4">Create Job</h3>
+            <div className="space-y-3">
+              <div>
+                <Label>Job Type</Label>
+                <Input value={newJob.type} onChange={(e) => setNewJob({ ...newJob, type: e.target.value })} />
+              </div>
+              <div>
+                <Label>Platform</Label>
+                <Input value={newJob.platform} onChange={(e) => setNewJob({ ...newJob, platform: e.target.value })} />
+              </div>
+              <div>
+                <Label>Business</Label>
+                <select value={newJob.business} onChange={(e) => setNewJob({ ...newJob, business: e.target.value })} className="w-full border rounded h-9 px-2">
+                  <option value="">Select business</option>
+                  {businesses.map((b) => (<option key={b.id} value={b.name}>{b.name}</option>))}
+                </select>
+              </div>
+              <div>
+                <Label>Budget (EC)</Label>
+                <Input type="number" value={newJob.budget} onChange={(e) => setNewJob({ ...newJob, budget: e.target.value })} />
+              </div>
+            </div>
+            <div className="flex items-center justify-end gap-2 mt-4">
+              <Button variant="outline" onClick={() => setShowCreateJob(false)}>Cancel</Button>
+              <Button onClick={createJob}>Save Job</Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
