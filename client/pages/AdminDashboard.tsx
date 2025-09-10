@@ -303,13 +303,15 @@ export default function AdminDashboard() {
                 <CardContent className="p-6 pt-6">
                   <div className="space-y-2">
                         {influencers.slice(0, 5).map((inf) => (
-                          <div key={inf.id} className="flex items-center gap-3 p-2 border rounded">
+                          <div key={inf.id} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 border rounded">
                             <Avatar className="h-8 w-8"><AvatarImage src="/placeholder.svg" /><AvatarFallback>{inf.name.charAt(0)}</AvatarFallback></Avatar>
                             <div className="flex-1 min-w-0">
                               <div className="font-medium text-sm truncate">{inf.name}</div>
                               <div className="text-xs text-gray-500 truncate">{inf.email}</div>
                             </div>
-                            <Button variant="outline" size="sm" onClick={() => { setSelectedInfluencer(inf); setShowInfluencerModal(true); }}><Eye className="h-4 w-4 mr-1" />View</Button>
+                            <div className="w-full sm:w-auto flex sm:justify-end">
+                              <Button variant="outline" size="sm" onClick={() => { setSelectedInfluencer(inf); setShowInfluencerModal(true); }}>View</Button>
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -336,9 +338,9 @@ export default function AdminDashboard() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold">Admin Managers</h3>
-                  <div className="flex items-center gap-2">
-                    <Input placeholder="Search managers..." className="h-9" />
-                    <Button onClick={() => setShowAddManager(true)}>Add Manager</Button>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
+                    <Input placeholder="Search managers..." className="h-9 w-full sm:w-auto flex-1" />
+                    <Button onClick={() => setShowAddManager(true)} className="w-full sm:w-auto">Add Manager</Button>
                   </div>
                 </div>
 
@@ -370,9 +372,9 @@ export default function AdminDashboard() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold">Influencers</h3>
-                  <div className="flex items-center gap-2">
-                    <Input placeholder="Search influencers..." className="h-9" />
-                    <Button onClick={() => setShowAddInfluencer(true)}>Add Influencer</Button>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
+                    <Input placeholder="Search influencers..." className="h-9 w-full sm:w-auto flex-1" />
+                    <Button onClick={() => setShowAddInfluencer(true)} className="w-full sm:w-auto">Add Influencer</Button>
                   </div>
                 </div>
 
@@ -404,9 +406,9 @@ export default function AdminDashboard() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold">Businesses</h3>
-                  <div className="flex items-center gap-2">
-                    <Input placeholder="Search businesses..." className="h-9" />
-                    <Button onClick={() => alert('Add business modal would open')}>Add Business</Button>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
+                    <Input placeholder="Search businesses..." className="h-9 w-full sm:w-auto flex-1" />
+                    <Button onClick={() => alert('Add business modal would open')} className="w-full sm:w-auto">Add Business</Button>
                   </div>
                 </div>
 
@@ -434,9 +436,9 @@ export default function AdminDashboard() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold">Job Management</h3>
-                  <div className="flex items-center gap-2">
-                    <Input placeholder="Filter by business, status..." className="h-9" />
-                    <Button onClick={() => setShowCreateJob(true)}>Create Job</Button>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
+                    <Input placeholder="Filter by business, status..." className="h-9 w-full sm:w-auto flex-1" />
+                    <Button onClick={() => setShowCreateJob(true)} className="w-full sm:w-auto">Create Job</Button>
                   </div>
                 </div>
 
