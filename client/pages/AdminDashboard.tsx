@@ -211,7 +211,6 @@ export default function AdminDashboard() {
         <div className="flex-1">
           <header className="bg-white border-b p-3 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <h2 className="text-lg font-semibold">{section === "dashboard" ? "Overview" : section.charAt(0).toUpperCase() + section.slice(1)}</h2>
               <div className="text-sm text-gray-500">Admin Console</div>
             </div>
             <div className="flex items-center gap-3">
