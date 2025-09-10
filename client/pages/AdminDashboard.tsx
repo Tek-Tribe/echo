@@ -291,11 +291,11 @@ export default function AdminDashboard() {
                   </Card>
 
                   <Card>
-                    <CardHeader>
-                      <CardTitle>Recent Influencer Signups</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2">
+                <CardHeader>
+                  <CardTitle>Recent Influencer Signups</CardTitle>
+                </CardHeader>
+                <CardContent className="p-6 pt-6">
+                  <div className="space-y-2">
                         {influencers.slice(0, 5).map((inf) => (
                           <div key={inf.id} className="flex items-center gap-3 p-2 border rounded">
                             <Avatar className="h-8 w-8"><AvatarImage src="/placeholder.svg" /><AvatarFallback>{inf.name.charAt(0)}</AvatarFallback></Avatar>
@@ -337,7 +337,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <Card>
-                  <CardContent>
+                  <CardContent className="p-6 pt-6">
                     <div className="space-y-2">
                       {managers.map((m) => (
                         <div key={m.id} className="flex items-center justify-between p-3 border rounded">
@@ -371,7 +371,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <Card>
-                  <CardContent>
+                  <CardContent className="p-6 pt-6">
                     <div className="space-y-2">
                       {influencers.map((inf) => (
                         <div key={inf.id} className="flex items-center justify-between p-3 border rounded">
@@ -435,7 +435,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <Card>
-                  <CardContent>
+                  <CardContent className="p-6 pt-6">
                     <div className="overflow-x-auto">
                       <table className="min-w-full text-sm">
                         <thead className="text-left text-xs text-gray-500">
