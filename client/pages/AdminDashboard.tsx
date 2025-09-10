@@ -613,6 +613,37 @@ export default function AdminDashboard() {
         </div>
       )}
 
+      {/* Reset Password Modal */}
+      {showResetPassword && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white max-w-md w-full rounded shadow p-6">
+            <h3 className="text-lg font-semibold mb-4">Reset Password</h3>
+            <div className="space-y-3">
+              <div>
+                <Label>New Password</Label>
+                <Input type="password" value={resetPassword.newPassword} onChange={(e) => setResetPassword({ ...resetPassword, newPassword: e.target.value })} />
+              </div>
+              <div>
+                <Label>Confirm Password</Label>
+                <Input type="password" value={resetPassword.confirmPassword} onChange={(e) => setResetPassword({ ...resetPassword, confirmPassword: e.target.value })} />
+              </div>
+            </div>
+            <div className="flex items-center justify-end gap-2 mt-4">
+              <Button variant="outline" onClick={() => { setShowResetPassword(false); setResetPassword({ newPassword: '', confirmPassword: '' }); }}>Cancel</Button>
+              <Button onClick={() => {
+                if (resetPassword.newPassword && resetPassword.newPassword === resetPassword.confirmPassword) {
+                  toast({ title: 'Password reset', description: 'Password has been updated.' });
+                  setShowResetPassword(false);
+                  setResetPassword({ newPassword: '', confirmPassword: '' });
+                } else {
+                  toast({ title: 'Error', description: 'Passwords do not match', variant: 'destructive' });
+                }
+              }}>Update Password</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Modals - simple inline modal implementations */}
       {showAddManager && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
