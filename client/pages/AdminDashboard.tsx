@@ -73,6 +73,7 @@ interface Job {
   bidStart?: string;
   bidEnd?: string;
   duration?: { value: number; unit: string };
+  participants?: string[];
 }
 
 export default function AdminDashboard() {
@@ -86,8 +87,8 @@ export default function AdminDashboard() {
   ]);
 
   const [influencers, setInfluencers] = useState<Influencer[]>([
-    { id: "i1", name: "Alex Johnson", email: "alex@example.com", phone: "+1 555 1234", categories: ["Fitness"], profiles: [{ platform: "Instagram", handle: "@alex" }] },
-    { id: "i2", name: "Maya Rodriguez", email: "maya@example.com", categories: ["Fashion"], profiles: [{ platform: "TikTok", handle: "@maya" }] },
+    { id: "i1", name: "Alex Johnson", email: "alex@example.com", phone: "+1 555 1234", categories: ["Fitness"], profiles: [{ platform: "Instagram", username: "@alex", url: "https://instagram.com/alex", followers: 45000 }] },
+    { id: "i2", name: "Maya Rodriguez", email: "maya@example.com", categories: ["Fashion"], profiles: [{ platform: "TikTok", username: "@maya", url: "https://tiktok.com/@maya", followers: 78000 }] },
   ]);
 
   const [businesses, setBusinesses] = useState<Business[]>([
@@ -96,14 +97,19 @@ export default function AdminDashboard() {
   ]);
 
   const [jobs, setJobs] = useState<Job[]>([
-    { id: "j1", type: "Feed Post", platform: "Instagram", business: "FitnessNutrition Co.", status: "Doing", budget: 2500 },
-    { id: "j2", type: "Video Creation", platform: "YouTube", business: "TechWear", status: "Bid", budget: 5000 },
+    { id: "j1", type: "Feed Post", platform: "Instagram", business: "FitnessNutrition Co.", status: "Doing", budget: 2500, participants: ["i1"] },
+    { id: "j2", type: "Video Creation", platform: "YouTube", business: "TechWear", status: "Bid", budget: 5000, participants: ["i2"] },
   ]);
 
   // UI state for modals & forms
   const [showAddManager, setShowAddManager] = useState(false);
   const [showAddInfluencer, setShowAddInfluencer] = useState(false);
   const [showCreateJob, setShowCreateJob] = useState(false);
+
+  const [selectedInfluencer, setSelectedInfluencer] = useState<Influencer | null>(null);
+  const [showInfluencerModal, setShowInfluencerModal] = useState(false);
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const [showJobModal, setShowJobModal] = useState(false);
 
   const [newManager, setNewManager] = useState({ name: "", email: "", role: "Admin Manager", password: "" });
   const [newInfluencer, setNewInfluencer] = useState<any>({ name: "", email: "", phone: "", place: "", latitude: "", longitude: "", profiles: [], categories: "" });
@@ -296,7 +302,7 @@ export default function AdminDashboard() {
                               <div className="font-medium text-sm truncate">{inf.name}</div>
                               <div className="text-xs text-gray-500 truncate">{inf.email}</div>
                             </div>
-                            <Button variant="outline" size="sm" onClick={() => alert(JSON.stringify(inf))}><Eye className="h-4 w-4 mr-1" />View</Button>
+                            <Button variant="outline" size="sm" onClick={() => { setSelectedInfluencer(inf); setShowInfluencerModal(true); }}><Eye className="h-4 w-4 mr-1" />View</Button>
                           </div>
                         ))}
                       </div>
@@ -377,7 +383,7 @@ export default function AdminDashboard() {
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Button variant="outline" size="sm" onClick={() => alert(JSON.stringify(inf))}>View</Button>
+                            <Button variant="outline" size="sm" onClick={() => { setSelectedInfluencer(inf); setShowInfluencerModal(true); }}>View</Button>
                           </div>
                         </div>
                       ))}
@@ -451,7 +457,7 @@ export default function AdminDashboard() {
                               <td className="px-3 py-2">{j.budget} EC</td>
                               <td className="px-3 py-2">
                                 <div className="flex items-center gap-2">
-                                  <Button size="sm" variant="outline" onClick={() => alert(`View job ${j.id}`)}>View</Button>
+                                  <Button size="sm" variant="outline" onClick={() => { setSelectedJob(j); setShowJobModal(true); }}>View</Button>
                                   <Button size="sm" onClick={() => alert(`Mark job ${j.id} done`)}>Mark Done</Button>
                                 </div>
                               </td>
@@ -666,6 +672,105 @@ export default function AdminDashboard() {
           </div>
         </div>
       )}
+
+      {/* Influencer Detail Modal */}
+      {showInfluencerModal && selectedInfluencer && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white max-w-3xl w-full rounded shadow p-6 max-h-[85vh] overflow-y-auto">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold">{selectedInfluencer.name}</h3>
+                <div className="text-sm text-gray-600">{selectedInfluencer.email} • {selectedInfluencer.phone}</div>
+                <div className="text-sm text-gray-500">{selectedInfluencer.place}{selectedInfluencer.latitude ? ` • ${selectedInfluencer.latitude}, ${selectedInfluencer.longitude}` : ''}</div>
+              </div>
+              <div>
+                <Button variant="outline" onClick={() => setShowInfluencerModal(false)}>Close</Button>
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <h4 className="font-semibold mb-2">Social Profiles</h4>
+              <div className="space-y-2">
+                {selectedInfluencer.profiles.map((p) => (
+                  <div key={p.username} className="flex items-center justify-between p-2 border rounded">
+                    <div>
+                      <div className="font-medium">{p.platform} • {p.username}</div>
+                      <div className="text-xs text-gray-500">{p.url} • {p.followers?.toLocaleString()} followers</div>
+                    </div>
+                    <div>
+                      <a href={p.url} target="_blank" rel="noreferrer"><Button variant="outline" size="sm">Open</Button></a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-2">Jobs Participated</h4>
+              <div className="space-y-2">
+                {jobs.filter((j) => (j.participants || []).includes(selectedInfluencer.id)).map((j) => (
+                  <div key={j.id} className="flex items-center justify-between p-2 border rounded">
+                    <div>
+                      <div className="font-medium">{j.type} • {j.platform}</div>
+                      <div className="text-xs text-gray-500">{j.business} • {j.budget} EC</div>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm" onClick={() => { setSelectedJob(j); setShowJobModal(true); }}>View Job</Button>
+                    </div>
+                  </div>
+                ))}
+                {jobs.filter((j) => (j.participants || []).includes(selectedInfluencer.id)).length === 0 && (
+                  <div className="text-sm text-gray-500">No job participation records found.</div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Job Detail Modal */}
+      {showJobModal && selectedJob && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white max-w-2xl w-full rounded shadow p-6 max-h-[80vh] overflow-y-auto">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold">{selectedJob.type} - {selectedJob.platform}</h3>
+                <div className="text-sm text-gray-500">{selectedJob.business}</div>
+              </div>
+              <div>
+                <Button variant="outline" onClick={() => setShowJobModal(false)}>Close</Button>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div>
+                <div className="text-xs text-gray-500">Budget</div>
+                <div className="font-semibold">{selectedJob.budget} EC</div>
+              </div>
+              <div>
+                <div className="text-xs text-gray-500">Status</div>
+                <div className="font-semibold">{selectedJob.status}</div>
+              </div>
+              {selectedJob.postUrl && (
+                <div>
+                  <div className="text-xs text-gray-500">Post URL</div>
+                  <a href={selectedJob.postUrl} className="text-sm text-blue-600" target="_blank" rel="noreferrer">{selectedJob.postUrl}</a>
+                </div>
+              )}
+              <div>
+                <div className="text-xs text-gray-500">Bid Window</div>
+                <div className="text-sm">{selectedJob.bidStart || 'N/A'} to {selectedJob.bidEnd || 'N/A'}</div>
+              </div>
+              {selectedJob.duration && (
+                <div>
+                  <div className="text-xs text-gray-500">Expected Duration</div>
+                  <div className="text-sm">{selectedJob.duration.value} {selectedJob.duration.unit}</div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
