@@ -46,8 +46,11 @@ interface Influencer {
   name: string;
   email: string;
   phone?: string;
+  place?: string;
+  latitude?: number;
+  longitude?: number;
   categories: string[];
-  profiles: { platform: string; handle: string }[];
+  profiles: { platform: string; username: string; url?: string; followers?: number }[];
 }
 
 interface Business {
@@ -63,9 +66,13 @@ interface Job {
   id: string;
   type: string;
   platform: string;
+  postUrl?: string;
   business: string;
   status: string;
   budget: number;
+  bidStart?: string;
+  bidEnd?: string;
+  duration?: { value: number; unit: string };
 }
 
 export default function AdminDashboard() {
@@ -99,8 +106,8 @@ export default function AdminDashboard() {
   const [showCreateJob, setShowCreateJob] = useState(false);
 
   const [newManager, setNewManager] = useState({ name: "", email: "", role: "Admin Manager", password: "" });
-  const [newInfluencer, setNewInfluencer] = useState({ name: "", email: "", phone: "", profiles: "", categories: "" });
-  const [newJob, setNewJob] = useState({ type: "", platform: "", business: "", budget: "" });
+  const [newInfluencer, setNewInfluencer] = useState<any>({ name: "", email: "", phone: "", place: "", latitude: "", longitude: "", profiles: [], categories: "" });
+  const [newJob, setNewJob] = useState<any>({ type: "", platform: "", postUrl: "", business: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days", status: "Draft" });
 
   const totalBusinesses = businesses.length;
   const totalInfluencers = influencers.length;
@@ -120,21 +127,24 @@ export default function AdminDashboard() {
 
   const addInfluencer = () => {
     const id = `i${Date.now()}`;
-    const categories = newInfluencer.categories.split(",").map((s) => s.trim()).filter(Boolean);
-    const profiles = newInfluencer.profiles.split(",").map((s) => {
-      const [platform, handle] = s.split(":").map((p) => p.trim());
-      return platform && handle ? { platform, handle } : { platform: "Unknown", handle: s.trim() };
-    });
-    setInfluencers([...influencers, { id, name: newInfluencer.name, email: newInfluencer.email, phone: newInfluencer.phone, categories, profiles }]);
+    const categories = (newInfluencer.categories || "").split(",").map((s: string) => s.trim()).filter(Boolean);
+    const profiles = (newInfluencer.profiles || []).map((p: any) => ({
+      platform: p.platform || "Unknown",
+      username: p.username || "",
+      url: p.url || "",
+      followers: Number(p.followers) || 0,
+    }));
+    setInfluencers([...influencers, { id, name: newInfluencer.name, email: newInfluencer.email, phone: newInfluencer.phone, place: newInfluencer.place, latitude: newInfluencer.latitude ? Number(newInfluencer.latitude) : undefined, longitude: newInfluencer.longitude ? Number(newInfluencer.longitude) : undefined, categories, profiles }]);
     setShowAddInfluencer(false);
-    setNewInfluencer({ name: "", email: "", phone: "", profiles: "", categories: "" });
+    setNewInfluencer({ name: "", email: "", phone: "", place: "", latitude: "", longitude: "", profiles: [], categories: "" });
   };
 
   const createJob = () => {
     const id = `j${Date.now()}`;
-    setJobs([...jobs, { id, type: newJob.type, platform: newJob.platform, business: newJob.business, status: "Draft", budget: Number(newJob.budget || 0) }]);
+    const duration = { value: Number(newJob.durationValue || 0), unit: newJob.durationUnit || "days" };
+    setJobs([...jobs, { id, type: newJob.type, platform: newJob.platform, postUrl: newJob.postUrl, business: newJob.business, status: newJob.status || "Draft", budget: Number(newJob.budget || 0), bidStart: newJob.bidStart || undefined, bidEnd: newJob.bidEnd || undefined, duration }]);
     setShowCreateJob(false);
-    setNewJob({ type: "", platform: "", business: "", budget: "" });
+    setNewJob({ type: "", platform: "", postUrl: "", business: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days", status: "Draft" });
   };
 
   return (
@@ -495,25 +505,63 @@ export default function AdminDashboard() {
 
       {showAddInfluencer && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-          <div className="bg-white max-w-md w-full rounded shadow p-6">
+          <div className="bg-white max-w-2xl w-full rounded shadow p-6">
             <h3 className="text-lg font-semibold mb-4">Add Influencer</h3>
             <div className="space-y-3">
-              <div>
-                <Label>Name</Label>
-                <Input value={newInfluencer.name} onChange={(e) => setNewInfluencer({ ...newInfluencer, name: e.target.value })} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <Label>Name</Label>
+                  <Input value={newInfluencer.name} onChange={(e) => setNewInfluencer({ ...newInfluencer, name: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Phone</Label>
+                  <Input value={newInfluencer.phone} onChange={(e) => setNewInfluencer({ ...newInfluencer, phone: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Email</Label>
+                  <Input value={newInfluencer.email} onChange={(e) => setNewInfluencer({ ...newInfluencer, email: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Place / Address</Label>
+                  <Input value={newInfluencer.place} onChange={(e) => setNewInfluencer({ ...newInfluencer, place: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Latitude</Label>
+                  <Input value={newInfluencer.latitude} onChange={(e) => setNewInfluencer({ ...newInfluencer, latitude: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Longitude</Label>
+                  <Input value={newInfluencer.longitude} onChange={(e) => setNewInfluencer({ ...newInfluencer, longitude: e.target.value })} />
+                </div>
               </div>
+
               <div>
-                <Label>Email</Label>
-                <Input value={newInfluencer.email} onChange={(e) => setNewInfluencer({ ...newInfluencer, email: e.target.value })} />
+                <Label>Social Media Profiles</Label>
+                <div className="space-y-2">
+                  {(newInfluencer.profiles || []).map((p: any, idx: number) => (
+                    <div key={idx} className="grid grid-cols-12 gap-2 items-center">
+                      <Input className="col-span-3" placeholder="Platform (Instagram)" value={p.platform} onChange={(e) => {
+                        const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], platform: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
+                      }} />
+                      <Input className="col-span-3" placeholder="Username" value={p.username} onChange={(e) => {
+                        const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], username: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
+                      }} />
+                      <Input className="col-span-4" placeholder="Profile URL" value={p.url} onChange={(e) => {
+                        const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], url: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
+                      }} />
+                      <Input className="col-span-1" placeholder="Followers" value={p.followers} onChange={(e) => {
+                        const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], followers: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
+                      }} />
+                      <div className="col-span-1">
+                        <Button variant="ghost" size="sm" onClick={() => { const profiles = [...newInfluencer.profiles]; profiles.splice(idx, 1); setNewInfluencer({ ...newInfluencer, profiles }); }}>Remove</Button>
+                      </div>
+                    </div>
+                  ))}
+
+                  <Button variant="outline" size="sm" onClick={() => setNewInfluencer({ ...newInfluencer, profiles: [...(newInfluencer.profiles || []), { platform: '', username: '', url: '', followers: '' }] })}>Add Profile</Button>
+                </div>
               </div>
-              <div>
-                <Label>Phone</Label>
-                <Input value={newInfluencer.phone} onChange={(e) => setNewInfluencer({ ...newInfluencer, phone: e.target.value })} />
-              </div>
-              <div>
-                <Label>Social Profiles (format: Platform:handle, comma separated)</Label>
-                <Input value={newInfluencer.profiles} onChange={(e) => setNewInfluencer({ ...newInfluencer, profiles: e.target.value })} />
-              </div>
+
               <div>
                 <Label>Categories (comma separated)</Label>
                 <Input value={newInfluencer.categories} onChange={(e) => setNewInfluencer({ ...newInfluencer, categories: e.target.value })} />
@@ -529,27 +577,75 @@ export default function AdminDashboard() {
 
       {showCreateJob && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-          <div className="bg-white max-w-lg w-full rounded shadow p-6">
+          <div className="bg-white max-w-2xl w-full rounded shadow p-6">
             <h3 className="text-lg font-semibold mb-4">Create Job</h3>
             <div className="space-y-3">
-              <div>
-                <Label>Job Type</Label>
-                <Input value={newJob.type} onChange={(e) => setNewJob({ ...newJob, type: e.target.value })} />
-              </div>
-              <div>
-                <Label>Platform</Label>
-                <Input value={newJob.platform} onChange={(e) => setNewJob({ ...newJob, platform: e.target.value })} />
-              </div>
-              <div>
-                <Label>Business</Label>
-                <select value={newJob.business} onChange={(e) => setNewJob({ ...newJob, business: e.target.value })} className="w-full border rounded h-9 px-2">
-                  <option value="">Select business</option>
-                  {businesses.map((b) => (<option key={b.id} value={b.name}>{b.name}</option>))}
-                </select>
-              </div>
-              <div>
-                <Label>Budget (EC)</Label>
-                <Input type="number" value={newJob.budget} onChange={(e) => setNewJob({ ...newJob, budget: e.target.value })} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <Label>Job Type</Label>
+                  <select value={newJob.type} onChange={(e) => setNewJob({ ...newJob, type: e.target.value })} className="w-full border rounded h-9 px-2">
+                    <option value="">Select type</option>
+                    <option value="Story">Story</option>
+                    <option value="Post">Post</option>
+                    <option value="Reshare">Reshare</option>
+                  </select>
+                </div>
+                <div>
+                  <Label>Social Platform</Label>
+                  <select value={newJob.platform} onChange={(e) => setNewJob({ ...newJob, platform: e.target.value })} className="w-full border rounded h-9 px-2">
+                    <option value="">Select platform</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="TikTok">TikTok</option>
+                    <option value="YouTube">YouTube</option>
+                    <option value="Twitter">Twitter</option>
+                  </select>
+                </div>
+                <div className="md:col-span-2">
+                  <Label>Post URL (optional)</Label>
+                  <Input value={newJob.postUrl} onChange={(e) => setNewJob({ ...newJob, postUrl: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Business</Label>
+                  <select value={newJob.business} onChange={(e) => setNewJob({ ...newJob, business: e.target.value })} className="w-full border rounded h-9 px-2">
+                    <option value="">Select business</option>
+                    {businesses.map((b) => (<option key={b.id} value={b.name}>{b.name}</option>))}
+                  </select>
+                </div>
+                <div>
+                  <Label>Budget (EC)</Label>
+                  <Input type="number" value={newJob.budget} onChange={(e) => setNewJob({ ...newJob, budget: e.target.value })} />
+                </div>
+
+                <div>
+                  <Label>Bid Start (date/time)</Label>
+                  <Input type="datetime-local" value={newJob.bidStart} onChange={(e) => setNewJob({ ...newJob, bidStart: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Bid End (date/time)</Label>
+                  <Input type="datetime-local" value={newJob.bidEnd} onChange={(e) => setNewJob({ ...newJob, bidEnd: e.target.value })} />
+                </div>
+
+                <div>
+                  <Label>Expected Duration</Label>
+                  <div className="flex gap-2">
+                    <Input type="number" value={newJob.durationValue} onChange={(e) => setNewJob({ ...newJob, durationValue: e.target.value })} />
+                    <select value={newJob.durationUnit} onChange={(e) => setNewJob({ ...newJob, durationUnit: e.target.value })} className="border rounded h-9 px-2">
+                      <option value="days">days</option>
+                      <option value="hours">hours</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <Label>Status</Label>
+                  <select value={newJob.status} onChange={(e) => setNewJob({ ...newJob, status: e.target.value })} className="w-full border rounded h-9 px-2">
+                    <option value="Draft">Draft</option>
+                    <option value="Bid">Bid</option>
+                    <option value="Doing">Doing</option>
+                    <option value="Review">Review</option>
+                    <option value="Done">Done</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div className="flex items-center justify-end gap-2 mt-4">
