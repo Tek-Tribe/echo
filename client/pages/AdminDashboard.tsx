@@ -539,21 +539,31 @@ export default function AdminDashboard() {
                 <Label>Social Media Profiles</Label>
                 <div className="space-y-2">
                   {(newInfluencer.profiles || []).map((p: any, idx: number) => (
-                    <div key={idx} className="grid grid-cols-12 gap-2 items-center">
-                      <Input className="col-span-3 min-w-0" placeholder="Platform (Instagram)" value={p.platform} onChange={(e) => {
-                        const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], platform: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
-                      }} />
-                      <Input className="col-span-3 min-w-0" placeholder="Username" value={p.username} onChange={(e) => {
-                        const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], username: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
-                      }} />
-                      <Input className="col-span-4 min-w-0" placeholder="Profile URL" value={p.url} onChange={(e) => {
-                        const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], url: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
-                      }} />
-                      <Input className="col-span-1 min-w-0" placeholder="Followers" value={p.followers} onChange={(e) => {
-                        const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], followers: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
-                      }} />
-                      <div className="col-span-1">
-                        <Button variant="ghost" size="sm" onClick={() => { const profiles = [...newInfluencer.profiles]; profiles.splice(idx, 1); setNewInfluencer({ ...newInfluencer, profiles }); }}>Remove</Button>
+                    <div key={idx} className="border rounded p-2">
+                      <div className="grid grid-cols-12 gap-2">
+                        <div className="col-span-12 sm:col-span-3">
+                          <Input className="w-full" placeholder="Platform (Instagram)" value={p.platform} onChange={(e) => {
+                            const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], platform: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
+                          }} />
+                        </div>
+                        <div className="col-span-12 sm:col-span-3">
+                          <Input className="w-full" placeholder="Username" value={p.username} onChange={(e) => {
+                            const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], username: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
+                          }} />
+                        </div>
+                        <div className="col-span-12 sm:col-span-4">
+                          <Input className="w-full" placeholder="Profile URL" value={p.url} onChange={(e) => {
+                            const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], url: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
+                          }} />
+                        </div>
+                        <div className="col-span-8 sm:col-span-1">
+                          <Input className="w-full" placeholder="Followers" value={p.followers} onChange={(e) => {
+                            const profiles = [...newInfluencer.profiles]; profiles[idx] = { ...profiles[idx], followers: e.target.value }; setNewInfluencer({ ...newInfluencer, profiles });
+                          }} />
+                        </div>
+                        <div className="col-span-4 sm:col-span-1 flex items-center justify-end">
+                          <Button variant="ghost" size="sm" onClick={() => { const profiles = [...newInfluencer.profiles]; profiles.splice(idx, 1); setNewInfluencer({ ...newInfluencer, profiles }); }}>Remove</Button>
+                        </div>
                       </div>
                     </div>
                   ))}
