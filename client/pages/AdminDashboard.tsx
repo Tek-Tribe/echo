@@ -114,6 +114,7 @@ export default function AdminDashboard() {
   const [showJobModal, setShowJobModal] = useState(false);
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null);
   const [showBusinessModal, setShowBusinessModal] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const [newManager, setNewManager] = useState({ name: "", email: "", role: "Admin Manager", password: "" });
   const [newInfluencer, setNewInfluencer] = useState<any>({ name: "", email: "", phone: "", place: "", latitude: "", longitude: "", profiles: [], categories: "" });
