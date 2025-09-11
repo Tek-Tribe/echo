@@ -1,8 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function BusinessDashboard() {
+  const [currentBusiness] = useState<any>({
+    id: "b1",
+    name: "FitnessNutrition Co.",
+    email: "contact@fitnessnutrition.co",
+    phone: "+1 555 0099",
+    address: "123 Wellness Ave, Austin, TX",
+    industry: "Health & Wellness",
+  });
+
+  const [campaigns, setCampaigns] = useState<any[]>([
+    { id: "c1", type: "Feed Post", platform: "Instagram", business: "FitnessNutrition Co.", status: "Doing", budget: 2500, postUrl: "", duration: { value: 3, unit: "days" } },
+    { id: "c2", type: "Story Repost", platform: "Instagram", business: "FitnessNutrition Co.", status: "Bid", budget: 500, postUrl: "", duration: { value: 1, unit: "days" } },
+    { id: "c3", type: "Product Review", platform: "YouTube", business: "Other Brand", status: "Done", budget: 1200, postUrl: "", duration: { value: 7, unit: "days" } },
+  ]);
+
+  const [showCreateCampaign, setShowCreateCampaign] = useState(false);
+  const [newCampaign, setNewCampaign] = useState<any>({ type: "", platform: "", postUrl: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days" });
+
+  const myCampaigns = campaigns.filter((c) => c.business === currentBusiness.name);
+  const activeCount = myCampaigns.filter((c) => c.status === "Doing" || c.status === "Bid").length;
+  const totalBudget = myCampaigns.reduce((s, c) => s + Number(c.budget || 0), 0);
+
+  const createCampaign = () => {
+    const id = `c${Date.now()}`;
+    const duration = { value: Number(newCampaign.durationValue || 0), unit: newCampaign.durationUnit || "days" };
+    setCampaigns([...campaigns, { id, type: newCampaign.type, platform: newCampaign.platform, postUrl: newCampaign.postUrl, business: currentBusiness.name, status: newCampaign.status || "Draft", budget: Number(newCampaign.budget || 0), bidStart: newCampaign.bidStart || undefined, bidEnd: newCampaign.bidEnd || undefined, duration }]);
+    setShowCreateCampaign(false);
+    setNewCampaign({ type: "", platform: "", postUrl: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days" });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200">
@@ -12,26 +45,169 @@ export default function BusinessDashboard() {
               <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-brand-700 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold">E</span>
               </div>
-              <h1 className="text-lg font-semibold text-gray-900">Business Dashboard</h1>
+              <h1 className="text-lg font-semibold text-gray-900">{currentBusiness.name}</h1>
+              <div className="text-sm text-gray-500">{currentBusiness.industry}</div>
             </div>
-            <div>
+            <div className="flex items-center gap-3">
               <Link to="/">
                 <Button variant="ghost">Home</Button>
               </Link>
+              <Button onClick={() => setShowCreateCampaign(true)}>Create Campaign</Button>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <section className="rounded-lg border border-dashed border-gray-200 bg-white p-8 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Blank Canvas</h2>
-          <p className="text-sm text-gray-600 mb-6">This page has been reset to a minimal scaffold. Provide a new design or requirements and I will implement it.</p>
-          <div className="flex items-center justify-center">
-            <Button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Start New Design</Button>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Overview</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-sm text-gray-500">Active Campaigns</div>
+              <div className="text-2xl font-bold">{activeCount}</div>
+              <div className="mt-4 text-sm text-gray-500">Total Campaigns</div>
+              <div className="text-xl font-semibold">{myCampaigns.length}</div>
+              <div className="mt-4 text-sm text-gray-500">Total Budget Allocated</div>
+              <div className="text-xl font-semibold">{totalBudget} EC</div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Business Info</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-sm text-gray-500">Contact</div>
+              <div className="font-medium">{currentBusiness.email} • {currentBusiness.phone}</div>
+              <div className="mt-3 text-sm text-gray-500">Address</div>
+              <div className="text-sm">{currentBusiness.address}</div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Recent Influencers</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                <div className="p-2 border rounded">Alex Johnson • @alex • 45k followers</div>
+                <div className="p-2 border rounded">Emma Wellness • @emma • 32k followers</div>
+                <div className="p-2 border rounded">Mike Strong • @mike • 18k followers</div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <section className="bg-white rounded border p-4">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-lg font-semibold">Campaigns</h3>
+            <div>
+              <Button onClick={() => setShowCreateCampaign(true)}>Create Campaign</Button>
+            </div>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="text-sm text-gray-600">
+                  <th className="px-3 py-2">Campaign Type</th>
+                  <th className="px-3 py-2">Platform</th>
+                  <th className="px-3 py-2">Budget</th>
+                  <th className="px-3 py-2">Status</th>
+                  <th className="px-3 py-2">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="text-gray-700">
+                {myCampaigns.map((c) => (
+                  <tr key={c.id} className="border-t">
+                    <td className="px-3 py-2">{c.type}</td>
+                    <td className="px-3 py-2">{c.platform}</td>
+                    <td className="px-3 py-2">{c.budget} EC</td>
+                    <td className="px-3 py-2">{c.status}</td>
+                    <td className="px-3 py-2">
+                      <div className="flex gap-2">
+                        <Button size="sm" variant="outline" onClick={() => alert(JSON.stringify(c, null, 2))}>View</Button>
+                        <Button size="sm" onClick={() => alert(`Mark campaign ${c.id} done`)}>Mark Done</Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+                {myCampaigns.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="p-4 text-sm text-gray-500">No campaigns yet. Create your first campaign.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
         </section>
       </main>
+
+      {showCreateCampaign && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white max-w-2xl w-full rounded shadow p-6 max-h-[80vh] overflow-y-auto">
+            <h3 className="text-lg font-semibold mb-4">Create Campaign</h3>
+            <div className="space-y-3">
+              <div>
+                <Label>Campaign Type</Label>
+                <select value={newCampaign.type} onChange={(e) => setNewCampaign({ ...newCampaign, type: e.target.value })} className="w-full border rounded h-9 px-2">
+                  <option value="">Select type</option>
+                  <option value="Feed Post">Feed Post</option>
+                  <option value="Story Repost">Story Repost</option>
+                  <option value="Product Review">Product Review</option>
+                </select>
+              </div>
+
+              <div>
+                <Label>Social Platform</Label>
+                <select value={newCampaign.platform} onChange={(e) => setNewCampaign({ ...newCampaign, platform: e.target.value })} className="w-full border rounded h-9 px-2">
+                  <option value="">Select platform</option>
+                  <option value="Instagram">Instagram</option>
+                  <option value="YouTube">YouTube</option>
+                  <option value="TikTok">TikTok</option>
+                </select>
+              </div>
+
+              <div>
+                <Label>Post URL (optional)</Label>
+                <Input value={newCampaign.postUrl} onChange={(e) => setNewCampaign({ ...newCampaign, postUrl: e.target.value })} />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <Label>Budget (EC)</Label>
+                  <Input type="number" value={newCampaign.budget} onChange={(e) => setNewCampaign({ ...newCampaign, budget: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Bid Start (date/time)</Label>
+                  <Input type="datetime-local" value={newCampaign.bidStart} onChange={(e) => setNewCampaign({ ...newCampaign, bidStart: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Bid End (date/time)</Label>
+                  <Input type="datetime-local" value={newCampaign.bidEnd} onChange={(e) => setNewCampaign({ ...newCampaign, bidEnd: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Duration</Label>
+                  <div className="flex gap-2">
+                    <Input type="number" value={newCampaign.durationValue} onChange={(e) => setNewCampaign({ ...newCampaign, durationValue: e.target.value })} />
+                    <select value={newCampaign.durationUnit} onChange={(e) => setNewCampaign({ ...newCampaign, durationUnit: e.target.value })} className="border rounded h-9 px-2">
+                      <option value="days">days</option>
+                      <option value="weeks">weeks</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-2 mt-4">
+                <Button variant="outline" onClick={() => setShowCreateCampaign(false)}>Cancel</Button>
+                <Button onClick={createCampaign}>Save Campaign</Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
