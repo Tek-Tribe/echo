@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -63,6 +63,8 @@ interface Business {
   phone?: string;
   address?: string;
   industry?: string;
+  latitude?: number;
+  longitude?: number;
 }
 
 interface Job {
@@ -115,6 +117,11 @@ export default function AdminDashboard() {
   const [showJobModal, setShowJobModal] = useState(false);
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null);
   const [showBusinessModal, setShowBusinessModal] = useState(false);
+  const [showAddBusiness, setShowAddBusiness] = useState(false);
+  const [newBusiness, setNewBusiness] = useState<any>({ name: "", email: "", phone: "", address: "", industry: "", latitude: "", longitude: "" });
+  const [showMapPicker, setShowMapPicker] = useState(false);
+  const [mapPickerCoords, setMapPickerCoords] = useState<{ lat?: number; lng?: number }>({});
+  const mapRef = useRef<HTMLDivElement | null>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [showResetPassword, setShowResetPassword] = useState(false);
@@ -133,6 +140,54 @@ export default function AdminDashboard() {
       localStorage.setItem('theme', 'light');
     }
   }, [theme]);
+
+  useEffect(() => {
+    if (!showMapPicker) return;
+    const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+    const container = mapRef.current;
+    let map: any;
+    let marker: any;
+    const initMap = () => {
+      // @ts-ignore
+      if (!window.google) {
+        return;
+      }
+      // @ts-ignore
+      map = new google.maps.Map(container, {
+        center: { lat: mapPickerCoords.lat || 20, lng: mapPickerCoords.lng || 0 },
+        zoom: 4,
+      });
+      // @ts-ignore
+      marker = new google.maps.Marker({ position: map.getCenter(), map });
+      map.addListener('click', (e: any) => {
+        const lat = e.latLng.lat();
+        const lng = e.latLng.lng();
+        if (marker) marker.setPosition({ lat, lng });
+        else marker = new google.maps.Marker({ position: { lat, lng }, map });
+        setMapPickerCoords({ lat, lng });
+      });
+    };
+
+    if (typeof window !== 'undefined' && (window as any).google) {
+      initMap();
+      return;
+    }
+
+    if (!apiKey) {
+      toast({ title: 'Google Maps key missing', description: 'Set VITE_GOOGLE_MAPS_API_KEY to enable map picking', variant: 'destructive' });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
+    script.async = true;
+    script.onload = () => initMap();
+    document.head.appendChild(script);
+
+    return () => {
+      if (script.parentNode) script.parentNode.removeChild(script);
+    };
+  }, [showMapPicker]);
 
   const totalBusinesses = businesses.length;
   const totalInfluencers = influencers.length;
@@ -170,6 +225,22 @@ export default function AdminDashboard() {
     setJobs([...jobs, { id, type: newJob.type, platform: newJob.platform, postUrl: newJob.postUrl, business: newJob.business, status: newJob.status || "Draft", budget: Number(newJob.budget || 0), bidStart: newJob.bidStart || undefined, bidEnd: newJob.bidEnd || undefined, duration }]);
     setShowCreateJob(false);
     setNewJob({ type: "", platform: "", postUrl: "", business: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days", status: "Draft" });
+  };
+
+  const addBusiness = () => {
+    const id = `b${Date.now()}`;
+    setBusinesses([...businesses, {
+      id,
+      name: newBusiness.name,
+      email: newBusiness.email,
+      phone: newBusiness.phone,
+      address: newBusiness.address,
+      industry: newBusiness.industry,
+      latitude: newBusiness.latitude ? Number(newBusiness.latitude) : undefined,
+      longitude: newBusiness.longitude ? Number(newBusiness.longitude) : undefined,
+    }]);
+    setShowAddBusiness(false);
+    setNewBusiness({ name: "", email: "", phone: "", address: "", industry: "", latitude: "", longitude: "" });
   };
 
   return (
@@ -422,7 +493,7 @@ export default function AdminDashboard() {
                   <h3 className="text-lg font-semibold">Businesses</h3>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
                     <Input placeholder="Search businesses..." className="h-9 w-full sm:w-auto flex-1" />
-                    <Button onClick={() => alert('Add business modal would open')} className="w-full sm:w-auto">Add Business</Button>
+                    <Button onClick={() => setShowAddBusiness(true)} className="w-full sm:w-auto">Add Business</Button>
                   </div>
                 </div>
 
@@ -805,6 +876,84 @@ export default function AdminDashboard() {
                 )}
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add Business Modal */}
+      {showAddBusiness && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white max-w-2xl w-full rounded shadow p-6 max-h-[80vh] overflow-y-auto">
+            <h3 className="text-lg font-semibold mb-4">Add Business</h3>
+            <div className="space-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <Label>Name</Label>
+                  <Input value={newBusiness.name} onChange={(e) => setNewBusiness({ ...newBusiness, name: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Phone</Label>
+                  <Input value={newBusiness.phone} onChange={(e) => setNewBusiness({ ...newBusiness, phone: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Email</Label>
+                  <Input value={newBusiness.email} onChange={(e) => setNewBusiness({ ...newBusiness, email: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Industry</Label>
+                  <Input value={newBusiness.industry} onChange={(e) => setNewBusiness({ ...newBusiness, industry: e.target.value })} />
+                </div>
+                <div className="md:col-span-2">
+                  <Label>Address</Label>
+                  <Input value={newBusiness.address} onChange={(e) => setNewBusiness({ ...newBusiness, address: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Latitude</Label>
+                  <Input value={newBusiness.latitude} onChange={(e) => setNewBusiness({ ...newBusiness, latitude: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Longitude</Label>
+                  <Input value={newBusiness.longitude} onChange={(e) => setNewBusiness({ ...newBusiness, longitude: e.target.value })} />
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" onClick={() => setShowMapPicker(true)}>Pick on map</Button>
+                <div className="text-sm text-gray-500 self-center">Or enter latitude / longitude manually</div>
+              </div>
+            </div>
+            <div className="flex items-center justify-end gap-2 mt-4">
+              <Button variant="outline" onClick={() => setShowAddBusiness(false)}>Cancel</Button>
+              <Button onClick={addBusiness}>Create Business</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Map Picker Modal */}
+      {showMapPicker && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white max-w-3xl w-full rounded shadow p-6 max-h-[85vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Pick Location</h3>
+              <div>
+                <Button variant="outline" onClick={() => setShowMapPicker(false)}>Close</Button>
+              </div>
+            </div>
+            <div className="h-96 mb-4" ref={mapRef} id="map-picker" />
+            <div className="flex items-center justify-between">
+              <div className="text-sm text-gray-600">Selected: {mapPickerCoords.lat ? `${mapPickerCoords.lat.toFixed(6)}, ${mapPickerCoords.lng?.toFixed(6)}` : 'None'}</div>
+              <div>
+                <Button variant="outline" onClick={() => {
+                  if (mapPickerCoords.lat && mapPickerCoords.lng) {
+                    setNewBusiness({ ...newBusiness, latitude: String(mapPickerCoords.lat), longitude: String(mapPickerCoords.lng) });
+                    setShowMapPicker(false);
+                  } else {
+                    toast({ title: 'No location selected', description: 'Click on the map to pick a location', variant: 'destructive' });
+                  }
+                }}>Use Location</Button>
+              </div>
+            </div>
+            <div className="mt-4 text-xs text-gray-500">This map uses the Google Maps JavaScript API. Set VITE_GOOGLE_MAPS_API_KEY in your environment for the map to load.</div>
           </div>
         </div>
       )}
