@@ -189,6 +189,8 @@ export default function BusinessDashboard() {
                   <th className="px-3 py-2">Platform</th>
                   <th className="px-3 py-2">Budget</th>
                   <th className="px-3 py-2">Status</th>
+                  <th className="px-3 py-2">Dates</th>
+                  <th className="px-3 py-2">Reach</th>
                   <th className="px-3 py-2">Actions</th>
                 </tr>
               </thead>
