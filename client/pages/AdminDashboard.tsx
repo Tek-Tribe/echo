@@ -772,13 +772,9 @@ export default function AdminDashboard() {
                   <Label>Place / Address</Label>
                   <Input value={newInfluencer.place} onChange={(e) => setNewInfluencer({ ...newInfluencer, place: e.target.value })} />
                 </div>
-                <div>
-                  <Label>Latitude</Label>
-                  <Input value={newInfluencer.latitude} onChange={(e) => setNewInfluencer({ ...newInfluencer, latitude: e.target.value })} />
-                </div>
-                <div>
-                  <Label>Longitude</Label>
-                  <Input value={newInfluencer.longitude} onChange={(e) => setNewInfluencer({ ...newInfluencer, longitude: e.target.value })} />
+                <div className="md:col-span-2 flex items-center gap-3">
+                  <Button variant="outline" onClick={() => { setMapPickerTarget('influencer'); setMapPickerCoords({ lat: newInfluencer.latitude ? Number(newInfluencer.latitude) : undefined, lng: newInfluencer.longitude ? Number(newInfluencer.longitude) : undefined }); setShowMapPicker(true); }}>Pick on map</Button>
+                  <div className="text-sm text-gray-500">Selected: {newInfluencer.latitude && newInfluencer.longitude ? `${Number(newInfluencer.latitude).toFixed(6)}, ${Number(newInfluencer.longitude).toFixed(6)}` : 'None'}</div>
                 </div>
               </div>
 
