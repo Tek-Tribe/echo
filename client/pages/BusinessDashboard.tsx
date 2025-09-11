@@ -26,7 +26,7 @@ export default function BusinessDashboard() {
   const viewMapRef = useRef<HTMLDivElement | null>(null);
   const [mapPickerCoords, setMapPickerCoords] = useState<{ lat?: number; lng?: number }>({});
 
-  const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [view, setView] = useState<'dashboard' | 'settings'>('dashboard');
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   const [campaigns, setCampaigns] = useState<any[]>([
