@@ -307,7 +307,7 @@ export default function BusinessDashboard() {
                   </div>
                   <div>
                     <div className="text-sm text-gray-500">Budget</div>
-                    <div className="font-medium">{selectedCampaign.budget} EC</div>
+                    <div className="font-medium">{selectedCampaign.budget} INR</div>
                   </div>
                   <div>
                     <div className="text-sm text-gray-500">Reach</div>
