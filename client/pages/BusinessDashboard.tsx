@@ -160,16 +160,27 @@ export default function BusinessDashboard() {
               <h1 className="text-lg font-semibold text-gray-900">{currentBusiness.name}</h1>
               <div className="text-sm text-gray-500">{currentBusiness.industry}</div>
             </div>
-            <div className="flex items-center gap-3 relative">
-              <div>
-                <button onClick={() => setShowUserMenu((s) => !s)} className="inline-flex items-center justify-center h-9 w-9 rounded-full bg-gray-100">{currentBusiness.name.charAt(0)}</button>
-                {showUserMenu && (
-                  <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow p-2">
-                    <button className="w-full text-left px-2 py-1 hover:bg-gray-50" onClick={() => { setShowSettingsModal(true); setShowUserMenu(false); }}>Settings</button>
-                    <button className="w-full text-left px-2 py-1 hover:bg-gray-50" onClick={() => alert('Logged out')}>Logout</button>
-                  </div>
-                )}
-              </div>
+            <div className="flex items-center gap-3">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center gap-2">
+                    <Avatar className="h-7 w-7">
+                      <AvatarImage src="/placeholder.svg" />
+                      <AvatarFallback>{currentBusiness.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <span className="hidden sm:block">{currentBusiness.name}</span>
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => setShowSettingsModal(true)}>
+                    <Settings className="h-4 w-4 mr-2" /> Settings
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => alert('Logged out')}>
+                    <LogOut className="h-4 w-4 mr-2" /> Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
