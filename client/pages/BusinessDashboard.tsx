@@ -192,22 +192,6 @@ export default function BusinessDashboard() {
           </Card>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 mb-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Overview</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-sm text-gray-500">Active Campaigns</div>
-              <div className="text-2xl font-bold">{activeCount}</div>
-              <div className="mt-4 text-sm text-gray-500">Total Campaigns</div>
-              <div className="text-xl font-semibold">{myCampaigns.length}</div>
-              <div className="mt-4 text-sm text-gray-500">Total Budget Allocated</div>
-              <div className="text-xl font-semibold">{totalBudget} EC</div>
-            </CardContent>
-          </Card>
-
-        </div>
 
         {/* Map Picker Modal */}
         {showMapPicker && (
