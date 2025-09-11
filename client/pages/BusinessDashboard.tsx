@@ -43,7 +43,8 @@ export default function BusinessDashboard() {
       completedAt: undefined,
       reach: 42000,
       participants: [ { id: 'i1', name: 'Alex Johnson' }, { id: 'i2', name: 'Emma Wellness' } ],
-      selected: { id: 'i1', name: 'Alex Johnson' }
+      selected: { id: 'i1', name: 'Alex Johnson' },
+      maxInfluencers: 2
     },
     {
       id: "c2",
@@ -54,6 +55,7 @@ export default function BusinessDashboard() {
       budget: 500,
       postUrl: "",
       duration: { value: 1, unit: "days" },
+      maxInfluencers: 1,
       createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString(),
       bidStart: new Date(Date.now() - 1000 * 60 * 60 * 24 * 9).toISOString(),
       bidEnd: new Date(Date.now() - 1000 * 60 * 60 * 24 * 8).toISOString(),
