@@ -446,9 +446,14 @@ export default function BusinessDashboard() {
                 <Input type="number" value={newCampaign.reach} onChange={(e) => setNewCampaign({ ...newCampaign, reach: e.target.value })} />
               </div>
 
+              <div>
+                <Label>Max Influencers</Label>
+                <Input type="number" min={1} value={newCampaign.maxInfluencers} onChange={(e) => setNewCampaign({ ...newCampaign, maxInfluencers: Number(e.target.value) })} />
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
-                  <Label>Budget (EC)</Label>
+                  <Label>Budget (INR)</Label>
                   <Input type="number" value={newCampaign.budget} onChange={(e) => setNewCampaign({ ...newCampaign, budget: e.target.value })} />
                 </div>
                 <div>
