@@ -85,7 +85,7 @@ export default function BusinessDashboard() {
   const [newCampaign, setNewCampaign] = useState<any>({ type: "", platform: "", postUrl: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days", reach: "" });
 
   const myCampaigns = campaigns.filter((c) => c.business === currentBusiness.name);
-  const activeCount = myCampaigns.filter((c) => c.status === "Doing" || c.status === "Bid").length;
+  const activeCount = myCampaigns.filter((c) => c.status !== "Done").length;
   const totalBudget = myCampaigns.reduce((s, c) => s + Number(c.budget || 0), 0);
 
   const formatDate = (d?: string) => (d ? new Date(d).toLocaleString() : '—');
