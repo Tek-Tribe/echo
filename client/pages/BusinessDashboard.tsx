@@ -343,6 +343,61 @@ export default function BusinessDashboard() {
 
       </main>
 
+      {/* Settings Modal */}
+      {showSettingsModal && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white max-w-2xl w-full rounded shadow p-6 max-h-[80vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Business Settings</h3>
+              <div>
+                <Button variant="outline" onClick={() => setShowSettingsModal(false)}>Close</Button>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div>
+                <Label>Business Name</Label>
+                <Input value={editedBusiness.name} onChange={(e) => setEditedBusiness({ ...editedBusiness, name: e.target.value })} />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <Label>Email</Label>
+                  <Input value={editedBusiness.email} onChange={(e) => setEditedBusiness({ ...editedBusiness, email: e.target.value })} />
+                </div>
+                <div>
+                  <Label>Phone</Label>
+                  <Input value={editedBusiness.phone} onChange={(e) => setEditedBusiness({ ...editedBusiness, phone: e.target.value })} />
+                </div>
+              </div>
+              <div>
+                <Label>Industry</Label>
+                <Input value={editedBusiness.industry} onChange={(e) => setEditedBusiness({ ...editedBusiness, industry: e.target.value })} />
+              </div>
+              <div>
+                <Label>Category</Label>
+                <Input value={editedBusiness.category} onChange={(e) => setEditedBusiness({ ...editedBusiness, category: e.target.value })} />
+              </div>
+              <div>
+                <Label>Address</Label>
+                <Input value={editedBusiness.address} onChange={(e) => setEditedBusiness({ ...editedBusiness, address: e.target.value })} />
+              </div>
+              <div>
+                <Label>Location</Label>
+                <div className="flex items-center gap-3">
+                  <div className="text-sm text-gray-600">{editedBusiness.latitude ? `${editedBusiness.latitude.toFixed(6)}, ${editedBusiness.longitude.toFixed(6)}` : 'Not set'}</div>
+                  <Button variant="outline" onClick={() => { setMapPickerCoords({ lat: editedBusiness.latitude, lng: editedBusiness.longitude }); setShowMapPicker(true); }}>Edit Location</Button>
+                </div>
+                <div className="mt-3 h-48 w-full rounded border" ref={viewMapRef} />
+              </div>
+
+              <div className="flex items-center justify-end gap-2 mt-4">
+                <Button variant="outline" onClick={() => { setEditedBusiness(currentBusiness); setShowSettingsModal(false); }}>Cancel</Button>
+                <Button onClick={() => { setCurrentBusiness(editedBusiness); setShowSettingsModal(false); }}>Save Settings</Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showCreateCampaign && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
           <div className="bg-white max-w-2xl w-full rounded shadow p-6 max-h-[80vh] overflow-y-auto">
