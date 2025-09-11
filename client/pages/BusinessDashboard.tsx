@@ -170,6 +170,28 @@ export default function BusinessDashboard() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* KPI boxes */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Active Campaigns</CardTitle>
+            </CardHeader>
+            <CardContent className="p-4">
+              <div className="text-sm text-gray-500">Currently running or in bid</div>
+              <div className="text-2xl font-bold mt-2">{activeCount}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Total Campaigns</CardTitle>
+            </CardHeader>
+            <CardContent className="p-4">
+              <div className="text-sm text-gray-500">All campaigns for your business</div>
+              <div className="text-2xl font-bold mt-2">{myCampaigns.length}</div>
+            </CardContent>
+          </Card>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 mb-6">
           <Card>
             <CardHeader>
