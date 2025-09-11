@@ -279,7 +279,7 @@ export default function AdminDashboard() {
             </button>
             <button onClick={() => setSection("jobs")} className={`w-full flex items-center ${collapsed ? 'justify-center px-2' : 'text-left px-3 py-2'} rounded ${section === "jobs" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
               <FileText className="inline-block" />
-              {!collapsed && <span className="ml-2">Jobs</span>}
+              {!collapsed && <span className="ml-2">Campaigns</span>}
             </button>
             {role === "super_admin" && (
               <button onClick={() => setSection("managers")} className={`w-full flex items-center ${collapsed ? 'justify-center px-2' : 'text-left px-3 py-2'} rounded ${section === "managers" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
@@ -347,7 +347,7 @@ export default function AdminDashboard() {
                   </Card>
                   <Card>
                     <CardContent className="p-4">
-                      <div className="text-xs text-gray-500">Active Jobs</div>
+                      <div className="text-xs text-gray-500">Active Campaigns</div>
                       <div className="text-xl font-bold">{activeJobs}</div>
                     </CardContent>
                   </Card>
@@ -362,7 +362,7 @@ export default function AdminDashboard() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                   <Card>
                     <CardHeader>
-                      <CardTitle>Recent Jobs</CardTitle>
+                      <CardTitle>Recent Campaigns</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-2">
@@ -410,7 +410,7 @@ export default function AdminDashboard() {
                     </CardHeader>
                     <CardContent>
                       <div className="flex flex-col gap-2">
-                        <Button onClick={() => setShowCreateJob(true)}>Create Job</Button>
+                        <Button onClick={() => setShowCreateJob(true)}>Create Campaign</Button>
                         <Button variant="outline" onClick={() => setShowAddInfluencer(true)}>Add Influencer</Button>
                         {role === "super_admin" && <Button variant="outline" onClick={() => setShowAddManager(true)}>Add Manager</Button>}
                       </div>
@@ -521,7 +521,7 @@ export default function AdminDashboard() {
             {section === "jobs" && (
               <div className="space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                  <h3 className="text-lg font-semibold">Job Management</h3>
+                  <h3 className="text-lg font-semibold">Campaign Management</h3>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
                     <Input placeholder="Filter by business, status..." className="h-9 w-full sm:w-auto flex-1" />
                     <Button onClick={() => setShowCreateJob(true)} className="w-full sm:w-auto">Create Job</Button>
@@ -534,7 +534,7 @@ export default function AdminDashboard() {
                       <table className="min-w-full text-sm">
                         <thead className="text-left text-xs text-gray-500">
                           <tr>
-                            <th className="px-3 py-2">Job Type</th>
+                            <th className="px-3 py-2">Campaign Type</th>
                             <th className="px-3 py-2">Platform</th>
                             <th className="px-3 py-2">Business</th>
                             <th className="px-3 py-2">Status</th>
@@ -553,7 +553,7 @@ export default function AdminDashboard() {
                               <td className="px-3 py-2">
                                 <div className="flex items-center gap-2">
                                   <Button size="sm" variant="outline" onClick={() => { setSelectedJob(j); setShowJobModal(true); }}>View</Button>
-                                  <Button size="sm" onClick={() => alert(`Mark job ${j.id} done`)}>Mark Done</Button>
+                                  <Button size="sm" onClick={() => alert(`Mark campaign ${j.id} done`)}>Mark Done</Button>
                                 </div>
                               </td>
                             </tr>
@@ -677,7 +677,7 @@ export default function AdminDashboard() {
               <button onClick={() => { setSection("dashboard"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Dashboard</button>
               <button onClick={() => { setSection("businesses"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Businesses</button>
               <button onClick={() => { setSection("influencers"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Influencers</button>
-              <button onClick={() => { setSection("jobs"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Jobs</button>
+              <button onClick={() => { setSection("jobs"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Campaigns</button>
               {role === "super_admin" && <button onClick={() => { setSection("managers"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Echo Users</button>}
               <button onClick={() => { setSection("settings"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Settings</button>
             </nav>
@@ -864,12 +864,12 @@ export default function AdminDashboard() {
                       <div className="text-xs text-gray-500">{j.status} • {j.budget} EC</div>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm" onClick={() => { setSelectedJob(j); setShowJobModal(true); }}>View Job</Button>
+                      <Button variant="outline" size="sm" onClick={() => { setSelectedJob(j); setShowJobModal(true); }}>View Campaign</Button>
                     </div>
                   </div>
                 ))}
                 {jobs.filter((j) => j.business === selectedBusiness.name).length === 0 && (
-                  <div className="text-sm text-gray-500">No jobs found for this business.</div>
+                  <div className="text-sm text-gray-500">No campaigns found for this business.</div>
                 )}
               </div>
             </div>
@@ -955,11 +955,11 @@ export default function AdminDashboard() {
       {showCreateJob && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
           <div className="bg-white max-w-2xl w-full rounded shadow p-6 max-h-[80vh] overflow-y-auto">
-            <h3 className="text-lg font-semibold mb-4">Create Job</h3>
+            <h3 className="text-lg font-semibold mb-4">Create Campaign</h3>
             <div className="space-y-3">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
-                  <Label>Job Type</Label>
+                  <Label>Campaign Type</Label>
                   <select value={newJob.type} onChange={(e) => setNewJob({ ...newJob, type: e.target.value })} className="w-full border rounded h-9 px-2">
                     <option value="">Select type</option>
                     <option value="Story">Story</option>
@@ -1017,7 +1017,7 @@ export default function AdminDashboard() {
             </div>
             <div className="flex items-center justify-end gap-2 mt-4">
               <Button variant="outline" onClick={() => setShowCreateJob(false)}>Cancel</Button>
-              <Button onClick={createJob}>Save Job</Button>
+              <Button onClick={createJob}>Save Campaign</Button>
             </div>
           </div>
         </div>
@@ -1056,7 +1056,7 @@ export default function AdminDashboard() {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-2">Jobs Participated</h4>
+              <h4 className="font-semibold mb-2">Campaigns Participated</h4>
               <div className="space-y-2">
                 {jobs.filter((j) => (j.participants || []).includes(selectedInfluencer.id)).map((j) => (
                   <div key={j.id} className="flex items-center justify-between p-2 border rounded">
@@ -1065,12 +1065,12 @@ export default function AdminDashboard() {
                       <div className="text-xs text-gray-500">{j.business} • {j.budget} EC</div>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm" onClick={() => { setSelectedJob(j); setShowJobModal(true); }}>View Job</Button>
+                      <Button variant="outline" size="sm" onClick={() => { setSelectedJob(j); setShowJobModal(true); }}>View Campaign</Button>
                     </div>
                   </div>
                 ))}
                 {jobs.filter((j) => (j.participants || []).includes(selectedInfluencer.id)).length === 0 && (
-                  <div className="text-sm text-gray-500">No job participation records found.</div>
+                  <div className="text-sm text-gray-500">No campaign participation records found.</div>
                 )}
               </div>
             </div>
