@@ -235,6 +235,9 @@ export default function BusinessDashboard() {
         <section className="bg-white rounded border p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-lg font-semibold">Campaigns</h3>
+            <div>
+              <Button onClick={() => setShowCreateCampaign(true)}>Create Campaign</Button>
+            </div>
           </div>
 
           <div className="overflow-x-auto">
