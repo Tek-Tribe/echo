@@ -300,8 +300,10 @@ export default function BusinessDashboard() {
                     <td className="px-3 py-2">{c.reach ? `${c.reach.toLocaleString()} people` : '—'}</td>
                     <td className="px-3 py-2">
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline" onClick={() => alert(JSON.stringify(c, null, 2))}>View</Button>
-                        <Button size="sm" onClick={() => alert(`Mark campaign ${c.id} done`)}>Mark Done</Button>
+                        <Button size="sm" variant="outline" onClick={() => { setSelectedCampaign(c); setShowCampaignModal(true); }}>View</Button>
+                        <Button size="sm" onClick={() => {
+                          setCampaigns(campaigns.map((cc) => cc.id === c.id ? { ...cc, status: 'Done', completedAt: new Date().toISOString() } : cc));
+                        }}>Mark Done</Button>
                       </div>
                     </td>
                   </tr>
