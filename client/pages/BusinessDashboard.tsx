@@ -185,22 +185,6 @@ export default function BusinessDashboard() {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Settings</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-sm text-gray-500">Business Settings</div>
-              <div className="mt-2">
-                <div className="font-medium">{currentBusiness.name}</div>
-                <div className="text-sm text-gray-500">{currentBusiness.industry} • {currentBusiness.category}</div>
-              </div>
-              <div className="mt-4">
-                <Button onClick={() => setShowSettingsModal(true)}>Open Settings</Button>
-              </div>
-            </CardContent>
-          </Card>
-
         </div>
 
         {/* Map Picker Modal */}
