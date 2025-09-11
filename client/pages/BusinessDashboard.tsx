@@ -154,9 +154,15 @@ export default function BusinessDashboard() {
                       <div className="text-sm">{currentBusiness.category}</div>
                       <div className="mt-3 text-sm text-gray-500">Location</div>
                       <div className="text-sm">{currentBusiness.latitude ? `${currentBusiness.latitude.toFixed(6)}, ${currentBusiness.longitude.toFixed(6)}` : 'Not set'}</div>
+                      <div className="mt-3">
+                        <div ref={viewMapRef} className="w-full h-40 rounded border mt-2" />
+                      </div>
                     </div>
                     <div>
-                      <Button variant="outline" size="sm" onClick={() => { setEditedBusiness(currentBusiness); setEditingBusiness(true); }}>Edit</Button>
+                      <div className="flex flex-col gap-2">
+                        <Button variant="outline" size="sm" onClick={() => { setEditedBusiness(currentBusiness); setEditingBusiness(true); }}>Edit</Button>
+                        <Button variant="ghost" size="sm" onClick={() => { setMapPickerCoords({ lat: currentBusiness.latitude, lng: currentBusiness.longitude }); setShowMapPicker(true); }}>View on map</Button>
+                      </div>
                     </div>
                   </div>
                 </div>
