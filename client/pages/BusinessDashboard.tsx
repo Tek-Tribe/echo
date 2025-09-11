@@ -220,7 +220,7 @@ export default function BusinessDashboard() {
                 ))}
                 {myCampaigns.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="p-4 text-sm text-gray-500">No campaigns yet. Create your first campaign.</td>
+                    <td colSpan={8} className="p-4 text-sm text-gray-500">No campaigns yet. Create your first campaign.</td>
                   </tr>
                 )}
               </tbody>
