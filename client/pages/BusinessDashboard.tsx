@@ -158,7 +158,7 @@ export default function BusinessDashboard() {
               <div>
                 <button onClick={() => setShowUserMenu((s) => !s)} className="inline-flex items-center justify-center h-9 w-9 rounded-full bg-gray-100">{currentBusiness.name.charAt(0)}</button>
                 {showUserMenu && (
-                  <div className="absolute right-0 mt-10 w-40 bg-white border rounded shadow p-2">
+                  <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow p-2">
                     <button className="w-full text-left px-2 py-1 hover:bg-gray-50" onClick={() => { setShowSettingsModal(true); setShowUserMenu(false); }}>Settings</button>
                     <button className="w-full text-left px-2 py-1 hover:bg-gray-50" onClick={() => alert('Logged out')}>Logout</button>
                   </div>
