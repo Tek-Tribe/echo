@@ -16,13 +16,15 @@ export default function BusinessDashboard() {
     latitude: 30.2672,
     longitude: -97.7431,
   });
-  const [editingBusiness, setEditingBusiness] = useState(false);
   const [editedBusiness, setEditedBusiness] = useState<any>(currentBusiness);
 
   const [showMapPicker, setShowMapPicker] = useState(false);
   const pickerMapRef = useRef<HTMLDivElement | null>(null);
   const viewMapRef = useRef<HTMLDivElement | null>(null);
   const [mapPickerCoords, setMapPickerCoords] = useState<{ lat?: number; lng?: number }>({});
+
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const [campaigns, setCampaigns] = useState<any[]>([
     {
