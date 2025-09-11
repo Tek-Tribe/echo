@@ -191,6 +191,35 @@ export default function BusinessDashboard() {
 
         </div>
 
+        {/* Map Picker Modal */}
+        {showMapPicker && (
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+            <div className="bg-white max-w-3xl w-full rounded shadow p-6 max-h-[85vh] overflow-y-auto">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">Pick Location</h3>
+                <div>
+                  <Button variant="outline" onClick={() => { setShowMapPicker(false); }}>{'Close'}</Button>
+                </div>
+              </div>
+              <div ref={pickerMapRef} className="h-96 mb-4" />
+              <div className="flex items-center justify-between">
+                <div className="text-sm text-gray-600">Selected: {mapPickerCoords.lat ? `${mapPickerCoords.lat.toFixed(6)}, ${mapPickerCoords.lng?.toFixed(6)}` : 'None'}</div>
+                <div>
+                  <Button variant="outline" onClick={() => {
+                    if (mapPickerCoords.lat && mapPickerCoords.lng) {
+                      setEditedBusiness({ ...editedBusiness, latitude: mapPickerCoords.lat, longitude: mapPickerCoords.lng });
+                      setCurrentBusiness({ ...currentBusiness, latitude: mapPickerCoords.lat, longitude: mapPickerCoords.lng });
+                      setShowMapPicker(false);
+                    } else {
+                      alert('No location selected. Click on the map to pick a location.');
+                    }
+                  }}>Use Location</Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <section className="bg-white rounded border p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-lg font-semibold">Campaigns</h3>
