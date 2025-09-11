@@ -904,13 +904,9 @@ export default function AdminDashboard() {
                   <Label>Address</Label>
                   <Input value={newBusiness.address} onChange={(e) => setNewBusiness({ ...newBusiness, address: e.target.value })} />
                 </div>
-                <div>
-                  <Label>Latitude</Label>
-                  <Input value={newBusiness.latitude} onChange={(e) => setNewBusiness({ ...newBusiness, latitude: e.target.value })} />
-                </div>
-                <div>
-                  <Label>Longitude</Label>
-                  <Input value={newBusiness.longitude} onChange={(e) => setNewBusiness({ ...newBusiness, longitude: e.target.value })} />
+                <div className="md:col-span-2 flex items-center gap-3">
+                  <Button variant="outline" onClick={() => { setMapPickerTarget('business'); setMapPickerCoords({ lat: newBusiness.latitude ? Number(newBusiness.latitude) : undefined, lng: newBusiness.longitude ? Number(newBusiness.longitude) : undefined }); setShowMapPicker(true); }}>Pick on map</Button>
+                  <div className="text-sm text-gray-500">Selected: {newBusiness.latitude && newBusiness.longitude ? `${Number(newBusiness.latitude).toFixed(6)}, ${Number(newBusiness.longitude).toFixed(6)}` : 'None'}</div>
                 </div>
               </div>
               <div className="flex gap-2">
