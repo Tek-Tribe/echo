@@ -41,6 +41,8 @@ export default function BusinessDashboard() {
       postedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
       completedAt: undefined,
       reach: 42000,
+      participants: [ { id: 'i1', name: 'Alex Johnson' }, { id: 'i2', name: 'Emma Wellness' } ],
+      selected: { id: 'i1', name: 'Alex Johnson' }
     },
     {
       id: "c2",
@@ -57,6 +59,8 @@ export default function BusinessDashboard() {
       postedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 8).toISOString(),
       completedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
       reach: 18500,
+      participants: [ { id: 'i3', name: 'Mike Strong' } ],
+      selected: { id: 'i3', name: 'Mike Strong' }
     },
     {
       id: "c3",
