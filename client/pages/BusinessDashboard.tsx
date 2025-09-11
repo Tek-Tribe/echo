@@ -139,6 +139,7 @@ export default function BusinessDashboard() {
   const [selectedCampaign, setSelectedCampaign] = useState<any | null>(null);
   const [showCampaignModal, setShowCampaignModal] = useState(false);
   const STATUS_OPTIONS = ["Todo", "In Progress", "Done"];
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   const createCampaign = () => {
     const id = `c${Date.now()}`;
