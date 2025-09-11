@@ -174,7 +174,7 @@ export default function BusinessDashboard() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => setShowSettingsModal(true)}>
+                  <DropdownMenuItem onClick={() => setView('settings')}>
                     <Settings className="h-4 w-4 mr-2" /> Settings
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => alert('Logged out')}>
