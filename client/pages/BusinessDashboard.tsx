@@ -6,14 +6,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function BusinessDashboard() {
-  const [currentBusiness] = useState<any>({
+  const [currentBusiness, setCurrentBusiness] = useState<any>({
     id: "b1",
     name: "FitnessNutrition Co.",
     email: "contact@fitnessnutrition.co",
     phone: "+1 555 0099",
     address: "123 Wellness Ave, Austin, TX",
     industry: "Health & Wellness",
+    category: "Supplements",
+    latitude: 30.2672,
+    longitude: -97.7431,
   });
+  const [editingBusiness, setEditingBusiness] = useState(false);
+  const [editedBusiness, setEditedBusiness] = useState<any>(currentBusiness);
 
   const [campaigns, setCampaigns] = useState<any[]>([
     { id: "c1", type: "Feed Post", platform: "Instagram", business: "FitnessNutrition Co.", status: "Doing", budget: 2500, postUrl: "", duration: { value: 3, unit: "days" } },
@@ -79,10 +84,46 @@ export default function BusinessDashboard() {
               <CardTitle>Business Info</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-sm text-gray-500">Contact</div>
-              <div className="font-medium">{currentBusiness.email} • {currentBusiness.phone}</div>
-              <div className="mt-3 text-sm text-gray-500">Address</div>
-              <div className="text-sm">{currentBusiness.address}</div>
+              {!editingBusiness ? (
+                <div>
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <div className="text-sm text-gray-500">Contact</div>
+                      <div className="font-medium">{currentBusiness.email} • {currentBusiness.phone}</div>
+                      <div className="mt-3 text-sm text-gray-500">Address</div>
+                      <div className="text-sm">{currentBusiness.address}</div>
+                      <div className="mt-3 text-sm text-gray-500">Industry</div>
+                      <div className="text-sm">{currentBusiness.industry}</div>
+                      <div className="mt-3 text-sm text-gray-500">Category</div>
+                      <div className="text-sm">{currentBusiness.category}</div>
+                      <div className="mt-3 text-sm text-gray-500">Location</div>
+                      <div className="text-sm">{currentBusiness.latitude ? `${currentBusiness.latitude.toFixed(6)}, ${currentBusiness.longitude.toFixed(6)}` : 'Not set'}</div>
+                    </div>
+                    <div>
+                      <Button variant="outline" size="sm" onClick={() => { setEditedBusiness(currentBusiness); setEditingBusiness(true); }}>Edit</Button>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <div>
+                    <Label>Industry</Label>
+                    <Input value={editedBusiness.industry} onChange={(e) => setEditedBusiness({ ...editedBusiness, industry: e.target.value })} />
+                  </div>
+                  <div>
+                    <Label>Category</Label>
+                    <Input value={editedBusiness.category} onChange={(e) => setEditedBusiness({ ...editedBusiness, category: e.target.value })} />
+                  </div>
+                  <div>
+                    <Label>Address</Label>
+                    <Input value={editedBusiness.address} onChange={(e) => setEditedBusiness({ ...editedBusiness, address: e.target.value })} />
+                  </div>
+                  <div className="flex items-center justify-end gap-2">
+                    <Button variant="outline" size="sm" onClick={() => setEditingBusiness(false)}>Cancel</Button>
+                    <Button size="sm" onClick={() => { setCurrentBusiness(editedBusiness); setEditingBusiness(false); }}>Save</Button>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
 
@@ -103,9 +144,6 @@ export default function BusinessDashboard() {
         <section className="bg-white rounded border p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-lg font-semibold">Campaigns</h3>
-            <div>
-              <Button onClick={() => setShowCreateCampaign(true)}>Create Campaign</Button>
-            </div>
           </div>
 
           <div className="overflow-x-auto">
