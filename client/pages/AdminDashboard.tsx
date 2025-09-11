@@ -121,6 +121,7 @@ export default function AdminDashboard() {
   const [newBusiness, setNewBusiness] = useState<any>({ name: "", email: "", phone: "", address: "", industry: "", latitude: "", longitude: "" });
   const [showMapPicker, setShowMapPicker] = useState(false);
   const [mapPickerCoords, setMapPickerCoords] = useState<{ lat?: number; lng?: number }>({});
+  const [mapPickerTarget, setMapPickerTarget] = useState<"business" | "influencer" | null>(null);
   const mapRef = useRef<HTMLDivElement | null>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
