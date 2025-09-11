@@ -255,9 +255,13 @@ export default function BusinessDashboard() {
                     <td className="px-3 py-2">
                       <div className="flex gap-2">
                         <Button size="sm" variant="outline" onClick={() => { setSelectedCampaign(c); setShowCampaignModal(true); }}>View</Button>
-                        <Button size="sm" onClick={() => {
-                          setCampaigns(campaigns.map((cc) => cc.id === c.id ? { ...cc, status: 'Done', completedAt: new Date().toISOString() } : cc));
-                        }}>Mark Done</Button>
+                        {c.status !== 'Done' ? (
+                          <Button size="sm" onClick={() => {
+                            setCampaigns(campaigns.map((cc) => cc.id === c.id ? { ...cc, status: 'Done', completedAt: new Date().toISOString() } : cc));
+                          }}>Mark Done</Button>
+                        ) : (
+                          <div className="inline-flex items-center px-2 py-1 rounded text-sm bg-gray-100 text-gray-700">Completed</div>
+                        )}
                       </div>
                     </td>
                   </tr>
