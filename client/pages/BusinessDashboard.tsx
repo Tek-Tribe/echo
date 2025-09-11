@@ -220,7 +220,6 @@ export default function BusinessDashboard() {
                   <Button variant="outline" onClick={() => {
                     if (mapPickerCoords.lat && mapPickerCoords.lng) {
                       setEditedBusiness({ ...editedBusiness, latitude: mapPickerCoords.lat, longitude: mapPickerCoords.lng });
-                      setCurrentBusiness({ ...currentBusiness, latitude: mapPickerCoords.lat, longitude: mapPickerCoords.lng });
                       setShowMapPicker(false);
                     } else {
                       alert('No location selected. Click on the map to pick a location.');
