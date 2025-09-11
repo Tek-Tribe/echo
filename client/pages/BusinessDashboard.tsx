@@ -85,7 +85,7 @@ export default function BusinessDashboard() {
   ]);
 
   const [showCreateCampaign, setShowCreateCampaign] = useState(false);
-  const [newCampaign, setNewCampaign] = useState<any>({ type: "", platform: "", postUrl: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days", reach: "" });
+  const [newCampaign, setNewCampaign] = useState<any>({ type: "", platform: "", postUrl: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days", reach: "", maxInfluencers: 1 });
 
   const myCampaigns = campaigns.filter((c) => c.business === currentBusiness.name);
   const activeCount = myCampaigns.filter((c) => c.status !== "Done").length;
