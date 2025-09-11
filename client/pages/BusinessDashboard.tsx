@@ -259,6 +259,11 @@ export default function BusinessDashboard() {
                 <Input value={newCampaign.postUrl} onChange={(e) => setNewCampaign({ ...newCampaign, postUrl: e.target.value })} />
               </div>
 
+              <div>
+                <Label>Reach (estimated)</Label>
+                <Input type="number" value={newCampaign.reach} onChange={(e) => setNewCampaign({ ...newCampaign, reach: e.target.value })} />
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
                   <Label>Budget (EC)</Label>
