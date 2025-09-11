@@ -263,6 +263,8 @@ export default function BusinessDashboard() {
                       </div>
                     </td>
                     <td className="px-3 py-2">{c.reach ? `${c.reach.toLocaleString()} people` : '—'}</td>
+                    <td className="px-3 py-2">{typeof c.maxInfluencers === 'number' ? Math.max(0, c.maxInfluencers - (c.selected ? 1 : 0)) : '—'}</td>
+                    <td className="px-3 py-2">{c.selected ? c.selected.name : '—'}</td>
                     <td className="px-3 py-2">
                       <div className="flex gap-2 items-center">
                         <Button size="sm" variant="outline" onClick={() => { setSelectedCampaign(c); setShowCampaignModal(true); }}>View</Button>
