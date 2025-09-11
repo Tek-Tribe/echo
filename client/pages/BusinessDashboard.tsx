@@ -80,6 +80,7 @@ export default function BusinessDashboard() {
       postedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 18).toISOString(),
       completedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString(),
       reach: 76000,
+      maxInfluencers: 1,
     },
   ]);
 
