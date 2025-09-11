@@ -929,7 +929,7 @@ export default function AdminDashboard() {
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold">Pick Location</h3>
               <div>
-                <Button variant="outline" onClick={() => setShowMapPicker(false)}>Close</Button>
+                <Button variant="outline" onClick={() => { setShowMapPicker(false); setMapPickerTarget(null); }}>Close</Button>
               </div>
             </div>
             <div className="h-96 mb-4" ref={mapRef} id="map-picker" />
