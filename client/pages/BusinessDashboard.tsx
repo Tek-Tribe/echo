@@ -187,55 +187,17 @@ export default function BusinessDashboard() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Business Info</CardTitle>
+              <CardTitle>Settings</CardTitle>
             </CardHeader>
             <CardContent>
-              {!editingBusiness ? (
-                <div>
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <div className="text-sm text-gray-500">Contact</div>
-                      <div className="font-medium">{currentBusiness.email} • {currentBusiness.phone}</div>
-                      <div className="mt-3 text-sm text-gray-500">Address</div>
-                      <div className="text-sm">{currentBusiness.address}</div>
-                      <div className="mt-3 text-sm text-gray-500">Industry</div>
-                      <div className="text-sm">{currentBusiness.industry}</div>
-                      <div className="mt-3 text-sm text-gray-500">Category</div>
-                      <div className="text-sm">{currentBusiness.category}</div>
-                      <div className="mt-3 text-sm text-gray-500">Location</div>
-                      <div className="text-sm">{currentBusiness.latitude ? `${currentBusiness.latitude.toFixed(6)}, ${currentBusiness.longitude.toFixed(6)}` : 'Not set'}</div>
-                      <div className="mt-3">
-                        <div ref={viewMapRef} className="w-full h-40 rounded border mt-2" />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex flex-col gap-2">
-                        <Button variant="outline" size="sm" onClick={() => { setEditedBusiness(currentBusiness); setEditingBusiness(true); }}>Edit</Button>
-                        <Button variant="ghost" size="sm" onClick={() => { setMapPickerCoords({ lat: currentBusiness.latitude, lng: currentBusiness.longitude }); setShowMapPicker(true); }}>View on map</Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  <div>
-                    <Label>Industry</Label>
-                    <Input value={editedBusiness.industry} onChange={(e) => setEditedBusiness({ ...editedBusiness, industry: e.target.value })} />
-                  </div>
-                  <div>
-                    <Label>Category</Label>
-                    <Input value={editedBusiness.category} onChange={(e) => setEditedBusiness({ ...editedBusiness, category: e.target.value })} />
-                  </div>
-                  <div>
-                    <Label>Address</Label>
-                    <Input value={editedBusiness.address} onChange={(e) => setEditedBusiness({ ...editedBusiness, address: e.target.value })} />
-                  </div>
-                  <div className="flex items-center justify-end gap-2">
-                    <Button variant="outline" size="sm" onClick={() => setEditingBusiness(false)}>Cancel</Button>
-                    <Button size="sm" onClick={() => { setCurrentBusiness(editedBusiness); setEditingBusiness(false); }}>Save</Button>
-                  </div>
-                </div>
-              )}
+              <div className="text-sm text-gray-500">Business Settings</div>
+              <div className="mt-2">
+                <div className="font-medium">{currentBusiness.name}</div>
+                <div className="text-sm text-gray-500">{currentBusiness.industry} • {currentBusiness.category}</div>
+              </div>
+              <div className="mt-4">
+                <Button onClick={() => setShowSettingsModal(true)}>Open Settings</Button>
+              </div>
             </CardContent>
           </Card>
 
