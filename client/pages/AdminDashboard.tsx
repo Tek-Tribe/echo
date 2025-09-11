@@ -938,8 +938,13 @@ export default function AdminDashboard() {
               <div>
                 <Button variant="outline" onClick={() => {
                   if (mapPickerCoords.lat && mapPickerCoords.lng) {
-                    setNewBusiness({ ...newBusiness, latitude: String(mapPickerCoords.lat), longitude: String(mapPickerCoords.lng) });
+                    if (mapPickerTarget === 'business') {
+                      setNewBusiness({ ...newBusiness, latitude: String(mapPickerCoords.lat), longitude: String(mapPickerCoords.lng) });
+                    } else if (mapPickerTarget === 'influencer') {
+                      setNewInfluencer({ ...newInfluencer, latitude: String(mapPickerCoords.lat), longitude: String(mapPickerCoords.lng) });
+                    }
                     setShowMapPicker(false);
+                    setMapPickerTarget(null);
                   } else {
                     toast({ title: 'No location selected', description: 'Click on the map to pick a location', variant: 'destructive' });
                   }
