@@ -78,6 +78,8 @@ export default function BusinessDashboard() {
   const activeCount = myCampaigns.filter((c) => c.status === "Doing" || c.status === "Bid").length;
   const totalBudget = myCampaigns.reduce((s, c) => s + Number(c.budget || 0), 0);
 
+  const formatDate = (d?: string) => (d ? new Date(d).toLocaleString() : '—');
+
   const createCampaign = () => {
     const id = `c${Date.now()}`;
     const duration = { value: Number(newCampaign.durationValue || 0), unit: newCampaign.durationUnit || "days" };
