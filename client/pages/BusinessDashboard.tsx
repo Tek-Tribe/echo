@@ -317,6 +317,72 @@ export default function BusinessDashboard() {
             </table>
           </div>
         </section>
+
+        {/* Campaign View Modal */}
+        {showCampaignModal && selectedCampaign && (
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+            <div className="bg-white max-w-2xl w-full rounded shadow p-6 max-h-[80vh] overflow-y-auto">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">Campaign: {selectedCampaign.type}</h3>
+                <div>
+                  <Button variant="outline" onClick={() => setShowCampaignModal(false)}>Close</Button>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div>
+                    <div className="text-sm text-gray-500">Platform</div>
+                    <div className="font-medium">{selectedCampaign.platform}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-500">Budget</div>
+                    <div className="font-medium">{selectedCampaign.budget} EC</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-500">Reach</div>
+                    <div className="font-medium">{selectedCampaign.reach ? `${selectedCampaign.reach.toLocaleString()} people` : '—'}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-500">Status</div>
+                    <select value={selectedCampaign.status} onChange={(e) => setSelectedCampaign({ ...selectedCampaign, status: e.target.value })} className="w-full border rounded h-9 px-2">
+                      <option value="Todo">Todo</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="Done">Done</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-sm text-gray-500">Dates</div>
+                  <div className="text-sm text-gray-700">
+                    <div>Created: {formatDate(selectedCampaign.createdAt)}</div>
+                    <div>Bid: {selectedCampaign.bidStart ? `${formatDate(selectedCampaign.bidStart)} → ${formatDate(selectedCampaign.bidEnd)}` : '—'}</div>
+                    <div>Posted: {formatDate(selectedCampaign.postedAt)}</div>
+                    <div>Completed: {formatDate(selectedCampaign.completedAt)}</div>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-sm text-gray-500">Participants</div>
+                  <div className="text-sm text-gray-700">{(selectedCampaign.participants || []).length} influencers bidded</div>
+                  <div className="mt-2 text-sm text-gray-500">Selected</div>
+                  <div className="text-sm text-gray-700">{selectedCampaign.selected ? selectedCampaign.selected.name : 'None'}</div>
+                </div>
+
+                <div className="flex items-center justify-end gap-2">
+                  <Button variant="outline" onClick={() => setShowCampaignModal(false)}>Cancel</Button>
+                  <Button onClick={() => {
+                    // save changes
+                    setCampaigns(campaigns.map((c) => c.id === selectedCampaign.id ? { ...c, status: selectedCampaign.status, completedAt: selectedCampaign.status === 'Done' ? (c.completedAt || new Date().toISOString()) : c.completedAt } : c));
+                    setShowCampaignModal(false);
+                    setSelectedCampaign(null);
+                  }}>Save</Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
       </main>
 
       {showCreateCampaign && (
