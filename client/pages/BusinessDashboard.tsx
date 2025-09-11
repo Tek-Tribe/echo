@@ -127,18 +127,6 @@ export default function BusinessDashboard() {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Influencers</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <div className="p-2 border rounded">Alex Johnson • @alex • 45k followers</div>
-                <div className="p-2 border rounded">Emma Wellness • @emma • 32k followers</div>
-                <div className="p-2 border rounded">Mike Strong • @mike • 18k followers</div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
         <section className="bg-white rounded border p-4">
