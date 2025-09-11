@@ -140,7 +140,7 @@ export default function BusinessDashboard() {
   const createCampaign = () => {
     const id = `c${Date.now()}`;
     const duration = { value: Number(newCampaign.durationValue || 0), unit: newCampaign.durationUnit || "days" };
-    setCampaigns([...campaigns, { id, type: newCampaign.type, platform: newCampaign.platform, postUrl: newCampaign.postUrl, business: currentBusiness.name, status: newCampaign.status || "Todo", budget: Number(newCampaign.budget || 0), bidStart: newCampaign.bidStart || undefined, bidEnd: newCampaign.bidEnd || undefined, duration, createdAt: new Date().toISOString(), postedAt: newCampaign.postedAt || undefined, completedAt: newCampaign.completedAt || undefined, reach: newCampaign.reach ? Number(newCampaign.reach) : undefined, participants: [], selected: undefined }]);
+    setCampaigns([...campaigns, { id, type: newCampaign.type, platform: newCampaign.platform, postUrl: newCampaign.postUrl, business: currentBusiness.name, status: newCampaign.status || "Todo", budget: Number(newCampaign.budget || 0), bidStart: newCampaign.bidStart || undefined, bidEnd: newCampaign.bidEnd || undefined, duration, createdAt: new Date().toISOString(), postedAt: newCampaign.postedAt || undefined, completedAt: newCampaign.completedAt || undefined, reach: newCampaign.reach ? Number(newCampaign.reach) : undefined, participants: [], selected: undefined, maxInfluencers: newCampaign.maxInfluencers ? Number(newCampaign.maxInfluencers) : 1 }]);
     setShowCreateCampaign(false);
     setNewCampaign({ type: "", platform: "", postUrl: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days", reach: "" });
   };
