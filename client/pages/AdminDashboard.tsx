@@ -910,8 +910,8 @@ export default function AdminDashboard() {
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" onClick={() => setShowMapPicker(true)}>Pick on map</Button>
-                <div className="text-sm text-gray-500 self-center">Or enter latitude / longitude manually</div>
+                <Button variant="outline" onClick={() => { setMapPickerTarget('business'); setMapPickerCoords({ lat: newBusiness.latitude ? Number(newBusiness.latitude) : undefined, lng: newBusiness.longitude ? Number(newBusiness.longitude) : undefined }); setShowMapPicker(true); }}>Pick on map</Button>
+                <div className="text-sm text-gray-500 self-center">Selected: {newBusiness.latitude && newBusiness.longitude ? `${Number(newBusiness.latitude).toFixed(6)}, ${Number(newBusiness.longitude).toFixed(6)}` : 'None'}</div>
               </div>
             </div>
             <div className="flex items-center justify-end gap-2 mt-4">
