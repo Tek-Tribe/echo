@@ -284,7 +284,7 @@ export default function AdminDashboard() {
             {role === "super_admin" && (
               <button onClick={() => setSection("managers")} className={`w-full flex items-center ${collapsed ? 'justify-center px-2' : 'text-left px-3 py-2'} rounded ${section === "managers" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}>
                 <UserPlus className="inline-block" />
-                {!collapsed && <span className="ml-2">Managers</span>}
+                {!collapsed && <span className="ml-2">Echo Users</span>}
               </button>
             )}
           </nav>
@@ -678,7 +678,7 @@ export default function AdminDashboard() {
               <button onClick={() => { setSection("businesses"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Businesses</button>
               <button onClick={() => { setSection("influencers"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Influencers</button>
               <button onClick={() => { setSection("jobs"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Jobs</button>
-              {role === "super_admin" && <button onClick={() => { setSection("managers"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Managers</button>}
+              {role === "super_admin" && <button onClick={() => { setSection("managers"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Echo Users</button>}
               <button onClick={() => { setSection("settings"); setMobileNavOpen(false); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-50">Settings</button>
             </nav>
           </aside>
