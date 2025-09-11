@@ -89,6 +89,46 @@ export default function BusinessDashboard() {
 
   const formatDate = (d?: string) => (d ? new Date(d).toLocaleString() : '—');
 
+  // Load Google Maps when map modals or view are used
+  useEffect(() => {
+    const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+    if (!apiKey) return;
+    if ((window as any).google) return; // already loaded
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
+    script.async = true;
+    document.head.appendChild(script);
+    return () => { if (script.parentNode) script.parentNode.removeChild(script); };
+  }, []);
+
+  useEffect(() => {
+    if (!(window as any).google) return;
+    // init view map
+    if (viewMapRef.current && currentBusiness.latitude && currentBusiness.longitude) {
+      // @ts-ignore
+      const map = new google.maps.Map(viewMapRef.current, { center: { lat: currentBusiness.latitude, lng: currentBusiness.longitude }, zoom: 12 });
+      // @ts-ignore
+      new google.maps.Marker({ position: { lat: currentBusiness.latitude, lng: currentBusiness.longitude }, map });
+    }
+  }, [currentBusiness.latitude, currentBusiness.longitude]);
+
+  useEffect(() => {
+    if (!showMapPicker) return;
+    if (!(window as any).google) return;
+    if (!pickerMapRef.current) return;
+    // @ts-ignore
+    const map = new google.maps.Map(pickerMapRef.current, { center: { lat: mapPickerCoords.lat || 20, lng: mapPickerCoords.lng || 0 }, zoom: 4 });
+    // @ts-ignore
+    let marker = new google.maps.Marker({ position: map.getCenter(), map });
+    map.addListener('click', (e: any) => {
+      const lat = e.latLng.lat();
+      const lng = e.latLng.lng();
+      if (marker) marker.setPosition({ lat, lng });
+      else marker = new google.maps.Marker({ position: { lat, lng }, map });
+      setMapPickerCoords({ lat, lng });
+    });
+  }, [showMapPicker, mapPickerCoords.lat, mapPickerCoords.lng]);
+
   const createCampaign = () => {
     const id = `c${Date.now()}`;
     const duration = { value: Number(newCampaign.durationValue || 0), unit: newCampaign.durationUnit || "days" };
