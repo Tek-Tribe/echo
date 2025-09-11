@@ -154,11 +154,16 @@ export default function BusinessDashboard() {
               <h1 className="text-lg font-semibold text-gray-900">{currentBusiness.name}</h1>
               <div className="text-sm text-gray-500">{currentBusiness.industry}</div>
             </div>
-            <div className="flex items-center gap-3">
-              <Link to="/">
-                <Button variant="ghost">Home</Button>
-              </Link>
-              <Button onClick={() => setShowCreateCampaign(true)}>Create Campaign</Button>
+            <div className="flex items-center gap-3 relative">
+              <div>
+                <button onClick={() => setShowUserMenu((s) => !s)} className="inline-flex items-center justify-center h-9 w-9 rounded-full bg-gray-100">{currentBusiness.name.charAt(0)}</button>
+                {showUserMenu && (
+                  <div className="absolute right-0 mt-10 w-40 bg-white border rounded shadow p-2">
+                    <button className="w-full text-left px-2 py-1 hover:bg-gray-50" onClick={() => { setShowSettingsModal(true); setShowUserMenu(false); }}>Settings</button>
+                    <button className="w-full text-left px-2 py-1 hover:bg-gray-50" onClick={() => alert('Logged out')}>Logout</button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
