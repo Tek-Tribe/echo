@@ -20,6 +20,11 @@ export default function BusinessDashboard() {
   const [editingBusiness, setEditingBusiness] = useState(false);
   const [editedBusiness, setEditedBusiness] = useState<any>(currentBusiness);
 
+  const [showMapPicker, setShowMapPicker] = useState(false);
+  const pickerMapRef = useRef<HTMLDivElement | null>(null);
+  const viewMapRef = useRef<HTMLDivElement | null>(null);
+  const [mapPickerCoords, setMapPickerCoords] = useState<{ lat?: number; lng?: number }>({});
+
   const [campaigns, setCampaigns] = useState<any[]>([
     {
       id: "c1",
