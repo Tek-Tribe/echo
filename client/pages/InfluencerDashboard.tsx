@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,11 +19,8 @@ import {
   TrendingUp,
   Clock,
   Star,
-  Instagram,
   Eye,
   Heart,
-  MessageCircle,
-  Share2,
   Filter,
   ArrowRight,
   CheckCircle,
@@ -34,9 +31,10 @@ import {
   ChevronDown,
   Upload,
   Camera,
-  Link as LinkIcon,
   Menu,
   X,
+  Settings,
+  Wallet as WalletIcon,
 } from "lucide-react";
 import { EchoCoinIcon } from "@/components/EchoCoinIcon";
 
@@ -86,20 +84,46 @@ interface ActiveCampaign {
   };
 }
 
+interface InfluencerProfile {
+  id: string;
+  name: string;
+  email: string;
+  followers: number;
+  categories: string[];
+  platforms: string[];
+}
+
 export default function InfluencerDashboard() {
-  const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(
-    null,
+  // App view state
+  const [view, setView] = useState<"dashboard" | "settings">("dashboard");
+  const [theme, setTheme] = useState<"light" | "dark">(
+    (localStorage.getItem("theme") as "light" | "dark") || "light",
   );
-  const [showBidModal, setShowBidModal] = useState(false);
-  const [bidEchoCoins, setBidEchoCoins] = useState("");
-  const [bidProposal, setBidProposal] = useState("");
-  const [showEvidenceModal, setShowEvidenceModal] = useState(false);
-  const [selectedActiveCampaign, setSelectedActiveCampaign] =
-    useState<ActiveCampaign | null>(null);
-  const [evidenceLinks, setEvidenceLinks] = useState("");
-  const [evidenceDescription, setEvidenceDescription] = useState("");
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [theme]);
+
+  // Demo influencer profile for matching logic
+  const [me, setMe] = useState<InfluencerProfile>({
+    id: "i1",
+    name: "Jane Doe",
+    email: "jane@example.com",
+    followers: 45000,
+    categories: ["Fitness", "Lifestyle"],
+    platforms: ["Instagram", "TikTok"],
+  });
+
+  // Header/mobile
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Campaigns and bids
   const [campaigns] = useState<Campaign[]>([
     {
       id: "1",
@@ -160,6 +184,19 @@ export default function InfluencerDashboard() {
     },
   ]);
 
+  const matchingCampaigns = useMemo(() => {
+    return campaigns.filter((c) => {
+      const meetsFollowers = me.followers >= c.requirements.minFollowers;
+      const matchesCategory = c.requirements.categories.some((cat) =>
+        me.categories.includes(cat),
+      );
+      const matchesPlatform = c.requirements.platforms.some((p) =>
+        me.platforms.includes(p),
+      );
+      return meetsFollowers && matchesCategory && matchesPlatform && c.status === "open";
+    });
+  }, [campaigns, me]);
+
   const [myBids] = useState<Bid[]>([
     {
       id: "1",
@@ -213,10 +250,38 @@ export default function InfluencerDashboard() {
         submittedAt: "2024-01-20",
       },
     },
+    {
+      id: "4",
+      title: "Ambassador Post",
+      businessName: "EcoStyle",
+      type: "Brand Partnership",
+      echoCoins: 1600,
+      deadline: "2023-12-20",
+      requirements: "Monthly post with styling freedom",
+      status: "completed",
+    },
   ]);
 
+  const inProgressCampaigns = activeCampaigns.filter(
+    (c) => c.status === "in-progress" || c.status === "awaiting-review",
+  );
+  const completedCampaigns = activeCampaigns.filter(
+    (c) => c.status === "completed",
+  );
+
+  // Bid/Evidence modals
+  const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
+  const [showBidModal, setShowBidModal] = useState(false);
+  const [bidEchoCoins, setBidEchoCoins] = useState("");
+  const [bidProposal, setBidProposal] = useState("");
+
+  const [showEvidenceModal, setShowEvidenceModal] = useState(false);
+  const [selectedActiveCampaign, setSelectedActiveCampaign] =
+    useState<ActiveCampaign | null>(null);
+  const [evidenceLinks, setEvidenceLinks] = useState("");
+  const [evidenceDescription, setEvidenceDescription] = useState("");
+
   const handleSubmitBid = () => {
-    // Handle bid submission logic here
     setShowBidModal(false);
     setBidEchoCoins("");
     setBidProposal("");
@@ -224,21 +289,43 @@ export default function InfluencerDashboard() {
   };
 
   const handleSubmitEvidence = () => {
-    // Handle evidence submission logic here
     setShowEvidenceModal(false);
     setEvidenceLinks("");
     setEvidenceDescription("");
     setSelectedActiveCampaign(null);
   };
 
+  // Wallet state
+  const [wallet] = useState({
+    balance: 2150,
+    pending: 450,
+    withdrawn: 3200,
+    transactions: [
+      { id: "t1", type: "credit", amount: 1200, note: "TechWear - Video Review", date: "2024-01-10" },
+      { id: "t2", type: "debit", amount: 500, note: "Withdrawal", date: "2024-01-12" },
+      { id: "t3", type: "credit", amount: 450, note: "FitnessNutrition - Feed Post", date: "2024-01-20" },
+    ] as { id: string; type: "credit" | "debit"; amount: number; note: string; date: string }[],
+  });
+
   const influencerStats = {
-    totalEarnings: 8500,
-    activeCampaigns: activeCampaigns.length,
-    completedCampaigns: 12,
+    totalEarnings: wallet.withdrawn + wallet.balance,
+    activeCampaigns: inProgressCampaigns.length,
+    completedCampaigns: completedCampaigns.length,
     averageRating: 4.8,
-    followers: 45000,
+    followers: me.followers,
     engagement: 6.2,
   };
+
+  // Settings state
+  const [account, setAccount] = useState({
+    name: me.name,
+    email: me.email,
+    password: "",
+  });
+  const [platform, setPlatform] = useState({
+    currency: "EC",
+    timezone: "UTC",
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -289,42 +376,30 @@ export default function InfluencerDashboard() {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="text-gray-600 p-2"
               >
-                {mobileMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
+                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </Button>
             </div>
             <div className="flex items-center space-x-4">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="flex items-center space-x-2 hover:bg-gray-50"
-                  >
+                  <Button variant="ghost" className="flex items-center space-x-2 hover:bg-gray-50">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src="/placeholder.svg" />
                       <AvatarFallback>JD</AvatarFallback>
                     </Avatar>
                     <span className="hidden md:block text-sm font-medium text-gray-700">
-                      Jane Doe
+                      {me.name}
                     </span>
                     <ChevronDown className="h-4 w-4 text-gray-500" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem className="flex items-center gap-2">
-                    <span>Profile Settings</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="flex items-center gap-2">
-                    <span>Earnings</span>
+                  <DropdownMenuItem className="flex items-center gap-2" onClick={() => setView("settings")}> 
+                    <Settings className="h-4 w-4" />
+                    <span>Settings</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link
-                      to="/"
-                      className="flex items-center gap-2 text-red-600"
-                    >
+                    <Link to="/" className="flex items-center gap-2 text-red-600">
                       <LogOut className="h-4 w-4" />
                       <span>Logout</span>
                     </Link>
@@ -338,594 +413,580 @@ export default function InfluencerDashboard() {
           {mobileMenuOpen && (
             <div className="md:hidden border-t border-gray-200 bg-white">
               <div className="px-2 pt-2 pb-3 space-y-1">
-                <a
-                  href="#"
-                  className="block px-3 py-2 text-base font-medium text-brand-600"
-                >
+                <a href="#" className="block px-3 py-2 text-base font-medium text-brand-600">
                   Dashboard
                 </a>
-                <a
-                  href="#"
-                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700"
-                >
+                <a href="#" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700">
                   My Campaigns
                 </a>
-                <a
-                  href="#"
-                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700"
-                >
+                <a href="#" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700">
                   Earnings
                 </a>
-                <a
-                  href="#"
-                  className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700"
-                >
-                  Profile
+                <a href="#" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700" onClick={() => setView("settings")}>
+                  Settings
                 </a>
+                <Link to="/" className="block px-3 py-2 text-base font-medium text-red-600">
+                  Logout
+                </Link>
               </div>
             </div>
           )}
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Dashboard Header */}
-        <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-            Influencer Dashboard
-          </h1>
-          <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">
-            Discover campaigns and grow your influence
-          </p>
-        </div>
+      {view === "dashboard" && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+          {/* Dashboard Header */}
+          <div className="mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Influencer Dashboard</h1>
+            <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">Discover campaigns and grow your influence</p>
+          </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-6 mb-6 sm:mb-8">
-          <Card>
-            <CardContent className="p-3 sm:p-6">
-              <div className="flex flex-col sm:flex-row sm:items-center">
-                <div className="flex-shrink-0 mb-2 sm:mb-0">
-                  <div className="w-8 h-8 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto sm:mx-0">
-                    <EchoCoinIcon className="h-4 w-4 sm:h-6 sm:w-6 text-green-600" />
-                  </div>
-                </div>
-                <div className="sm:ml-4 text-center sm:text-left min-w-0">
-                  <div className="text-xs sm:text-sm font-medium text-gray-500 truncate">
-                    Total Earnings
-                  </div>
-                  <div className="text-lg sm:text-2xl font-bold text-gray-900">
-                    {influencerStats.totalEarnings.toLocaleString()} EC
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-3 sm:p-6">
-              <div className="flex flex-col sm:flex-row sm:items-center">
-                <div className="flex-shrink-0 mb-2 sm:mb-0">
-                  <div className="w-8 h-8 sm:w-12 sm:h-12 bg-brand-100 rounded-lg flex items-center justify-center mx-auto sm:mx-0">
-                    <TrendingUp className="h-4 w-4 sm:h-6 sm:w-6 text-brand-600" />
-                  </div>
-                </div>
-                <div className="sm:ml-4 text-center sm:text-left min-w-0">
-                  <div className="text-xs sm:text-sm font-medium text-gray-500 truncate">
-                    Active Campaigns
-                  </div>
-                  <div className="text-lg sm:text-2xl font-bold text-gray-900">
-                    {influencerStats.activeCampaigns}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <CheckCircle className="h-6 w-6 text-blue-600" />
-                  </div>
-                </div>
-                <div className="ml-4">
-                  <div className="text-sm font-medium text-gray-500">
-                    Completed
-                  </div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {influencerStats.completedCampaigns}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                    <Star className="h-6 w-6 text-yellow-600" />
-                  </div>
-                </div>
-                <div className="ml-4">
-                  <div className="text-sm font-medium text-gray-500">
-                    Rating
-                  </div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {influencerStats.averageRating}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <Users className="h-6 w-6 text-purple-600" />
-                  </div>
-                </div>
-                <div className="ml-4">
-                  <div className="text-sm font-medium text-gray-500">
-                    Followers
-                  </div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {(influencerStats.followers / 1000).toFixed(0)}K
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center">
-                    <Heart className="h-6 w-6 text-pink-600" />
-                  </div>
-                </div>
-                <div className="ml-4">
-                  <div className="text-sm font-medium text-gray-500">
-                    Engagement
-                  </div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {influencerStats.engagement}%
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Main Content */}
-        <Tabs defaultValue="opportunities" className="space-y-4 sm:space-y-6">
-          <TabsList className="grid w-full grid-cols-3 h-auto">
-            <TabsTrigger
-              value="opportunities"
-              className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2"
-            >
-              Available
-            </TabsTrigger>
-            <TabsTrigger
-              value="my-bids"
-              className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2"
-            >
-              My Bids
-            </TabsTrigger>
-            <TabsTrigger
-              value="active-campaigns"
-              className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2"
-            >
-              Active
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="opportunities" className="space-y-4 sm:space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
-              <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
-                Available Campaigns
-              </h2>
-              <Button
-                variant="outline"
-                className="flex items-center gap-2 self-start sm:self-auto"
-              >
-                <Filter className="h-4 w-4" />
-                Filter
-              </Button>
-            </div>
-
-            <div className="grid gap-4 sm:gap-6">
-              {campaigns.map((campaign) => (
-                <Card
-                  key={campaign.id}
-                  className="hover:shadow-lg transition-shadow"
-                >
-                  <CardContent className="p-4 sm:p-6">
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4 mb-4">
-                      <div className="flex items-center gap-3 sm:gap-4">
-                        <Avatar className="h-10 w-10 sm:h-12 sm:w-12">
-                          <AvatarImage src={campaign.businessLogo} />
-                          <AvatarFallback>
-                            {campaign.businessName.charAt(0)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="min-w-0 flex-1">
-                          <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">
-                            {campaign.title}
-                          </h3>
-                          <p className="text-sm text-gray-500">
-                            {campaign.businessName}
-                          </p>
-                        </div>
-                      </div>
-                      <Badge className="bg-green-100 text-green-800 hover:bg-green-100 self-start">
-                        <Target className="h-3 w-3 mr-1" />
-                        {campaign.type}
-                      </Badge>
+          {/* Stats Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-6 mb-6 sm:mb-8">
+            <Card>
+              <CardContent className="p-3 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center">
+                  <div className="flex-shrink-0 mb-2 sm:mb-0">
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto sm:mx-0">
+                      <EchoCoinIcon className="h-4 w-4 sm:h-6 sm:w-6 text-green-600" />
                     </div>
+                  </div>
+                  <div className="sm:ml-4 text-center sm:text-left min-w-0">
+                    <div className="text-xs sm:text-sm font-medium text-gray-500 truncate">Total Earnings</div>
+                    <div className="text-lg sm:text-2xl font-bold text-gray-900">{influencerStats.totalEarnings.toLocaleString()} EC</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-3 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center">
+                  <div className="flex-shrink-0 mb-2 sm:mb-0">
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 bg-brand-100 rounded-lg flex items-center justify-center mx-auto sm:mx-0">
+                      <TrendingUp className="h-4 w-4 sm:h-6 sm:w-6 text-brand-600" />
+                    </div>
+                  </div>
+                  <div className="sm:ml-4 text-center sm:text-left min-w-0">
+                    <div className="text-xs sm:text-sm font-medium text-gray-500 truncate">Active Campaigns</div>
+                    <div className="text-lg sm:text-2xl font-bold text-gray-900">{influencerStats.activeCampaigns}</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <CheckCircle className="h-6 w-6 text-blue-600" />
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <div className="text-sm font-medium text-gray-500">Completed</div>
+                    <div className="text-2xl font-bold text-gray-900">{influencerStats.completedCampaigns}</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                      <Star className="h-6 w-6 text-yellow-600" />
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <div className="text-sm font-medium text-gray-500">Rating</div>
+                    <div className="text-2xl font-bold text-gray-900">{influencerStats.averageRating}</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <Users className="h-6 w-6 text-purple-600" />
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <div className="text-sm font-medium text-gray-500">Followers</div>
+                    <div className="text-2xl font-bold text-gray-900">{(influencerStats.followers / 1000).toFixed(0)}K</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center">
+                      <Heart className="h-6 w-6 text-pink-600" />
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <div className="text-sm font-medium text-gray-500">Engagement</div>
+                    <div className="text-2xl font-bold text-gray-900">{influencerStats.engagement}%</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-                    <p className="text-sm sm:text-base text-gray-600 mb-4">
-                      {campaign.description}
-                    </p>
+          {/* Main Content */}
+          <Tabs defaultValue="opportunities" className="space-y-4 sm:space-y-6">
+            <TabsList className="grid w-full grid-cols-4 h-auto">
+              <TabsTrigger value="opportunities" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">Matching</TabsTrigger>
+              <TabsTrigger value="my-bids" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">My Bids</TabsTrigger>
+              <TabsTrigger value="active-campaigns" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">Active</TabsTrigger>
+              <TabsTrigger value="wallet" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">Wallet</TabsTrigger>
+            </TabsList>
 
-                    <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-4">
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between text-xs sm:text-sm">
-                          <span className="text-gray-500">
-                            Echo Coin Range:
-                          </span>
-                          <span className="font-semibold text-gray-900">
-                            {campaign.echoCoinRange.min} -{" "}
-                            {campaign.echoCoinRange.max} EC
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between text-xs sm:text-sm">
-                          <span className="text-gray-500">
-                            Max Influencers:
-                          </span>
-                          <span className="font-semibold text-gray-900">
-                            {campaign.maxInfluencers}
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between text-xs sm:text-sm">
-                          <span className="text-gray-500">Current Bids:</span>
-                          <span className="font-semibold text-brand-600">
-                            {campaign.currentBids}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between text-xs sm:text-sm">
-                          <span className="text-gray-500">Min Followers:</span>
-                          <span className="font-semibold text-gray-900">
-                            {(
-                              campaign.requirements.minFollowers / 1000
-                            ).toFixed(0)}
-                            K
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between text-xs sm:text-sm">
-                          <span className="text-gray-500">Deadline:</span>
-                          <span className="font-semibold text-gray-900">
-                            {new Date(campaign.deadline).toLocaleDateString()}
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between text-xs sm:text-sm">
-                          <span className="text-gray-500">Platforms:</span>
-                          <div className="flex gap-1">
-                            {campaign.requirements.platforms.map((platform) => (
-                              <Badge
-                                key={platform}
-                                variant="outline"
-                                className="text-xs"
-                              >
-                                {platform}
-                              </Badge>
-                            ))}
+            <TabsContent value="opportunities" className="space-y-4 sm:space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Jobs Matching For You</h2>
+                <Button variant="outline" className="flex items-center gap-2 self-start sm:self-auto">
+                  <Filter className="h-4 w-4" />
+                  Filter
+                </Button>
+              </div>
+
+              <div className="grid gap-4 sm:gap-6">
+                {matchingCampaigns.length === 0 && (
+                  <Card>
+                    <CardContent className="p-6 text-gray-600">No matching campaigns right now. Check back soon.</CardContent>
+                  </Card>
+                )}
+                {matchingCampaigns.map((campaign) => (
+                  <Card key={campaign.id} className="hover:shadow-lg transition-shadow">
+                    <CardContent className="p-4 sm:p-6">
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4 mb-4">
+                        <div className="flex items-center gap-3 sm:gap-4">
+                          <Avatar className="h-10 w-10 sm:h-12 sm:w-12">
+                            <AvatarImage src={campaign.businessLogo} />
+                            <AvatarFallback>{campaign.businessName.charAt(0)}</AvatarFallback>
+                          </Avatar>
+                          <div className="min-w-0 flex-1">
+                            <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">{campaign.title}</h3>
+                            <p className="text-sm text-gray-500">{campaign.businessName}</p>
                           </div>
                         </div>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                      <div className="flex flex-wrap gap-1 sm:gap-2">
-                        {campaign.requirements.categories.map((category) => (
-                          <Badge
-                            key={category}
-                            variant="secondary"
-                            className="text-xs"
-                          >
-                            {category}
-                          </Badge>
-                        ))}
-                      </div>
-                      <Button
-                        onClick={() => {
-                          setSelectedCampaign(campaign);
-                          setShowBidModal(true);
-                        }}
-                        className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white text-sm"
-                      >
-                        Submit Bid
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="my-bids" className="space-y-4 sm:space-y-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
-              My Submitted Bids
-            </h2>
-
-            <div className="space-y-3 sm:space-y-4">
-              {myBids.map((bid) => (
-                <Card key={bid.id}>
-                  <CardContent className="p-4 sm:p-6">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
-                      <h3 className="text-base sm:text-lg font-semibold text-gray-900">
-                        {bid.campaignTitle}
-                      </h3>
-                      <Badge
-                        variant={
-                          bid.status === "accepted"
-                            ? "default"
-                            : bid.status === "rejected"
-                              ? "destructive"
-                              : "secondary"
-                        }
-                        className={
-                          bid.status === "accepted"
-                            ? "bg-green-100 text-green-800 hover:bg-green-100"
-                            : bid.status === "pending"
-                              ? "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"
-                              : ""
-                        }
-                      >
-                        {bid.status === "accepted" && (
-                          <CheckCircle className="h-3 w-3 mr-1" />
-                        )}
-                        {bid.status === "pending" && (
-                          <Clock className="h-3 w-3 mr-1" />
-                        )}
-                        {bid.status === "rejected" && (
-                          <AlertCircle className="h-3 w-3 mr-1" />
-                        )}
-                        {bid.status.charAt(0).toUpperCase() +
-                          bid.status.slice(1)}
-                      </Badge>
-                    </div>
-                    <p className="text-sm sm:text-base text-gray-600 mb-4">
-                      {bid.proposal}
-                    </p>
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 text-xs sm:text-sm">
-                      <span className="font-semibold text-gray-900">
-                        Bid Amount: {bid.echoCoins} EC
-                      </span>
-                      <span className="text-gray-500">
-                        Submitted{" "}
-                        {new Date(bid.submittedAt).toLocaleDateString()}
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent
-            value="active-campaigns"
-            className="space-y-4 sm:space-y-6"
-          >
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
-              Active Campaigns
-            </h2>
-
-            {activeCampaigns.length === 0 ? (
-              <Card>
-                <CardContent className="p-8 text-center">
-                  <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    No Active Campaigns
-                  </h3>
-                  <p className="text-gray-600">
-                    Once your bids are accepted, you'll see active campaigns
-                    here to manage and submit proof of completion.
-                  </p>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="space-y-4">
-                {activeCampaigns.map((campaign) => (
-                  <Card key={campaign.id}>
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900">
-                            {campaign.title}
-                          </h3>
-                          <p className="text-sm text-gray-500">
-                            {campaign.businessName}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-xl font-bold text-green-600">
-                            {campaign.echoCoins} EC
-                          </div>
-                          <Badge
-                            variant={
-                              campaign.status === "completed"
-                                ? "default"
-                                : campaign.status === "awaiting-review"
-                                  ? "secondary"
-                                  : "outline"
-                            }
-                            className={
-                              campaign.status === "completed"
-                                ? "bg-green-100 text-green-800 hover:bg-green-100"
-                                : campaign.status === "awaiting-review"
-                                  ? "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"
-                                  : "bg-blue-100 text-blue-800 hover:bg-blue-100"
-                            }
-                          >
-                            {campaign.status === "completed" && (
-                              <CheckCircle className="h-3 w-3 mr-1" />
-                            )}
-                            {campaign.status === "awaiting-review" && (
-                              <Clock className="h-3 w-3 mr-1" />
-                            )}
-                            {campaign.status === "in-progress" && (
-                              <AlertCircle className="h-3 w-3 mr-1" />
-                            )}
-                            {campaign.status.replace("-", " ")}
-                          </Badge>
-                        </div>
-                      </div>
-
-                      <p className="text-gray-600 mb-4">
-                        {campaign.requirements}
-                      </p>
-
-                      <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="h-4 w-4" />
-                          Deadline:{" "}
-                          {new Date(campaign.deadline).toLocaleDateString()}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Target className="h-4 w-4" />
+                        <Badge className="bg-green-100 text-green-800 hover:bg-green-100 self-start">
+                          <Target className="h-3 w-3 mr-1" />
                           {campaign.type}
-                        </span>
+                        </Badge>
                       </div>
 
-                      {campaign.evidenceSubmitted ? (
-                        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                          <div className="flex items-center gap-2 mb-2">
-                            <CheckCircle className="h-5 w-5 text-green-600" />
-                            <span className="font-medium text-green-800">
-                              Evidence Submitted
-                            </span>
+                      <p className="text-sm sm:text-base text-gray-600 mb-4">{campaign.description}</p>
+
+                      <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-4">
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between text-xs sm:text-sm">
+                            <span className="text-gray-500">Echo Coin Range:</span>
+                            <span className="font-semibold text-gray-900">{campaign.echoCoinRange.min} - {campaign.echoCoinRange.max} EC</span>
                           </div>
-                          <p className="text-sm text-green-700 mb-2">
-                            {campaign.evidenceSubmitted.description}
-                          </p>
-                          <div className="flex items-center gap-4 text-xs text-green-600">
-                            <span>
-                              {campaign.evidenceSubmitted.screenshots.length}{" "}
-                              screenshots
-                            </span>
-                            <span>
-                              {campaign.evidenceSubmitted.links.length} links
-                            </span>
-                            <span>
-                              Submitted{" "}
-                              {new Date(
-                                campaign.evidenceSubmitted.submittedAt,
-                              ).toLocaleDateString()}
-                            </span>
+                          <div className="flex items-center justify-between text-xs sm:text-sm">
+                            <span className="text-gray-500">Max Influencers:</span>
+                            <span className="font-semibold text-gray-900">{campaign.maxInfluencers}</span>
+                          </div>
+                          <div className="flex items-center justify-between text-xs sm:text-sm">
+                            <span className="text-gray-500">Current Bids:</span>
+                            <span className="font-semibold text-brand-600">{campaign.currentBids}</span>
                           </div>
                         </div>
-                      ) : (
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between text-xs sm:text-sm">
+                            <span className="text-gray-500">Min Followers:</span>
+                            <span className="font-semibold text-gray-900">{(campaign.requirements.minFollowers / 1000).toFixed(0)}K</span>
+                          </div>
+                          <div className="flex items-center justify-between text-xs sm:text-sm">
+                            <span className="text-gray-500">Deadline:</span>
+                            <span className="font-semibold text-gray-900">{new Date(campaign.deadline).toLocaleDateString()}</span>
+                          </div>
+                          <div className="flex items-center justify-between text-xs sm:text-sm">
+                            <span className="text-gray-500">Platforms:</span>
+                            <div className="flex gap-1">
+                              {campaign.requirements.platforms.map((platform) => (
+                                <Badge key={platform} variant="outline" className="text-xs">{platform}</Badge>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <div className="flex flex-wrap gap-1 sm:gap-2">
+                          {campaign.requirements.categories.map((category) => (
+                            <Badge key={category} variant="secondary" className="text-xs">{category}</Badge>
+                          ))}
+                        </div>
                         <Button
                           onClick={() => {
-                            setSelectedActiveCampaign(campaign);
-                            setShowEvidenceModal(true);
+                            setSelectedCampaign(campaign);
+                            setShowBidModal(true);
                           }}
-                          className="w-full bg-brand-600 hover:bg-brand-700 text-white"
+                          className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white text-sm"
                         >
-                          <Upload className="h-4 w-4 mr-2" />
-                          Submit Evidence
+                          Submit Bid
+                          <ArrowRight className="h-4 w-4 ml-2" />
                         </Button>
-                      )}
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
               </div>
-            )}
-          </TabsContent>
-        </Tabs>
-      </div>
+            </TabsContent>
+
+            <TabsContent value="my-bids" className="space-y-4 sm:space-y-6">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900">My Submitted Bids</h2>
+
+              <div className="space-y-3 sm:space-y-4">
+                {myBids.map((bid) => (
+                  <Card key={bid.id}>
+                    <CardContent className="p-4 sm:p-6">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
+                        <h3 className="text-base sm:text-lg font-semibold text-gray-900">{bid.campaignTitle}</h3>
+                        <Badge
+                          variant={
+                            bid.status === "accepted"
+                              ? "default"
+                              : bid.status === "rejected"
+                              ? "destructive"
+                              : "secondary"
+                          }
+                          className={
+                            bid.status === "accepted"
+                              ? "bg-green-100 text-green-800 hover:bg-green-100"
+                              : bid.status === "pending"
+                              ? "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"
+                              : ""
+                          }
+                        >
+                          {bid.status === "accepted" && <CheckCircle className="h-3 w-3 mr-1" />}
+                          {bid.status === "pending" && <Clock className="h-3 w-3 mr-1" />}
+                          {bid.status === "rejected" && <AlertCircle className="h-3 w-3 mr-1" />}
+                          {bid.status.charAt(0).toUpperCase() + bid.status.slice(1)}
+                        </Badge>
+                      </div>
+                      <p className="text-sm sm:text-base text-gray-600 mb-4">{bid.proposal}</p>
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 text-xs sm:text-sm">
+                        <span className="font-semibold text-gray-900">Bid Amount: {bid.echoCoins} EC</span>
+                        <span className="text-gray-500">Submitted {new Date(bid.submittedAt).toLocaleDateString()}</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="active-campaigns" className="space-y-6">
+              <div className="space-y-4">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900">In Progress</h2>
+                {inProgressCampaigns.length === 0 ? (
+                  <Card>
+                    <CardContent className="p-8 text-center">
+                      <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No Active Campaigns</h3>
+                      <p className="text-gray-600">Once your bids are accepted, you'll see active campaigns here to manage and submit proof of completion.</p>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <div className="space-y-4">
+                    {inProgressCampaigns.map((campaign) => (
+                      <Card key={campaign.id}>
+                        <CardContent className="p-6">
+                          <div className="flex items-center justify-between mb-4">
+                            <div>
+                              <h3 className="text-lg font-semibold text-gray-900">{campaign.title}</h3>
+                              <p className="text-sm text-gray-500">{campaign.businessName}</p>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-xl font-bold text-green-600">{campaign.echoCoins} EC</div>
+                              <Badge
+                                variant={
+                                  campaign.status === "completed"
+                                    ? "default"
+                                    : campaign.status === "awaiting-review"
+                                    ? "secondary"
+                                    : "outline"
+                                }
+                                className={
+                                  campaign.status === "completed"
+                                    ? "bg-green-100 text-green-800 hover:bg-green-100"
+                                    : campaign.status === "awaiting-review"
+                                    ? "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"
+                                    : "bg-blue-100 text-blue-800 hover:bg-blue-100"
+                                }
+                              >
+                                {campaign.status === "completed" && <CheckCircle className="h-3 w-3 mr-1" />}
+                                {campaign.status === "awaiting-review" && <Clock className="h-3 w-3 mr-1" />}
+                                {campaign.status === "in-progress" && <AlertCircle className="h-3 w-3 mr-1" />}
+                                {campaign.status.replace("-", " ")}
+                              </Badge>
+                            </div>
+                          </div>
+
+                          <p className="text-gray-600 mb-4">{campaign.requirements}</p>
+
+                          <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                            <span className="flex items-center gap-1">
+                              <Calendar className="h-4 w-4" />
+                              Deadline: {new Date(campaign.deadline).toLocaleDateString()}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <Target className="h-4 w-4" />
+                              {campaign.type}
+                            </span>
+                          </div>
+
+                          {campaign.evidenceSubmitted ? (
+                            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <CheckCircle className="h-5 w-5 text-green-600" />
+                                <span className="font-medium text-green-800">Evidence Submitted</span>
+                              </div>
+                              <p className="text-sm text-green-700 mb-2">{campaign.evidenceSubmitted.description}</p>
+                              <div className="flex items-center gap-4 text-xs text-green-600">
+                                <span>{campaign.evidenceSubmitted.screenshots.length} screenshots</span>
+                                <span>{campaign.evidenceSubmitted.links.length} links</span>
+                                <span>Submitted {new Date(campaign.evidenceSubmitted.submittedAt).toLocaleDateString()}</span>
+                              </div>
+                            </div>
+                          ) : (
+                            <Button
+                              onClick={() => {
+                                setSelectedActiveCampaign(campaign);
+                                setShowEvidenceModal(true);
+                              }}
+                              className="w-full bg-brand-600 hover:bg-brand-700 text-white"
+                            >
+                              <Upload className="h-4 w-4 mr-2" />
+                              Submit Evidence
+                            </Button>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-4">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Completed</h2>
+                {completedCampaigns.length === 0 ? (
+                  <Card>
+                    <CardContent className="p-6 text-gray-600">No completed campaigns yet.</CardContent>
+                  </Card>
+                ) : (
+                  <div className="space-y-4">
+                    {completedCampaigns.map((c) => (
+                      <Card key={c.id}>
+                        <CardContent className="p-6">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="font-semibold">{c.title}</div>
+                              <div className="text-sm text-gray-500">{c.businessName} • {c.type}</div>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-green-600 font-bold">+{c.echoCoins} EC</div>
+                              <Badge className="bg-green-100 text-green-800">Completed</Badge>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="wallet" className="space-y-4 sm:space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2"><WalletIcon className="h-5 w-5" /> Balance</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6 pt-0">
+                    <div className="text-3xl font-bold">{wallet.balance.toLocaleString()} EC</div>
+                    <div className="text-sm text-gray-500 mt-1">Available</div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Pending</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6 pt-0">
+                    <div className="text-3xl font-bold">{wallet.pending.toLocaleString()} EC</div>
+                    <div className="text-sm text-gray-500 mt-1">Awaiting approval</div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Withdrawn</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6 pt-0">
+                    <div className="text-3xl font-bold">{wallet.withdrawn.toLocaleString()} EC</div>
+                    <div className="text-sm text-gray-500 mt-1">All-time</div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Recent Transactions</CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full text-sm">
+                      <thead className="text-left text-xs text-gray-500">
+                        <tr>
+                          <th className="px-4 py-2">Date</th>
+                          <th className="px-4 py-2">Details</th>
+                          <th className="px-4 py-2">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-gray-700">
+                        {wallet.transactions.map((t) => (
+                          <tr key={t.id} className="border-t">
+                            <td className="px-4 py-2">{new Date(t.date).toLocaleDateString()}</td>
+                            <td className="px-4 py-2">{t.note}</td>
+                            <td className={`px-4 py-2 font-semibold ${t.type === "credit" ? "text-green-600" : "text-red-600"}`}>
+                              {t.type === "credit" ? "+" : "-"}
+                              {t.amount} EC
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </div>
+      )}
+
+      {view === "settings" && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-bold">Settings</h2>
+            <Button variant="outline" onClick={() => setView("dashboard")}>Back</Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Account</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4">
+                <div className="space-y-3">
+                  <div>
+                    <Label>Name</Label>
+                    <Input value={account.name} onChange={(e) => setAccount({ ...account, name: e.target.value })} className="h-10" />
+                  </div>
+                  <div>
+                    <Label>Email</Label>
+                    <Input value={account.email} onChange={(e) => setAccount({ ...account, email: e.target.value })} className="h-10" />
+                  </div>
+                  <div>
+                    <Label>Password</Label>
+                    <Input type="password" value={account.password} onChange={(e) => setAccount({ ...account, password: e.target.value })} className="h-10" />
+                  </div>
+                  <div className="flex gap-2">
+                    <Button className="flex-1" onClick={() => setMe({ ...me, name: account.name, email: account.email })}>Save</Button>
+                    <Button variant="outline" className="flex-1" onClick={() => setAccount({ name: me.name, email: me.email, password: "" })}>Reset</Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Platform</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4">
+                <div className="space-y-3">
+                  <div>
+                    <Label>Default Currency</Label>
+                    <select className="w-full border rounded h-10 px-2" value={platform.currency} onChange={(e) => setPlatform({ ...platform, currency: e.target.value })}>
+                      <option value="EC">Echo Coin (EC)</option>
+                      <option value="USD">USD</option>
+                      <option value="INR">INR</option>
+                    </select>
+                  </div>
+                  <div>
+                    <Label>Timezone</Label>
+                    <select className="w-full border rounded h-10 px-2" value={platform.timezone} onChange={(e) => setPlatform({ ...platform, timezone: e.target.value })}>
+                      <option value="UTC">UTC</option>
+                      <option value="America/New_York">America/New_York</option>
+                      <option value="Asia/Kolkata">Asia/Kolkata</option>
+                    </select>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button className="flex-1">Save</Button>
+                    <Button variant="outline" className="flex-1" onClick={() => setPlatform({ currency: "EC", timezone: "UTC" })}>Reset</Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Appearance</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <div className="font-medium">Theme</div>
+                    <div className="text-xs text-gray-500">Choose light or dark — changes apply immediately</div>
+                  </div>
+                  <select className="border rounded h-10 px-2" value={theme} onChange={(e) => setTheme(e.target.value as "light" | "dark")}> 
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                  </select>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      )}
 
       {/* Bid Submission Modal */}
       {showBidModal && selectedCampaign && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-3 sm:p-4 z-50">
           <Card className="w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg sm:text-xl pr-8">
-                Submit Bid for {selectedCampaign.title}
-              </CardTitle>
+              <CardTitle className="text-lg sm:text-xl pr-8">Submit Bid for {selectedCampaign.title}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 sm:space-y-6">
               <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                  Campaign Details
-                </h4>
-                <p className="text-xs sm:text-sm text-gray-600 mb-2">
-                  {selectedCampaign.description}
-                </p>
+                <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">Campaign Details</h4>
+                <p className="text-xs sm:text-sm text-gray-600 mb-2">{selectedCampaign.description}</p>
                 <div className="flex items-center justify-between text-xs sm:text-sm">
                   <span>Echo Coin Range:</span>
-                  <span className="font-semibold">
-                    {selectedCampaign.echoCoinRange.min} -{" "}
-                    {selectedCampaign.echoCoinRange.max} EC
-                  </span>
+                  <span className="font-semibold">{selectedCampaign.echoCoinRange.min} - {selectedCampaign.echoCoinRange.max} EC</span>
                 </div>
               </div>
 
               <div className="space-y-3 sm:space-y-4">
                 <div className="space-y-2">
-                  <Label
-                    htmlFor="bidEchoCoins"
-                    className="text-sm sm:text-base"
-                  >
-                    Your Bid (Echo Coins)
-                  </Label>
-                  <Input
-                    id="bidEchoCoins"
-                    type="number"
-                    placeholder={`Between ${selectedCampaign.echoCoinRange.min} - ${selectedCampaign.echoCoinRange.max} EC`}
-                    value={bidEchoCoins}
-                    onChange={(e) => setBidEchoCoins(e.target.value)}
-                    className="text-sm sm:text-base"
-                  />
+                  <Label htmlFor="bidEchoCoins" className="text-sm sm:text-base">Your Bid (Echo Coins)</Label>
+                  <Input id="bidEchoCoins" type="number" placeholder={`Between ${selectedCampaign.echoCoinRange.min} - ${selectedCampaign.echoCoinRange.max} EC`} value={bidEchoCoins} onChange={(e) => setBidEchoCoins(e.target.value)} className="text-sm sm:text-base" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="proposal" className="text-sm sm:text-base">
-                    Your Proposal
-                  </Label>
-                  <Textarea
-                    id="proposal"
-                    placeholder="Explain why you're the perfect fit for this campaign. Include your audience demographics, engagement rates, and relevant experience..."
-                    rows={4}
-                    value={bidProposal}
-                    onChange={(e) => setBidProposal(e.target.value)}
-                    className="text-sm sm:text-base resize-none"
-                  />
+                  <Label htmlFor="proposal" className="text-sm sm:text-base">Your Proposal</Label>
+                  <Textarea id="proposal" placeholder="Explain why you're the perfect fit for this campaign. Include your audience demographics, engagement rates, and relevant experience..." rows={4} value={bidProposal} onChange={(e) => setBidProposal(e.target.value)} className="text-sm sm:text-base resize-none" />
                 </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
-                <Button
-                  onClick={handleSubmitBid}
-                  className="w-full sm:flex-1 bg-brand-600 hover:bg-brand-700 text-white"
-                >
-                  Submit Bid
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setShowBidModal(false);
-                    setSelectedCampaign(null);
-                    setBidEchoCoins("");
-                    setBidProposal("");
-                  }}
-                  className="w-full sm:flex-1"
-                >
-                  Cancel
-                </Button>
+                <Button onClick={handleSubmitBid} className="w-full sm:flex-1 bg-brand-600 hover:bg-brand-700 text-white">Submit Bid</Button>
+                <Button variant="outline" onClick={() => { setShowBidModal(false); setSelectedCampaign(null); setBidEchoCoins(""); setBidProposal(""); }} className="w-full sm:flex-1">Cancel</Button>
               </div>
             </CardContent>
           </Card>
@@ -937,115 +998,51 @@ export default function InfluencerDashboard() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-3 sm:p-4 z-50">
           <Card className="w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg sm:text-xl pr-8">
-                Submit Evidence for {selectedActiveCampaign.title}
-              </CardTitle>
+              <CardTitle className="text-lg sm:text-xl pr-8">Submit Evidence for {selectedActiveCampaign.title}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 sm:space-y-6">
               <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                  Campaign Requirements
-                </h4>
-                <p className="text-xs sm:text-sm text-gray-600 mb-2">
-                  {selectedActiveCampaign.requirements}
-                </p>
+                <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">Campaign Requirements</h4>
+                <p className="text-xs sm:text-sm text-gray-600 mb-2">{selectedActiveCampaign.requirements}</p>
                 <div className="flex items-center justify-between text-xs sm:text-sm">
                   <span>Payment:</span>
-                  <span className="font-semibold text-green-600">
-                    {selectedActiveCampaign.echoCoins} EC
-                  </span>
+                  <span className="font-semibold text-green-600">{selectedActiveCampaign.echoCoins} EC</span>
                 </div>
               </div>
 
               <div className="space-y-3 sm:space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="screenshots" className="text-sm sm:text-base">
-                    Screenshots
-                  </Label>
+                  <Label htmlFor="screenshots" className="text-sm sm:text-base">Screenshots</Label>
                   <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 text-center hover:border-brand-400 transition-colors">
                     <Camera className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400 mx-auto mb-2" />
-                    <p className="text-xs sm:text-sm text-gray-600 mb-2">
-                      Upload screenshots of your posts
-                    </p>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="text-xs sm:text-sm"
-                    >
-                      Choose Files
-                    </Button>
+                    <p className="text-xs sm:text-sm text-gray-600 mb-2">Upload screenshots of your posts</p>
+                    <Button variant="outline" size="sm" className="text-xs sm:text-sm">Choose Files</Button>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label
-                    htmlFor="evidenceLinks"
-                    className="text-sm sm:text-base"
-                  >
-                    Post Links
-                  </Label>
-                  <Input
-                    id="evidenceLinks"
-                    placeholder="https://instagram.com/p/your-post-url"
-                    value={evidenceLinks}
-                    onChange={(e) => setEvidenceLinks(e.target.value)}
-                    className="text-sm sm:text-base"
-                  />
-                  <p className="text-xs text-gray-500">
-                    Provide direct links to your posts for verification
-                  </p>
+                  <Label htmlFor="evidenceLinks" className="text-sm sm:text-base">Post Links</Label>
+                  <Input id="evidenceLinks" placeholder="https://instagram.com/p/your-post-url" value={evidenceLinks} onChange={(e) => setEvidenceLinks(e.target.value)} className="text-sm sm:text-base" />
+                  <p className="text-xs text-gray-500">Provide direct links to your posts for verification</p>
                 </div>
 
                 <div className="space-y-2">
-                  <Label
-                    htmlFor="evidenceDescription"
-                    className="text-sm sm:text-base"
-                  >
-                    Description
-                  </Label>
-                  <Textarea
-                    id="evidenceDescription"
-                    placeholder="Describe how you completed the campaign requirements, any special approaches you took, and the response from your audience..."
-                    rows={3}
-                    value={evidenceDescription}
-                    onChange={(e) => setEvidenceDescription(e.target.value)}
-                    className="text-sm sm:text-base resize-none"
-                  />
+                  <Label htmlFor="evidenceDescription" className="text-sm sm:text-base">Description</Label>
+                  <Textarea id="evidenceDescription" placeholder="Describe how you completed the campaign requirements, any special approaches you took, and the response from your audience..." rows={3} value={evidenceDescription} onChange={(e) => setEvidenceDescription(e.target.value)} className="text-sm sm:text-base resize-none" />
                 </div>
               </div>
 
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4">
                 <div className="flex items-center gap-2 text-blue-800">
                   <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5" />
-                  <span className="font-medium text-sm sm:text-base">
-                    Important
-                  </span>
+                  <span className="font-medium text-sm sm:text-base">Important</span>
                 </div>
-                <p className="text-xs sm:text-sm text-blue-700 mt-1">
-                  Once submitted, your evidence will be reviewed by the
-                  business. Payment will be processed upon approval.
-                </p>
+                <p className="text-xs sm:text-sm text-blue-700 mt-1">Once submitted, your evidence will be reviewed by the business. Payment will be processed upon approval.</p>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
-                <Button
-                  onClick={handleSubmitEvidence}
-                  className="w-full sm:flex-1 bg-brand-600 hover:bg-brand-700 text-white"
-                >
-                  Submit Evidence
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setShowEvidenceModal(false);
-                    setSelectedActiveCampaign(null);
-                    setEvidenceLinks("");
-                    setEvidenceDescription("");
-                  }}
-                  className="w-full sm:flex-1"
-                >
-                  Cancel
-                </Button>
+                <Button onClick={handleSubmitEvidence} className="w-full sm:flex-1 bg-brand-600 hover:bg-brand-700 text-white">Submit Evidence</Button>
+                <Button variant="outline" onClick={() => { setShowEvidenceModal(false); setSelectedActiveCampaign(null); setEvidenceLinks(""); setEvidenceDescription(""); }} className="w-full sm:flex-1">Cancel</Button>
               </div>
             </CardContent>
           </Card>
