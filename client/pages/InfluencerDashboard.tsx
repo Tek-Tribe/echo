@@ -723,7 +723,7 @@ export default function InfluencerDashboard() {
                   </div>
                   <div className="flex gap-2">
                     <Button className="flex-1">Save</Button>
-                    <Button variant="outline" className="flex-1" onClick={() => setPlatform({ currency: "EC", timezone: "UTC" })}>Reset</Button>
+                    <Button variant="outline" className="flex-1" onClick={() => setPlatform({ currency: "INR", timezone: "UTC" })}>Reset</Button>
                   </div>
                 </div>
               </CardContent>
@@ -765,7 +765,7 @@ export default function InfluencerDashboard() {
                 <p className="text-xs sm:text-sm text-gray-600 mb-2">{selectedCampaign.description}</p>
                 <div className="flex items-center justify-between text-xs sm:text-sm">
                   <span>Budget Range:</span>
-                  <span className="font-semibold">{selectedCampaign.echoCoinRange.min} - {selectedCampaign.echoCoinRange.max} EC</span>
+                  <span className="font-semibold">{selectedCampaign.echoCoinRange.min} - {selectedCampaign.echoCoinRange.max} INR</span>
                 </div>
               </div>
 
@@ -798,7 +798,7 @@ export default function InfluencerDashboard() {
                 <p className="text-xs sm:text-sm text-gray-600 mb-2">{selectedActiveCampaign.requirements}</p>
                 <div className="flex items-center justify-between text-xs sm:text-sm">
                   <span>Payment:</span>
-                  <span className="font-semibold text-green-600">{selectedActiveCampaign.echoCoins} EC</span>
+                  <span className="font-semibold text-green-600">{selectedActiveCampaign.echoCoins} INR</span>
                 </div>
               </div>
 
