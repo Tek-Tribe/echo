@@ -34,7 +34,6 @@ import {
   Menu,
   X,
   Settings,
-  Wallet as WalletIcon,
 } from "lucide-react";
 import { EchoCoinIcon } from "@/components/EchoCoinIcon";
 
@@ -322,7 +321,7 @@ export default function InfluencerDashboard() {
     password: "",
   });
   const [platform, setPlatform] = useState({
-    currency: "EC",
+    currency: "INR",
     timezone: "UTC",
   });
 
@@ -453,7 +452,7 @@ export default function InfluencerDashboard() {
                   </div>
                   <div className="sm:ml-4 text-center sm:text-left min-w-0">
                     <div className="text-xs sm:text-sm font-medium text-gray-500 truncate">Total Earnings</div>
-                    <div className="text-lg sm:text-2xl font-bold text-gray-900">{influencerStats.totalEarnings.toLocaleString()} EC</div>
+                    <div className="text-lg sm:text-2xl font-bold text-gray-900">{influencerStats.totalEarnings.toLocaleString()} INR</div>
                   </div>
                 </div>
               </CardContent>
@@ -537,16 +536,14 @@ export default function InfluencerDashboard() {
 
           {/* Main Content */}
           <Tabs defaultValue="opportunities" className="space-y-4 sm:space-y-6">
-            <TabsList className="grid w-full grid-cols-4 h-auto">
-              <TabsTrigger value="opportunities" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">Matching</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 h-auto">
+              <TabsTrigger value="opportunities" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">Campaigns</TabsTrigger>
               <TabsTrigger value="my-bids" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">My Bids</TabsTrigger>
-              <TabsTrigger value="active-campaigns" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">Active</TabsTrigger>
-              <TabsTrigger value="wallet" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">Wallet</TabsTrigger>
             </TabsList>
 
             <TabsContent value="opportunities" className="space-y-4 sm:space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Jobs Matching For You</h2>
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Campaigns</h2>
                 <Button variant="outline" className="flex items-center gap-2 self-start sm:self-auto">
                   <Filter className="h-4 w-4" />
                   Filter
@@ -554,12 +551,12 @@ export default function InfluencerDashboard() {
               </div>
 
               <div className="grid gap-4 sm:gap-6">
-                {matchingCampaigns.length === 0 && (
+                {campaigns.length === 0 && (
                   <Card>
                     <CardContent className="p-6 text-gray-600">No matching campaigns right now. Check back soon.</CardContent>
                   </Card>
                 )}
-                {matchingCampaigns.map((campaign) => (
+                {campaigns.map((campaign) => (
                   <Card key={campaign.id} className="hover:shadow-lg transition-shadow">
                     <CardContent className="p-4 sm:p-6">
                       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4 mb-4">
@@ -573,10 +570,15 @@ export default function InfluencerDashboard() {
                             <p className="text-sm text-gray-500">{campaign.businessName}</p>
                           </div>
                         </div>
-                        <Badge className="bg-green-100 text-green-800 hover:bg-green-100 self-start">
-                          <Target className="h-3 w-3 mr-1" />
-                          {campaign.type}
-                        </Badge>
+                        <div className="flex items-center gap-2 self-start">
+                          <Badge variant="outline" className="self-start">
+                            <Target className="h-3 w-3 mr-1" />
+                            {campaign.type}
+                          </Badge>
+                          <Badge className={campaign.status === "open" ? "bg-green-100 text-green-800" : campaign.status === "in-review" ? "bg-yellow-100 text-yellow-800" : "bg-gray-200 text-gray-700"}>
+                            {campaign.status === "in-review" ? "In Review" : campaign.status.charAt(0).toUpperCase() + campaign.status.slice(1)}
+                          </Badge>
+                        </div>
                       </div>
 
                       <p className="text-sm sm:text-base text-gray-600 mb-4">{campaign.description}</p>
@@ -584,8 +586,8 @@ export default function InfluencerDashboard() {
                       <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-4">
                         <div className="space-y-2">
                           <div className="flex items-center justify-between text-xs sm:text-sm">
-                            <span className="text-gray-500">Echo Coin Range:</span>
-                            <span className="font-semibold text-gray-900">{campaign.echoCoinRange.min} - {campaign.echoCoinRange.max} EC</span>
+                            <span className="text-gray-500">Budget Range:</span>
+                            <span className="font-semibold text-gray-900">{campaign.echoCoinRange.min} - {campaign.echoCoinRange.max} INR</span>
                           </div>
                           <div className="flex items-center justify-between text-xs sm:text-sm">
                             <span className="text-gray-500">Max Influencers:</span>
@@ -622,16 +624,20 @@ export default function InfluencerDashboard() {
                             <Badge key={category} variant="secondary" className="text-xs">{category}</Badge>
                           ))}
                         </div>
-                        <Button
-                          onClick={() => {
-                            setSelectedCampaign(campaign);
-                            setShowBidModal(true);
-                          }}
-                          className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white text-sm"
-                        >
-                          Submit Bid
-                          <ArrowRight className="h-4 w-4 ml-2" />
-                        </Button>
+                        {campaign.status === "open" ? (
+                          <Button
+                            onClick={() => {
+                              setSelectedCampaign(campaign);
+                              setShowBidModal(true);
+                            }}
+                            className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white text-sm"
+                          >
+                            Submit Bid
+                            <ArrowRight className="h-4 w-4 ml-2" />
+                          </Button>
+                        ) : (
+                          <Button variant="outline" disabled className="w-full sm:w-auto">Bidding Closed</Button>
+                        )}
                       </div>
                     </CardContent>
                   </Card>
@@ -672,7 +678,7 @@ export default function InfluencerDashboard() {
                       </div>
                       <p className="text-sm sm:text-base text-gray-600 mb-4">{bid.proposal}</p>
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 text-xs sm:text-sm">
-                        <span className="font-semibold text-gray-900">Bid Amount: {bid.echoCoins} EC</span>
+                        <span className="font-semibold text-gray-900">Bid Amount: {bid.echoCoins} INR</span>
                         <span className="text-gray-500">Submitted {new Date(bid.submittedAt).toLocaleDateString()}</span>
                       </div>
                     </CardContent>
@@ -681,189 +687,7 @@ export default function InfluencerDashboard() {
               </div>
             </TabsContent>
 
-            <TabsContent value="active-campaigns" className="space-y-6">
-              <div className="space-y-4">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-900">In Progress</h2>
-                {inProgressCampaigns.length === 0 ? (
-                  <Card>
-                    <CardContent className="p-8 text-center">
-                      <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No Active Campaigns</h3>
-                      <p className="text-gray-600">Once your bids are accepted, you'll see active campaigns here to manage and submit proof of completion.</p>
-                    </CardContent>
-                  </Card>
-                ) : (
-                  <div className="space-y-4">
-                    {inProgressCampaigns.map((campaign) => (
-                      <Card key={campaign.id}>
-                        <CardContent className="p-6">
-                          <div className="flex items-center justify-between mb-4">
-                            <div>
-                              <h3 className="text-lg font-semibold text-gray-900">{campaign.title}</h3>
-                              <p className="text-sm text-gray-500">{campaign.businessName}</p>
-                            </div>
-                            <div className="text-right">
-                              <div className="text-xl font-bold text-green-600">{campaign.echoCoins} EC</div>
-                              <Badge
-                                variant={
-                                  campaign.status === "completed"
-                                    ? "default"
-                                    : campaign.status === "awaiting-review"
-                                    ? "secondary"
-                                    : "outline"
-                                }
-                                className={
-                                  campaign.status === "completed"
-                                    ? "bg-green-100 text-green-800 hover:bg-green-100"
-                                    : campaign.status === "awaiting-review"
-                                    ? "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"
-                                    : "bg-blue-100 text-blue-800 hover:bg-blue-100"
-                                }
-                              >
-                                {campaign.status === "completed" && <CheckCircle className="h-3 w-3 mr-1" />}
-                                {campaign.status === "awaiting-review" && <Clock className="h-3 w-3 mr-1" />}
-                                {campaign.status === "in-progress" && <AlertCircle className="h-3 w-3 mr-1" />}
-                                {campaign.status.replace("-", " ")}
-                              </Badge>
-                            </div>
-                          </div>
 
-                          <p className="text-gray-600 mb-4">{campaign.requirements}</p>
-
-                          <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                            <span className="flex items-center gap-1">
-                              <Calendar className="h-4 w-4" />
-                              Deadline: {new Date(campaign.deadline).toLocaleDateString()}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Target className="h-4 w-4" />
-                              {campaign.type}
-                            </span>
-                          </div>
-
-                          {campaign.evidenceSubmitted ? (
-                            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                              <div className="flex items-center gap-2 mb-2">
-                                <CheckCircle className="h-5 w-5 text-green-600" />
-                                <span className="font-medium text-green-800">Evidence Submitted</span>
-                              </div>
-                              <p className="text-sm text-green-700 mb-2">{campaign.evidenceSubmitted.description}</p>
-                              <div className="flex items-center gap-4 text-xs text-green-600">
-                                <span>{campaign.evidenceSubmitted.screenshots.length} screenshots</span>
-                                <span>{campaign.evidenceSubmitted.links.length} links</span>
-                                <span>Submitted {new Date(campaign.evidenceSubmitted.submittedAt).toLocaleDateString()}</span>
-                              </div>
-                            </div>
-                          ) : (
-                            <Button
-                              onClick={() => {
-                                setSelectedActiveCampaign(campaign);
-                                setShowEvidenceModal(true);
-                              }}
-                              className="w-full bg-brand-600 hover:bg-brand-700 text-white"
-                            >
-                              <Upload className="h-4 w-4 mr-2" />
-                              Submit Evidence
-                            </Button>
-                          )}
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="space-y-4">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Completed</h2>
-                {completedCampaigns.length === 0 ? (
-                  <Card>
-                    <CardContent className="p-6 text-gray-600">No completed campaigns yet.</CardContent>
-                  </Card>
-                ) : (
-                  <div className="space-y-4">
-                    {completedCampaigns.map((c) => (
-                      <Card key={c.id}>
-                        <CardContent className="p-6">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="font-semibold">{c.title}</div>
-                              <div className="text-sm text-gray-500">{c.businessName} • {c.type}</div>
-                            </div>
-                            <div className="text-right">
-                              <div className="text-green-600 font-bold">+{c.echoCoins} EC</div>
-                              <Badge className="bg-green-100 text-green-800">Completed</Badge>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="wallet" className="space-y-4 sm:space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2"><WalletIcon className="h-5 w-5" /> Balance</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-6 pt-0">
-                    <div className="text-3xl font-bold">{wallet.balance.toLocaleString()} EC</div>
-                    <div className="text-sm text-gray-500 mt-1">Available</div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Pending</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-6 pt-0">
-                    <div className="text-3xl font-bold">{wallet.pending.toLocaleString()} EC</div>
-                    <div className="text-sm text-gray-500 mt-1">Awaiting approval</div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Withdrawn</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-6 pt-0">
-                    <div className="text-3xl font-bold">{wallet.withdrawn.toLocaleString()} EC</div>
-                    <div className="text-sm text-gray-500 mt-1">All-time</div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Recent Transactions</CardTitle>
-                </CardHeader>
-                <CardContent className="p-0">
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full text-sm">
-                      <thead className="text-left text-xs text-gray-500">
-                        <tr>
-                          <th className="px-4 py-2">Date</th>
-                          <th className="px-4 py-2">Details</th>
-                          <th className="px-4 py-2">Amount</th>
-                        </tr>
-                      </thead>
-                      <tbody className="text-gray-700">
-                        {wallet.transactions.map((t) => (
-                          <tr key={t.id} className="border-t">
-                            <td className="px-4 py-2">{new Date(t.date).toLocaleDateString()}</td>
-                            <td className="px-4 py-2">{t.note}</td>
-                            <td className={`px-4 py-2 font-semibold ${t.type === "credit" ? "text-green-600" : "text-red-600"}`}>
-                              {t.type === "credit" ? "+" : "-"}
-                              {t.amount} EC
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
           </Tabs>
         </div>
       )}
@@ -911,9 +735,8 @@ export default function InfluencerDashboard() {
                   <div>
                     <Label>Default Currency</Label>
                     <select className="w-full border rounded h-10 px-2" value={platform.currency} onChange={(e) => setPlatform({ ...platform, currency: e.target.value })}>
-                      <option value="EC">Echo Coin (EC)</option>
-                      <option value="USD">USD</option>
                       <option value="INR">INR</option>
+                      <option value="USD">USD</option>
                     </select>
                   </div>
                   <div>
@@ -967,15 +790,15 @@ export default function InfluencerDashboard() {
                 <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">Campaign Details</h4>
                 <p className="text-xs sm:text-sm text-gray-600 mb-2">{selectedCampaign.description}</p>
                 <div className="flex items-center justify-between text-xs sm:text-sm">
-                  <span>Echo Coin Range:</span>
+                  <span>Budget Range:</span>
                   <span className="font-semibold">{selectedCampaign.echoCoinRange.min} - {selectedCampaign.echoCoinRange.max} EC</span>
                 </div>
               </div>
 
               <div className="space-y-3 sm:space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="bidEchoCoins" className="text-sm sm:text-base">Your Bid (Echo Coins)</Label>
-                  <Input id="bidEchoCoins" type="number" placeholder={`Between ${selectedCampaign.echoCoinRange.min} - ${selectedCampaign.echoCoinRange.max} EC`} value={bidEchoCoins} onChange={(e) => setBidEchoCoins(e.target.value)} className="text-sm sm:text-base" />
+                  <Label htmlFor="bidEchoCoins" className="text-sm sm:text-base">Your Bid (INR)</Label>
+                  <Input id="bidEchoCoins" type="number" placeholder={`Between ${selectedCampaign.echoCoinRange.min} - ${selectedCampaign.echoCoinRange.max} INR`} value={bidEchoCoins} onChange={(e) => setBidEchoCoins(e.target.value)} className="text-sm sm:text-base" />
                 </div>
               </div>
 
