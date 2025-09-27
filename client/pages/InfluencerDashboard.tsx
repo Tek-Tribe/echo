@@ -273,7 +273,6 @@ export default function InfluencerDashboard() {
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
   const [showBidModal, setShowBidModal] = useState(false);
   const [bidEchoCoins, setBidEchoCoins] = useState("");
-  const [bidProposal, setBidProposal] = useState("");
 
   const [showEvidenceModal, setShowEvidenceModal] = useState(false);
   const [selectedActiveCampaign, setSelectedActiveCampaign] =
@@ -284,7 +283,7 @@ export default function InfluencerDashboard() {
   const handleSubmitBid = () => {
     setShowBidModal(false);
     setBidEchoCoins("");
-    setBidProposal("");
+    
     setSelectedCampaign(null);
   };
 
@@ -978,15 +977,11 @@ export default function InfluencerDashboard() {
                   <Label htmlFor="bidEchoCoins" className="text-sm sm:text-base">Your Bid (Echo Coins)</Label>
                   <Input id="bidEchoCoins" type="number" placeholder={`Between ${selectedCampaign.echoCoinRange.min} - ${selectedCampaign.echoCoinRange.max} EC`} value={bidEchoCoins} onChange={(e) => setBidEchoCoins(e.target.value)} className="text-sm sm:text-base" />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="proposal" className="text-sm sm:text-base">Your Proposal</Label>
-                  <Textarea id="proposal" placeholder="Explain why you're the perfect fit for this campaign. Include your audience demographics, engagement rates, and relevant experience..." rows={4} value={bidProposal} onChange={(e) => setBidProposal(e.target.value)} className="text-sm sm:text-base resize-none" />
-                </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
                 <Button onClick={handleSubmitBid} className="w-full sm:flex-1 bg-brand-600 hover:bg-brand-700 text-white">Submit Bid</Button>
-                <Button variant="outline" onClick={() => { setShowBidModal(false); setSelectedCampaign(null); setBidEchoCoins(""); setBidProposal(""); }} className="w-full sm:flex-1">Cancel</Button>
+                <Button variant="outline" onClick={() => { setShowBidModal(false); setSelectedCampaign(null); setBidEchoCoins("");  }} className="w-full sm:flex-1">Cancel</Button>
               </div>
             </CardContent>
           </Card>
