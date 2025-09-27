@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -177,8 +178,10 @@ export default function BusinessDashboard() {
                   <DropdownMenuItem onClick={() => setView('settings')}>
                     <Settings className="h-4 w-4 mr-2" /> Settings
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => alert('Logged out')}>
-                    <LogOut className="h-4 w-4 mr-2" /> Logout
+                  <DropdownMenuItem asChild>
+                    <Link to="/">
+                      <LogOut className="h-4 w-4 mr-2" /> Logout
+                    </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

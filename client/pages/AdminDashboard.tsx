@@ -604,8 +604,10 @@ export default function AdminDashboard() {
                   <DropdownMenuItem onClick={() => setSection("settings")}>
                     <Settings className="h-4 w-4 mr-2" /> Settings
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <LogOut className="h-4 w-4 mr-2" /> Logout
+                  <DropdownMenuItem asChild>
+                    <Link to="/">
+                      <LogOut className="h-4 w-4 mr-2" /> Logout
+                    </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
