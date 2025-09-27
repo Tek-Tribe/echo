@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -357,12 +356,6 @@ export default function InfluencerDashboard() {
                 >
                   Earnings
                 </a>
-                <a
-                  href="#"
-                  className="text-gray-500 hover:text-gray-700 pb-4 text-sm font-medium"
-                >
-                  Profile
-                </a>
               </nav>
             </div>
 
@@ -506,21 +499,6 @@ export default function InfluencerDashboard() {
               <CardContent className="p-6">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                      <Users className="h-6 w-6 text-purple-600" />
-                    </div>
-                  </div>
-                  <div className="ml-4">
-                    <div className="text-sm font-medium text-gray-500">Followers</div>
-                    <div className="text-2xl font-bold text-gray-900">{(influencerStats.followers / 1000).toFixed(0)}K</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
                     <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center">
                       <Heart className="h-6 w-6 text-pink-600" />
                     </div>
@@ -535,13 +513,9 @@ export default function InfluencerDashboard() {
           </div>
 
           {/* Main Content */}
-          <Tabs defaultValue="opportunities" className="space-y-4 sm:space-y-6">
-            <TabsList className="grid w-full grid-cols-2 h-auto">
-              <TabsTrigger value="opportunities" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">Campaigns</TabsTrigger>
-              <TabsTrigger value="my-bids" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">My Bids</TabsTrigger>
-            </TabsList>
+          <div className="space-y-4 sm:space-y-6">
 
-            <TabsContent value="opportunities" className="space-y-4 sm:space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
                 <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Campaigns</h2>
                 <Button variant="outline" className="flex items-center gap-2 self-start sm:self-auto">
@@ -643,9 +617,9 @@ export default function InfluencerDashboard() {
                   </Card>
                 ))}
               </div>
-            </TabsContent>
+            </div>
 
-            <TabsContent value="my-bids" className="space-y-4 sm:space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               <h2 className="text-lg sm:text-xl font-semibold text-gray-900">My Submitted Bids</h2>
 
               <div className="space-y-3 sm:space-y-4">
@@ -685,10 +659,10 @@ export default function InfluencerDashboard() {
                   </Card>
                 ))}
               </div>
-            </TabsContent>
+            </div>
 
 
-          </Tabs>
+          </div>
         </div>
       )}
 
@@ -702,7 +676,7 @@ export default function InfluencerDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Card>
               <CardHeader>
-                <CardTitle>Account</CardTitle>
+                <CardTitle>Profile</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 <div className="space-y-3">
