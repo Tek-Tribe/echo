@@ -337,26 +337,6 @@ export default function InfluencerDashboard() {
                 </div>
                 <span className="text-xl font-bold text-gray-900">Echo</span>
               </Link>
-              <nav className="hidden md:flex ml-8 space-x-8">
-                <a
-                  href="#"
-                  className="text-brand-600 border-b-2 border-brand-600 pb-4 text-sm font-medium"
-                >
-                  Dashboard
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-500 hover:text-gray-700 pb-4 text-sm font-medium"
-                >
-                  My Campaigns
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-500 hover:text-gray-700 pb-4 text-sm font-medium"
-                >
-                  Earnings
-                </a>
-              </nav>
             </div>
 
             {/* Mobile menu button */}
@@ -404,15 +384,6 @@ export default function InfluencerDashboard() {
           {mobileMenuOpen && (
             <div className="md:hidden border-t border-gray-200 bg-white">
               <div className="px-2 pt-2 pb-3 space-y-1">
-                <a href="#" className="block px-3 py-2 text-base font-medium text-brand-600">
-                  Dashboard
-                </a>
-                <a href="#" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700">
-                  My Campaigns
-                </a>
-                <a href="#" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700">
-                  Earnings
-                </a>
                 <a href="#" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700" onClick={() => setView("settings")}>
                   Settings
                 </a>
