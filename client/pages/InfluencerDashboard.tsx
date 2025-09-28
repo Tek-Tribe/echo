@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -484,9 +485,14 @@ export default function InfluencerDashboard() {
           </div>
 
           {/* Main Content */}
-          <div className="space-y-4 sm:space-y-6">
+          <Tabs defaultValue="campaigns" className="space-y-4 sm:space-y-6">
 
-            <div className="space-y-4 sm:space-y-6">
+            <TabsList className="grid w-full grid-cols-2 h-auto">
+              <TabsTrigger value="campaigns" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">Campaigns</TabsTrigger>
+              <TabsTrigger value="bids" className="text-xs sm:text-sm px-2 py-2 sm:px-4 sm:py-2">Submitted Bids</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="campaigns" className="space-y-4 sm:space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
                 <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Campaigns</h2>
                 <Button variant="outline" className="flex items-center gap-2 self-start sm:self-auto">
@@ -588,9 +594,9 @@ export default function InfluencerDashboard() {
                   </Card>
                 ))}
               </div>
-            </div>
+            </TabsContent>
 
-            <div className="space-y-4 sm:space-y-6">
+            <TabsContent value="bids" className="space-y-4 sm:space-y-6">
               <h2 className="text-lg sm:text-xl font-semibold text-gray-900">My Submitted Bids</h2>
 
               <div className="space-y-3 sm:space-y-4">
@@ -630,10 +636,10 @@ export default function InfluencerDashboard() {
                   </Card>
                 ))}
               </div>
-            </div>
+            </TabsContent>
 
 
-          </div>
+          </Tabs>
         </div>
       )}
 
