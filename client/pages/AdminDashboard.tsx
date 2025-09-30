@@ -118,30 +118,31 @@ export default function AdminDashboard() {
   const [influencers, setInfluencers] = useState<Influencer[]>([
     {
       id: "i1",
-      name: "Alex Johnson",
-      email: "alex@example.com",
-      phone: "+1 555 1234",
+      name: "Gafoor Koduvally",
+      email: "gafoorkoduvally@gmail.com",
+      phone: "+91 9245551234",
       categories: ["Fitness"],
       profiles: [
         {
           platform: "Instagram",
-          username: "@alex",
-          url: "https://instagram.com/alex",
-          followers: 45000,
+          username: "@gafoor_kdy",
+          url: "https://instagram.com/gafoor_kdy",
+          followers: 50000,
         },
       ],
     },
     {
       id: "i2",
-      name: "Maya Rodriguez",
-      email: "maya@example.com",
-      categories: ["Fashion"],
+      name: "Salih Kavil",
+      email: "salihkavil@gmail.com",
+      phone: "+91 92453251234",
+      categories: ["Travel"],
       profiles: [
         {
-          platform: "TikTok",
-          username: "@maya",
-          url: "https://tiktok.com/@maya",
-          followers: 78000,
+          platform: "Instagram",
+          username: "@salihkavil",
+          url: "https://instagram.com/@maya",
+          followers: 21900,
         },
       ],
     },
@@ -675,7 +676,7 @@ export default function AdminDashboard() {
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="font-semibold">{j.budget} EC</div>
+                              <div className="font-semibold">{j.budget} INR</div>
                               <Badge className="text-xs">{j.status}</Badge>
                             </div>
                           </div>

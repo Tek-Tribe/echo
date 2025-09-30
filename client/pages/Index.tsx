@@ -30,7 +30,7 @@ export default function Index() {
                 <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-lg">E</span>
                 </div>
-                <span className="text-xl font-bold text-gray-900">Echo</span>
+                <span className="text-xl font-bold text-gray-900">EchoX</span>
               </div>
             </div>
 
@@ -154,16 +154,16 @@ export default function Index() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                Connect with
+                Start your 
                 <span className="bg-gradient-to-r from-brand-600 to-gradient-to bg-clip-text text-transparent">
                   {" "}
-                  Influencers
+                  Campaigns
                 </span>
                 <br />
-                Who Amplify Your Brand
+                With verified influencers who Amplify Your Brand
               </h1>
               <p className="mt-4 sm:mt-6 text-lg sm:text-xl text-gray-600 leading-relaxed">
-                Echo bridges businesses and influencers through a seamless
+                EchoX bridges businesses and influencers through a seamless
                 platform for social media collaborations. Post jobs, get bids,
                 and watch your brand reach new heights.
               </p>
@@ -173,7 +173,7 @@ export default function Index() {
                     size="lg"
                     className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
                   >
-                    Start Hiring Influencers
+                    Start your campaigns
                     <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </Link>
@@ -245,10 +245,10 @@ export default function Index() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              Everything You Need for Successful Collaborations
+              Everything You Need for Successful Campaigns
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-              From job posting to payment processing, Echo handles every aspect
+              From campaign posting to payment processing, Echo handles every aspect
               of influencer marketing
             </p>
           </div>
@@ -346,7 +346,7 @@ export default function Index() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              How Echo Works
+              How EchoX Works
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
               Simple, transparent process from campaign creation to completion
@@ -401,7 +401,7 @@ export default function Index() {
                 </span>
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
-                Verify & Pay
+                Verify & Complete
               </h3>
               <p className="text-gray-600">
                 Review proof of posting, approve the work, and payments are
@@ -419,7 +419,7 @@ export default function Index() {
             Ready to Amplify Your Brand?
           </h2>
           <p className="text-lg sm:text-xl text-brand-100 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-            Join thousands of businesses and influencers who trust Echo for
+            Join thousands of businesses and influencers who trust EchoX for
             their marketing collaborations
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -455,7 +455,7 @@ export default function Index() {
                     E
                   </span>
                 </div>
-                <span className="text-lg sm:text-xl font-bold">Echo</span>
+                <span className="text-lg sm:text-xl font-bold">EchoX</span>
               </div>
               <p className="text-sm sm:text-base text-gray-400">
                 Connecting businesses with influencers for authentic social
@@ -531,7 +531,7 @@ export default function Index() {
           </div>
           <div className="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-gray-400">
             <p className="text-sm sm:text-base">
-              &copy; 2024 Echo. All rights reserved.
+              &copy; 2025 EchoX. All rights reserved.
             </p>
           </div>
         </div>
