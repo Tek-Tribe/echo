@@ -154,8 +154,8 @@ export default function Index() {
                 </Link>
               </div>
             </div>
-            <div className="relative mt-8 lg:mt-0">
-              <div className="relative z-10 mx-4 overflow-hidden rounded-3xl shadow-2xl ring-1 ring-black/10 sm:mx-0">
+            <div className="relative mt-8 sm:mt-10 lg:mt-0 lg:-translate-y-6 xl:-translate-y-10">
+              <div className="relative z-10 mx-4 overflow-hidden rounded-3xl shadow-2xl ring-1 ring-black/10 sm:mx-0 lg:max-w-xl">
                 <img
                   src="/new-campaign-card.svg"
                   alt="Preview of a new Instagram reshare campaign in EchoX"
