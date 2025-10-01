@@ -149,7 +149,7 @@ export default function Index() {
                     variant="outline"
                     className="w-full sm:w-auto border-brand-200 text-brand-700 hover:bg-brand-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
                   >
-                    Join as Influencer
+                    I’m an Influencer – I’m Interested 🙌
                   </Button>
                 </Link>
               </div>
@@ -367,7 +367,7 @@ export default function Index() {
                 variant="outline"
                 className="w-full sm:w-auto border-white text-white hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
               >
-                Join as Influencer
+                I’m an Influencer – I’m Interested 🙌
               </Button>
             </Link>
           </div>
