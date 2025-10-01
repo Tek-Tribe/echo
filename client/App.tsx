@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import BusinessDashboard from "./pages/BusinessDashboard";
+import BusinessRegistration from "./pages/BusinessRegistration";
 import AdminDashboard from "./pages/AdminDashboard";
 import Analytics from "./pages/Analytics";
 import Payments from "./pages/Payments";
@@ -37,6 +38,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/business-registration" element={<BusinessRegistration />} />
             <Route path="/business-dashboard" element={<BusinessDashboard />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/analytics" element={<Analytics />} />
