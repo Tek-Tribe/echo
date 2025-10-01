@@ -8,7 +8,6 @@ import {
   Smartphone,
   Star,
   ArrowRight,
-  CheckCircle,
   Menu,
   X,
 } from "lucide-react";
@@ -59,7 +58,7 @@ export default function Index() {
 
             {/* Desktop Auth Buttons */}
             <div className="hidden md:flex items-center space-x-4">
-              <Link to="/influencer-login">
+              <Link to="/partner">
                 <Button>Login</Button>
               </Link>
             </div>
@@ -104,7 +103,7 @@ export default function Index() {
                   Pricing
                 </a>
                 <div className="pt-4 pb-2 space-y-2">
-                  <Link to="/influencer-login" className="block">
+                  <Link to="/partner" className="block">
                     <Button className="w-full">Login</Button>
                   </Link>
                 </div>
@@ -133,8 +132,8 @@ export default function Index() {
                 platform for social media collaborations. Post jobs, get bids,
                 and watch your brand reach new heights.
               </p>
-              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:items-stretch gap-3 sm:gap-4">
-                <Link to="/business-registration" className="w-full sm:w-auto">
+              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <Link to="/register/business" className="w-full sm:w-auto">
                   <Button
                     size="lg"
                     className="w-full sm:min-w-[260px] bg-brand-600 hover:bg-brand-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
@@ -143,7 +142,7 @@ export default function Index() {
                     <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </Link>
-                <Link to="/influencer-login" className="w-full sm:w-auto">
+                <Link to="/partner" className="w-full sm:w-auto">
                   <Button
                     size="lg"
                     variant="outline"
@@ -352,8 +351,8 @@ export default function Index() {
             Join thousands of businesses and influencers who trust EchoX for
             their marketing collaborations
           </p>
-          <div className="flex flex-col sm:flex-row sm:items-stretch gap-3 sm:gap-4 justify-center">
-            <Link to="/business-registration" className="w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+            <Link to="/register/business" className="w-full sm:w-auto">
               <Button
                 size="lg"
                 className="w-full sm:min-w-[260px] bg-white text-brand-600 hover:bg-gray-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
@@ -361,7 +360,7 @@ export default function Index() {
                 Start Your First Campaign
               </Button>
             </Link>
-            <Link to="/influencer-login" className="w-full sm:w-auto">
+            <Link to="/partner" className="w-full sm:w-auto">
               <Button
                 size="lg"
                 variant="outline"
@@ -399,14 +398,14 @@ export default function Index() {
               <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
                 <li>
                   <Link
-                    to="/business-registration"
+                    to="/register/business"
                     className="hover:text-white"
                   >
                     For Businesses
                   </Link>
                 </li>
                 <li>
-                  <Link to="/influencer-login" className="hover:text-white">
+                  <Link to="/partner" className="hover:text-white">
                     For Influencers
                   </Link>
                 </li>
