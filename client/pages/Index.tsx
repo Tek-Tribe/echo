@@ -61,12 +61,7 @@ export default function Index() {
             {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             <Link to="/influencer-login">
-              <Button
-                variant="ghost"
-                className="text-brand-600 hover:text-brand-700"
-              >
-                Influencer Login
-              </Button>
+              <Button>Login</Button>
             </Link>
           </div>
 
@@ -111,12 +106,7 @@ export default function Index() {
                 </a>
                 <div className="pt-4 pb-2 space-y-2">
                   <Link to="/influencer-login" className="block">
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start text-brand-600 hover:text-brand-700"
-                    >
-                      Influencer Login
-                    </Button>
+                    <Button className="w-full justify-start">Login</Button>
                   </Link>
                 </div>
               </div>
