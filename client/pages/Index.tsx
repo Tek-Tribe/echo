@@ -106,7 +106,7 @@ export default function Index() {
                 </a>
                 <div className="pt-4 pb-2 space-y-2">
                   <Link to="/influencer-login" className="block">
-                    <Button className="w-full justify-start">Login</Button>
+                    <Button className="w-full">Login</Button>
                   </Link>
                 </div>
               </div>
