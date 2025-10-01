@@ -16,7 +16,7 @@ export default function InfluencerLogin() {
               <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">E</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">Echo</span>
+              <span className="text-xl font-bold text-gray-900">EchoX</span>
             </Link>
             <Link to="/">
               <Button variant="ghost" className="flex items-center gap-2">
