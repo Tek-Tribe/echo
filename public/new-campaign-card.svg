@@ -1,0 +1,25 @@
+<svg width="480" height="360" viewBox="0 0 480 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="360" rx="32" fill="#F7F7FB"/>
+  <rect x="32" y="32" width="416" height="296" rx="24" fill="#FFFFFF"/>
+  <rect x="56" y="56" width="112" height="32" rx="16" fill="#EEF2FF"/>
+  <rect x="56" y="112" width="368" height="16" rx="8" fill="#F5F5F7"/>
+  <rect x="56" y="140" width="320" height="16" rx="8" fill="#F5F5F7"/>
+  <rect x="56" y="168" width="280" height="16" rx="8" fill="#F5F5F7"/>
+  <rect x="56" y="220" width="368" height="80" rx="16" fill="#F5F5F7"/>
+  <rect x="56" y="316" width="152" height="20" rx="10" fill="#3730A3"/>
+  <rect x="56" y="268" width="120" height="16" rx="8" fill="#E5E7FF"/>
+  <rect x="320" y="268" width="104" height="16" rx="8" fill="#E5E7FF"/>
+  <rect x="208" y="56" width="72" height="8" rx="4" fill="#6366F1"/>
+  <rect x="208" y="72" width="120" height="8" rx="4" fill="#A5B4FC"/>
+  <rect x="208" y="88" width="96" height="8" rx="4" fill="#C7D2FE"/>
+  <circle cx="400" cy="80" r="24" fill="#EEF2FF"/>
+  <path d="M215.5 324C215.5 318.201 220.201 313.5 226 313.5H337C342.799 313.5 347.5 318.201 347.5 324C347.5 329.799 342.799 334.5 337 334.5H226C220.201 334.5 215.5 329.799 215.5 324Z" fill="#312E81"/>
+  <text x="203" y="321" fill="#FFFFFF" font-family="'Inter', 'Segoe UI', sans-serif" font-size="18" font-weight="600">View Bidders</text>
+  <text x="84" y="78" fill="#3730A3" font-family="'Inter', 'Segoe UI', sans-serif" font-size="14" font-weight="600">New Campaign</text>
+  <text x="84" y="100" fill="#6B7280" font-family="'Inter', 'Segoe UI', sans-serif" font-size="12" font-weight="500">Instagram Story Reshare</text>
+  <text x="84" y="248" fill="#111827" font-family="'Inter', 'Segoe UI', sans-serif" font-size="28" font-weight="700">₹2,50,000</text>
+  <text x="84" y="288" fill="#1F2937" font-family="'Inter', 'Segoe UI', sans-serif" font-size="14" font-weight="500">Influencers Needed: 5</text>
+  <text x="278" y="288" fill="#1F2937" font-family="'Inter', 'Segoe UI', sans-serif" font-size="14" font-weight="500">Bids Received: 23</text>
+  <text x="56" y="208" fill="#111827" font-family="'Inter', 'Segoe UI', sans-serif" font-size="16" font-weight="600">Campaign Overview</text>
+  <text x="56" y="236" fill="#4B5563" font-family="'Inter', 'Segoe UI', sans-serif" font-size="12" font-weight="500">Reshare your latest story to boost awareness with curated influencers.</text>
+</svg>
