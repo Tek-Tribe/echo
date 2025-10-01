@@ -135,7 +135,7 @@ export default function Index() {
                 and watch your brand reach new heights.
               </p>
               <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <Link to="/business-dashboard" className="w-full sm:w-auto">
+                <Link to="/business-registration" className="w-full sm:w-auto">
                   <Button
                     size="lg"
                     className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
@@ -390,7 +390,7 @@ export default function Index() {
             their marketing collaborations
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-            <Link to="/business-dashboard" className="w-full sm:w-auto">
+            <Link to="/business-registration" className="w-full sm:w-auto">
               <Button
                 size="lg"
                 className="w-full sm:w-auto bg-white text-brand-600 hover:bg-gray-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
@@ -435,7 +435,7 @@ export default function Index() {
               </h3>
               <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
                 <li>
-                  <Link to="/business-dashboard" className="hover:text-white">
+                  <Link to="/business-registration" className="hover:text-white">
                     For Businesses
                   </Link>
                 </li>
