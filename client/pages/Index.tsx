@@ -121,7 +121,7 @@ export default function Index() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                Start your 
+                Start your
                 <span className="bg-gradient-to-r from-brand-600 to-gradient-to bg-clip-text text-transparent">
                   {" "}
                   Campaigns
@@ -156,52 +156,16 @@ export default function Index() {
               </div>
             </div>
             <div className="relative mt-8 lg:mt-0">
-              <div className="relative z-10 bg-white rounded-2xl shadow-2xl p-6 sm:p-8 mx-4 sm:mx-0">
-                <div className="flex items-center gap-3 mb-4 sm:mb-6">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-brand-100 rounded-full flex items-center justify-center">
-                    <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-brand-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 text-sm sm:text-base">
-                      New Campaign
-                    </h3>
-                    <p className="text-xs sm:text-sm text-gray-500">
-                      Instagram Story Repost
-                    </p>
-                  </div>
-                </div>
-                <div className="space-y-3 sm:space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs sm:text-sm text-gray-600">
-                      Budget
-                    </span>
-                    <span className="font-semibold text-gray-900 text-sm sm:text-base">
-                      2,500 EC
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs sm:text-sm text-gray-600">
-                      Influencers Needed
-                    </span>
-                    <span className="font-semibold text-gray-900 text-sm sm:text-base">
-                      5
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs sm:text-sm text-gray-600">
-                      Bids Received
-                    </span>
-                    <span className="font-semibold text-brand-600 text-sm sm:text-base">
-                      23
-                    </span>
-                  </div>
-                  <Button className="w-full bg-brand-600 hover:bg-brand-700 text-white mt-3 sm:mt-4 text-sm sm:text-base py-2 sm:py-3">
-                    View Bidders
-                  </Button>
-                </div>
+              <div className="relative z-10 mx-4 overflow-hidden rounded-3xl shadow-2xl ring-1 ring-black/10 sm:mx-0">
+                <img
+                  src="/new-campaign-card.svg"
+                  alt="Preview of a new Instagram reshare campaign in EchoX"
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
               </div>
-              <div className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-16 h-16 sm:w-24 sm:h-24 bg-gradient-to-br from-brand-400 to-gradient-to rounded-full opacity-20"></div>
-              <div className="absolute -bottom-2 -left-2 sm:-bottom-4 sm:-left-4 w-20 h-20 sm:w-32 sm:h-32 bg-gradient-to-br from-gradient-to to-brand-400 rounded-full opacity-10"></div>
+              <div className="pointer-events-none absolute -top-2 -right-2 sm:-top-4 sm:-right-4 h-16 w-16 rounded-full bg-gradient-to-br from-brand-400 to-gradient-to opacity-20 sm:h-24 sm:w-24"></div>
+              <div className="pointer-events-none absolute -bottom-2 -left-2 sm:-bottom-4 sm:-left-4 h-20 w-20 rounded-full bg-gradient-to-br from-gradient-to to-brand-400 opacity-10 sm:h-32 sm:w-32"></div>
             </div>
           </div>
         </div>
