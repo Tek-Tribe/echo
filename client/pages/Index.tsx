@@ -58,11 +58,11 @@ export default function Index() {
             </div>
 
             {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link to="/influencer-login">
-              <Button>Login</Button>
-            </Link>
-          </div>
+            <div className="hidden md:flex items-center space-x-4">
+              <Link to="/influencer-login">
+                <Button>Login</Button>
+              </Link>
+            </div>
 
             {/* Mobile menu button */}
             <div className="md:hidden">
@@ -178,8 +178,8 @@ export default function Index() {
               Everything You Need for Successful Campaigns
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-              From campaign posting to payment processing, Echo handles every aspect
-              of influencer marketing
+              From campaign posting to payment processing, Echo handles every
+              aspect of influencer marketing
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -398,7 +398,10 @@ export default function Index() {
               </h3>
               <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
                 <li>
-                  <Link to="/business-registration" className="hover:text-white">
+                  <Link
+                    to="/business-registration"
+                    className="hover:text-white"
+                  >
                     For Businesses
                   </Link>
                 </li>

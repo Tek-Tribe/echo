@@ -1,5 +1,12 @@
 import React, { useMemo, useState } from "react";
-import { ArrowRight, Building2, CheckCircle2, ClipboardList, Phone, Shield } from "lucide-react";
+import {
+  ArrowRight,
+  Building2,
+  CheckCircle2,
+  ClipboardList,
+  Phone,
+  Shield,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
@@ -85,7 +92,10 @@ export default function BusinessRegistration() {
     formData.monthlyBudget,
   ]);
 
-  const updateField = <K extends keyof RegistrationForm>(field: K, value: RegistrationForm[K]) => {
+  const updateField = <K extends keyof RegistrationForm>(
+    field: K,
+    value: RegistrationForm[K],
+  ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -101,7 +111,8 @@ export default function BusinessRegistration() {
 
     toast({
       title: "Registration submitted",
-      description: "Our business success team will reach out within one business day.",
+      description:
+        "Our business success team will reach out within one business day.",
     });
   };
 
@@ -109,7 +120,10 @@ export default function BusinessRegistration() {
     <div className="min-h-screen bg-gradient-to-br from-white via-brand-50/30 to-white">
       <header className="border-b border-gray-100 bg-white/60 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
-          <Link to="/" className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+          <Link
+            to="/"
+            className="flex items-center gap-2 text-lg font-semibold text-gray-900"
+          >
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white">
               EX
             </div>
@@ -132,7 +146,9 @@ export default function BusinessRegistration() {
               Register your business to launch Instagram reshare campaigns
             </h1>
             <p className="text-base text-gray-600 sm:text-lg">
-              Tell us about your brand, campaign goals, and budget. Our team will verify your profile, craft the ideal brief, and match you with vetted influencers who deliver measurable results in INR.
+              Tell us about your brand, campaign goals, and budget. Our team
+              will verify your profile, craft the ideal brief, and match you
+              with vetted influencers who deliver measurable results in INR.
             </p>
           </div>
 
@@ -140,7 +156,8 @@ export default function BusinessRegistration() {
             <CardHeader>
               <CardTitle className="text-2xl">Business details</CardTitle>
               <CardDescription>
-                Provide your contact information and preferred campaign structure so we can set up your account swiftly.
+                Provide your contact information and preferred campaign
+                structure so we can set up your account swiftly.
               </CardDescription>
             </CardHeader>
             <form onSubmit={handleSubmit} className="grid gap-6">
@@ -152,7 +169,9 @@ export default function BusinessRegistration() {
                       id="businessName"
                       placeholder="Eg. Glow Cosmetics Pvt. Ltd."
                       value={formData.businessName}
-                      onChange={(event) => updateField("businessName", event.target.value)}
+                      onChange={(event) =>
+                        updateField("businessName", event.target.value)
+                      }
                       required
                     />
                   </div>
@@ -162,7 +181,9 @@ export default function BusinessRegistration() {
                       id="contactName"
                       placeholder="Your full name"
                       value={formData.contactName}
-                      onChange={(event) => updateField("contactName", event.target.value)}
+                      onChange={(event) =>
+                        updateField("contactName", event.target.value)
+                      }
                       required
                     />
                   </div>
@@ -176,7 +197,9 @@ export default function BusinessRegistration() {
                       type="email"
                       placeholder="name@company.com"
                       value={formData.email}
-                      onChange={(event) => updateField("email", event.target.value)}
+                      onChange={(event) =>
+                        updateField("email", event.target.value)
+                      }
                       required
                     />
                   </div>
@@ -187,7 +210,9 @@ export default function BusinessRegistration() {
                       type="tel"
                       placeholder="+91 98765 43210"
                       value={formData.phone}
-                      onChange={(event) => updateField("phone", event.target.value)}
+                      onChange={(event) =>
+                        updateField("phone", event.target.value)
+                      }
                       required
                     />
                   </div>
@@ -200,7 +225,9 @@ export default function BusinessRegistration() {
                       id="instagramHandle"
                       placeholder="@yourbrandofficial"
                       value={formData.instagramHandle}
-                      onChange={(event) => updateField("instagramHandle", event.target.value)}
+                      onChange={(event) =>
+                        updateField("instagramHandle", event.target.value)
+                      }
                       required
                     />
                   </div>
@@ -210,7 +237,9 @@ export default function BusinessRegistration() {
                       id="website"
                       placeholder="https://"
                       value={formData.website}
-                      onChange={(event) => updateField("website", event.target.value)}
+                      onChange={(event) =>
+                        updateField("website", event.target.value)
+                      }
                     />
                   </div>
                 </div>
@@ -220,7 +249,9 @@ export default function BusinessRegistration() {
                     <Label htmlFor="campaignType">Campaign type</Label>
                     <Select
                       value={formData.campaignType}
-                      onValueChange={(value) => updateField("campaignType", value)}
+                      onValueChange={(value) =>
+                        updateField("campaignType", value)
+                      }
                     >
                       <SelectTrigger id="campaignType">
                         <SelectValue placeholder="Select campaign type" />
@@ -235,7 +266,9 @@ export default function BusinessRegistration() {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="monthlyBudget">Monthly campaign budget (INR)</Label>
+                    <Label htmlFor="monthlyBudget">
+                      Monthly campaign budget (INR)
+                    </Label>
                     <Input
                       id="monthlyBudget"
                       type="number"
@@ -243,14 +276,18 @@ export default function BusinessRegistration() {
                       step="1000"
                       placeholder="₹50,000"
                       value={formData.monthlyBudget}
-                      onChange={(event) => updateField("monthlyBudget", event.target.value)}
+                      onChange={(event) =>
+                        updateField("monthlyBudget", event.target.value)
+                      }
                       required
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="annualSpend">Estimated annual influencer spend</Label>
+                  <Label htmlFor="annualSpend">
+                    Estimated annual influencer spend
+                  </Label>
                   <Select
                     value={formData.annualSpend}
                     onValueChange={(value) => updateField("annualSpend", value)}
@@ -269,12 +306,16 @@ export default function BusinessRegistration() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="goals">What results do you want to achieve?</Label>
+                  <Label htmlFor="goals">
+                    What results do you want to achieve?
+                  </Label>
                   <Textarea
                     id="goals"
                     placeholder="Share your objectives for Instagram reshare campaigns, such as reach, website visits, conversions, or new product discovery."
                     value={formData.goals}
-                    onChange={(event) => updateField("goals", event.target.value)}
+                    onChange={(event) =>
+                      updateField("goals", event.target.value)
+                    }
                     rows={5}
                   />
                 </div>
@@ -299,9 +340,12 @@ export default function BusinessRegistration() {
         <aside className="space-y-6">
           <Card className="border-0 bg-brand-900 text-brand-50 shadow-xl">
             <CardHeader>
-              <CardTitle className="text-2xl font-semibold">Why brands pick EchoX</CardTitle>
+              <CardTitle className="text-2xl font-semibold">
+                Why brands pick EchoX
+              </CardTitle>
               <CardDescription className="text-brand-100">
-                Purpose-built for Instagram collaborations with transparent pricing in INR and dedicated campaign managers.
+                Purpose-built for Instagram collaborations with transparent
+                pricing in INR and dedicated campaign managers.
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-5">
@@ -310,9 +354,12 @@ export default function BusinessRegistration() {
                   <Building2 className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-white">Account activation in 48 hours</h3>
+                  <h3 className="text-lg font-semibold text-white">
+                    Account activation in 48 hours
+                  </h3>
                   <p className="text-sm text-brand-100/90">
-                    Verified onboarding ensures your campaigns can go live within two business days after approval.
+                    Verified onboarding ensures your campaigns can go live
+                    within two business days after approval.
                   </p>
                 </div>
               </div>
@@ -321,9 +368,12 @@ export default function BusinessRegistration() {
                   <ClipboardList className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-white">Pre-vetted influencer pool</h3>
+                  <h3 className="text-lg font-semibold text-white">
+                    Pre-vetted influencer pool
+                  </h3>
                   <p className="text-sm text-brand-100/90">
-                    Work with influencers who specialise in Instagram reshares across lifestyle, beauty, fitness, and D2C niches.
+                    Work with influencers who specialise in Instagram reshares
+                    across lifestyle, beauty, fitness, and D2C niches.
                   </p>
                 </div>
               </div>
@@ -332,22 +382,30 @@ export default function BusinessRegistration() {
                   <Phone className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-white">Dedicated campaign strategist</h3>
+                  <h3 className="text-lg font-semibold text-white">
+                    Dedicated campaign strategist
+                  </h3>
                   <p className="text-sm text-brand-100/90">
-                    Receive tailored campaign guidance, reporting dashboards, and WhatsApp support in IST business hours.
+                    Receive tailored campaign guidance, reporting dashboards,
+                    and WhatsApp support in IST business hours.
                   </p>
                 </div>
               </div>
               <div className="rounded-2xl bg-white/10 p-4 text-brand-50">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-sm uppercase tracking-wide text-brand-200">Successful submissions</div>
-                    <div className="text-3xl font-semibold text-white">{Math.max(submissionCount, 28)}</div>
+                    <div className="text-sm uppercase tracking-wide text-brand-200">
+                      Successful submissions
+                    </div>
+                    <div className="text-3xl font-semibold text-white">
+                      {Math.max(submissionCount, 28)}
+                    </div>
                   </div>
                   <ArrowRight className="h-6 w-6 text-brand-200" />
                 </div>
                 <p className="mt-2 text-sm text-brand-100/90">
-                  Brands trust EchoX to launch reshare campaigns that convert attention into measurable outcomes.
+                  Brands trust EchoX to launch reshare campaigns that convert
+                  attention into measurable outcomes.
                 </p>
               </div>
             </CardContent>

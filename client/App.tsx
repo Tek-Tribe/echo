@@ -1,6 +1,6 @@
 import "./global.css";
 
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -24,9 +24,9 @@ const queryClient = new QueryClient();
 const App = () => {
   useEffect(() => {
     try {
-      const t = localStorage.getItem('theme');
-      if (t === 'dark') document.documentElement.classList.add('dark');
-      else document.documentElement.classList.remove('dark');
+      const t = localStorage.getItem("theme");
+      if (t === "dark") document.documentElement.classList.add("dark");
+      else document.documentElement.classList.remove("dark");
     } catch (e) {}
   }, []);
 
@@ -38,7 +38,10 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/business-registration" element={<BusinessRegistration />} />
+            <Route
+              path="/business-registration"
+              element={<BusinessRegistration />}
+            />
             <Route path="/business-dashboard" element={<BusinessDashboard />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/analytics" element={<Analytics />} />
