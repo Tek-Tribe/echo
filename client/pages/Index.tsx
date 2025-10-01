@@ -59,29 +59,16 @@ export default function Index() {
             </div>
 
             {/* Desktop Auth Buttons */}
-            <div className="hidden md:flex items-center space-x-4">
-              <Link to="/influencer-login">
-                <Button
-                  variant="ghost"
-                  className="text-brand-600 hover:text-brand-700"
-                >
-                  Influencer Login
-                </Button>
-              </Link>
-              <Link to="/business-dashboard">
-                <Button className="bg-brand-600 hover:bg-brand-700 text-white">
-                  Business Dashboard
-                </Button>
-              </Link>
-              <Link to="/admin-dashboard">
-                <Button
-                  variant="outline"
-                  className="border-red-200 text-red-600 hover:bg-red-50"
-                >
-                  Admin
-                </Button>
-              </Link>
-            </div>
+          <div className="hidden md:flex items-center space-x-4">
+            <Link to="/influencer-login">
+              <Button
+                variant="ghost"
+                className="text-brand-600 hover:text-brand-700"
+              >
+                Influencer Login
+              </Button>
+            </Link>
+          </div>
 
             {/* Mobile menu button */}
             <div className="md:hidden">
@@ -129,16 +116,6 @@ export default function Index() {
                       className="w-full justify-start text-brand-600 hover:text-brand-700"
                     >
                       Influencer Login
-                    </Button>
-                  </Link>
-                  <Link to="/business-dashboard" className="block">
-                    <Button className="w-full bg-brand-600 hover:bg-brand-700 text-white">
-                      Business Dashboard
-                    </Button>
-                  </Link>
-                  <Link to="/admin-dashboard" className="block">
-                    <Button variant="outline" className="w-full border-red-200 text-red-600 hover:bg-red-50">
-                      Admin Dashboard
                     </Button>
                   </Link>
                 </div>
