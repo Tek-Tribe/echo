@@ -162,8 +162,9 @@ export default function Index() {
                 And Guaranteed Reach
               </h1>
               <p className="mt-4 sm:mt-6 text-lg sm:text-xl text-gray-600 leading-relaxed">
-                EchoX connects you with quality influencers and guarantees your campaign reaches
-                the target number of users. Post campaigns, receive bids, and track your reach.
+                EchoX connects you with quality influencers and guarantees your
+                campaign reaches the target number of users. Post campaigns,
+                receive bids, and track your reach.
               </p>
               <div className="mt-6 sm:mt-8 flex flex-col gap-3">
                 <Link to="/register/business" className="w-full">
@@ -215,7 +216,9 @@ export default function Index() {
                           <Target className="h-3.5 w-3.5" />
                           Guaranteed reach
                         </div>
-                        <div className="mt-2 text-2xl font-semibold text-brand-900">150K</div>
+                        <div className="mt-2 text-2xl font-semibold text-brand-900">
+                          150K
+                        </div>
                         <p className="mt-1 text-xs text-brand-600">
                           Minimum reach commitment or platform credits you back.
                         </p>
@@ -226,8 +229,12 @@ export default function Index() {
                           Timeline
                         </div>
                         <div className="mt-2 flex items-baseline gap-2">
-                          <span className="text-2xl font-semibold text-gray-900">3 days</span>
-                          <span className="text-xs text-gray-500">to launch</span>
+                          <span className="text-2xl font-semibold text-gray-900">
+                            3 days
+                          </span>
+                          <span className="text-xs text-gray-500">
+                            to launch
+                          </span>
                         </div>
                         <p className="mt-1 text-xs text-gray-500">
                           Bids close 18 Jul • Content live 20 Jul
@@ -251,16 +258,24 @@ export default function Index() {
                       </div>
                       <div className="mt-4 grid gap-3 sm:grid-cols-3">
                         <div className="rounded-xl bg-gray-50 p-3">
-                          <p className="text-xs text-gray-500">Influencers needed</p>
-                          <p className="text-lg font-semibold text-gray-900">5</p>
+                          <p className="text-xs text-gray-500">
+                            Influencers needed
+                          </p>
+                          <p className="text-lg font-semibold text-gray-900">
+                            5
+                          </p>
                         </div>
                         <div className="rounded-xl bg-gray-50 p-3">
                           <p className="text-xs text-gray-500">Applications</p>
-                          <p className="text-lg font-semibold text-gray-900">23</p>
+                          <p className="text-lg font-semibold text-gray-900">
+                            23
+                          </p>
                         </div>
                         <div className="rounded-xl bg-gray-50 p-3">
                           <p className="text-xs text-gray-500">Avg. bid</p>
-                          <p className="text-lg font-semibold text-gray-900">₹31,800</p>
+                          <p className="text-lg font-semibold text-gray-900">
+                            ₹31,800
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -290,8 +305,12 @@ export default function Index() {
                                 <p className="text-sm font-semibold text-gray-900">
                                   {bid.name}
                                 </p>
-                                <p className="text-xs text-gray-500">{bid.handle}</p>
-                                <p className="text-xs text-gray-500">{bid.reach}</p>
+                                <p className="text-xs text-gray-500">
+                                  {bid.handle}
+                                </p>
+                                <p className="text-xs text-gray-500">
+                                  {bid.reach}
+                                </p>
                               </div>
                             </div>
                             <div className="text-right">
@@ -350,7 +369,8 @@ export default function Index() {
                   Verified Influencers
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Connect with quality, verified influencers across all niches and audiences
+                  Connect with quality, verified influencers across all niches
+                  and audiences
                 </p>
               </CardContent>
             </Card>
@@ -363,7 +383,8 @@ export default function Index() {
                   Guaranteed Reach
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  We guarantee your campaign reaches the target number of users you specify
+                  We guarantee your campaign reaches the target number of users
+                  you specify
                 </p>
               </CardContent>
             </Card>
@@ -390,7 +411,8 @@ export default function Index() {
                   Flexible Pricing
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Pay per campaign or subscribe yearly for unlimited campaigns at a discounted rate
+                  Pay per campaign or subscribe yearly for unlimited campaigns
+                  at a discounted rate
                 </p>
               </CardContent>
             </Card>
@@ -403,7 +425,8 @@ export default function Index() {
                   Easy Campaign Management
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Post campaigns, review bids, select influencers, and track reach all in one place
+                  Post campaigns, review bids, select influencers, and track
+                  reach all in one place
                 </p>
               </CardContent>
             </Card>
@@ -486,7 +509,8 @@ export default function Index() {
                 Track Guaranteed Reach
               </h3>
               <p className="text-gray-600">
-                Monitor campaign progress and get guaranteed reach to your target users
+                Monitor campaign progress and get guaranteed reach to your
+                target users
               </p>
             </div>
           </div>
@@ -503,7 +527,10 @@ export default function Index() {
             Start guaranteed campaigns hassle free via verified influencers
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
-            <Link to="/register/business" className="w-full max-w-xl sm:max-w-none sm:w-auto">
+            <Link
+              to="/register/business"
+              className="w-full max-w-xl sm:max-w-none sm:w-auto"
+            >
               <Button
                 size="lg"
                 className="w-full max-w-[800px] sm:w-auto sm:min-w-[320px] bg-white text-brand-600 hover:bg-gray-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
@@ -511,7 +538,10 @@ export default function Index() {
                 Start Your First Campaign
               </Button>
             </Link>
-            <Link to="/partner" className="w-full max-w-xl sm:max-w-none sm:w-auto">
+            <Link
+              to="/partner"
+              className="w-full max-w-xl sm:max-w-none sm:w-auto"
+            >
               <Button
                 size="lg"
                 variant="outline"
@@ -548,7 +578,10 @@ export default function Index() {
               </h3>
               <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
                 <li>
-                  <Link to="/business-registration" className="hover:text-white">
+                  <Link
+                    to="/business-registration"
+                    className="hover:text-white"
+                  >
                     For Businesses
                   </Link>
                 </li>
