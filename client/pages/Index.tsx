@@ -147,7 +147,7 @@ export default function Index() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="w-full sm:min-w-[260px] border-brand-200 text-brand-700 hover:bg-brand-50 px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-lg"
+                    className="w-full sm:min-w-[260px] border-brand-200 text-brand-700 hover:bg-brand-50 px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-lg flex-wrap whitespace-normal text-center leading-snug"
                   >
                     <span className="block text-center leading-snug break-words">
                       I’m an Influencer – I’m Interested 🙌
@@ -367,7 +367,7 @@ export default function Index() {
               <Button
                 size="lg"
                 variant="outline"
-                className="w-full sm:min-w-[260px] border-white text-white hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-lg"
+                className="w-full sm:min-w-[260px] border-white text-white hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-lg flex-wrap whitespace-normal text-center leading-snug"
               >
                 <span className="block text-center leading-snug break-words">
                   I’m an Influencer – I’m Interested 🙌
