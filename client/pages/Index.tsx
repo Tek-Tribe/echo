@@ -18,6 +18,38 @@ import { useState } from "react";
 
 export default function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const highlightedBids = [
+    {
+      initials: "AR",
+      name: "Aditi Rao",
+      handle: "@aditirao",
+      reach: "82K reach • Lifestyle",
+      amount: "₹32,500",
+      status: "In review",
+      badgeClass: "bg-emerald-50 text-emerald-600",
+      avatarClass: "bg-emerald-500/10 text-emerald-700",
+    },
+    {
+      initials: "MK",
+      name: "Manish Khanna",
+      handle: "@khannafit",
+      reach: "120K reach • Fitness",
+      amount: "₹35,800",
+      status: "Shortlisted",
+      badgeClass: "bg-brand-50 text-brand-700",
+      avatarClass: "bg-brand-500/10 text-brand-700",
+    },
+    {
+      initials: "SJ",
+      name: "Sonal Jain",
+      handle: "@sonalstyles",
+      reach: "64K reach • Fashion",
+      amount: "₹30,600",
+      status: "Awaiting deck",
+      badgeClass: "bg-amber-50 text-amber-700",
+      avatarClass: "bg-amber-500/10 text-amber-700",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-white">
