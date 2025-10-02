@@ -186,17 +186,143 @@ export default function Index() {
                 </Link>
               </div>
             </div>
-            <div className="relative mt-8 sm:mt-10 lg:mt-0 lg:-translate-y-2 xl:-translate-y-4 2xl:-translate-y-8 lg:ml-auto">
-              <div className="relative z-10 mx-4 overflow-hidden rounded-[32px] shadow-2xl ring-1 ring-black/10 bg-white/80 backdrop-blur-sm sm:mx-0 lg:max-w-xl lg:max-h-[520px]">
-                <img
-                  src="/new-campaign-card.svg"
-                  alt="Preview of a new Instagram reshare campaign in EchoX"
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
+            <div className="relative mt-8 sm:mt-10 lg:mt-0 lg:ml-auto">
+              <div className="absolute -top-12 -right-8 h-28 w-28 rounded-full bg-gradient-to-br from-brand-400/40 to-gradient-to/40 blur-2xl"></div>
+              <div className="absolute -bottom-16 -left-10 h-32 w-32 rounded-full bg-gradient-to-br from-brand-300/40 to-brand-500/30 blur-3xl"></div>
+              <div className="relative z-10 mx-4 sm:mx-0 lg:max-w-xl">
+                <div className="rounded-[32px] border border-white/60 bg-white/90 p-6 shadow-2xl backdrop-blur sm:p-8">
+                  <div className="flex flex-col gap-6">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-wide text-brand-600/90">
+                          Live campaign
+                        </p>
+                        <h3 className="mt-1 text-xl font-semibold text-gray-900 sm:text-2xl">
+                          #EFX-104 Summer Hydration Push
+                        </h3>
+                        <p className="mt-1 text-sm text-gray-500">
+                          Managed by GlowUp Beverages • Instagram
+                        </p>
+                      </div>
+                      <span className="inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
+                        Story reshare
+                      </span>
+                    </div>
+
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div className="rounded-2xl bg-brand-50/60 p-4">
+                        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-brand-700/90">
+                          <Target className="h-3.5 w-3.5" />
+                          Guaranteed reach
+                        </div>
+                        <div className="mt-2 text-2xl font-semibold text-brand-900">150K</div>
+                        <p className="mt-1 text-xs text-brand-600">
+                          Minimum reach commitment or platform credits you back.
+                        </p>
+                      </div>
+                      <div className="rounded-2xl border border-gray-100 p-4">
+                        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-600">
+                          <Clock3 className="h-3.5 w-3.5 text-brand-600" />
+                          Timeline
+                        </div>
+                        <div className="mt-2 flex items-baseline gap-2">
+                          <span className="text-2xl font-semibold text-gray-900">3 days</span>
+                          <span className="text-xs text-gray-500">to launch</span>
+                        </div>
+                        <p className="mt-1 text-xs text-gray-500">
+                          Bids close 18 Jul • Content live 20 Jul
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl border border-gray-100 bg-white/85 p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                            Budget locked
+                          </p>
+                          <p className="mt-1 text-2xl font-semibold text-gray-900">
+                            ₹2,40,000
+                          </p>
+                        </div>
+                        <span className="text-xs font-semibold text-brand-600">
+                          Escrow secured
+                        </span>
+                      </div>
+                      <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                        <div className="rounded-xl bg-gray-50 p-3">
+                          <p className="text-xs text-gray-500">Influencers needed</p>
+                          <p className="text-lg font-semibold text-gray-900">5</p>
+                        </div>
+                        <div className="rounded-xl bg-gray-50 p-3">
+                          <p className="text-xs text-gray-500">Applications</p>
+                          <p className="text-lg font-semibold text-gray-900">23</p>
+                        </div>
+                        <div className="rounded-xl bg-gray-50 p-3">
+                          <p className="text-xs text-gray-500">Avg. bid</p>
+                          <p className="text-lg font-semibold text-gray-900">₹31,800</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-sm font-semibold text-gray-900">
+                          Highlighted bids
+                        </h4>
+                        <span className="text-xs font-semibold text-brand-600">
+                          Auto-vetted
+                        </span>
+                      </div>
+                      <div className="mt-3 space-y-3">
+                        {highlightedBids.map((bid) => (
+                          <div
+                            key={bid.handle}
+                            className="flex items-center justify-between rounded-2xl border border-gray-100 bg-white/95 p-3 shadow-sm sm:p-4"
+                          >
+                            <div className="flex items-center gap-3">
+                              <div
+                                className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold ${bid.avatarClass}`}
+                              >
+                                {bid.initials}
+                              </div>
+                              <div>
+                                <p className="text-sm font-semibold text-gray-900">
+                                  {bid.name}
+                                </p>
+                                <p className="text-xs text-gray-500">{bid.handle}</p>
+                                <p className="text-xs text-gray-500">{bid.reach}</p>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <span className="block text-sm font-semibold text-gray-900">
+                                {bid.amount}
+                              </span>
+                              <span
+                                className={`mt-1 inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${bid.badgeClass}`}
+                              >
+                                {bid.status}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -bottom-10 left-6 hidden sm:flex flex-col rounded-2xl border border-white/70 bg-white/90 px-4 py-3 shadow-xl backdrop-blur">
+                  <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    <Clock3 className="h-3.5 w-3.5 text-brand-600" />
+                    Bids closing in
+                  </div>
+                  <span className="mt-1 text-lg font-semibold text-gray-900">
+                    02h 36m
+                  </span>
+                  <p className="text-xs text-gray-500">
+                    Auto reminders sent to shortlisted creators
+                  </p>
+                </div>
               </div>
-              <div className="pointer-events-none absolute -top-2 -right-2 sm:-top-4 sm:-right-4 h-16 w-16 rounded-full bg-gradient-to-br from-brand-400 to-gradient-to opacity-20 sm:h-24 sm:w-24"></div>
-              <div className="pointer-events-none absolute -bottom-2 -left-2 sm:-bottom-4 sm:-left-4 h-20 w-20 rounded-full bg-gradient-to-br from-gradient-to to-brand-400 opacity-10 sm:h-32 sm:w-32"></div>
             </div>
           </div>
         </div>
