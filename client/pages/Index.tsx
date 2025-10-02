@@ -148,8 +148,8 @@ export default function Index() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-50 to-gradient-to/10 py-12 sm:py-20 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-50 to-gradient-to/10 min-h-[calc(100vh-64px)] flex items-center py-12 sm:py-16 lg:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
@@ -162,7 +162,7 @@ export default function Index() {
                 And Guaranteed Reach
               </h1>
               <p className="mt-4 sm:mt-6 text-lg sm:text-xl text-gray-600 leading-relaxed">
-                EchoX connects you with quality influencers and guarantees your
+                EchoX connects you with prevetted micro influencers and guarantees your
                 campaign reaches the target number of users. Post campaigns,
                 receive bids, and track your reach.
               </p>
@@ -425,7 +425,7 @@ export default function Index() {
                   Easy Campaign Management
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Post campaigns, review bids, select influencers, and track
+                  Post campaigns, review bids, select bids, and track
                   reach all in one place
                 </p>
               </CardContent>
@@ -493,10 +493,10 @@ export default function Index() {
                 </span>
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
-                Select Influencers
+                Select Bids
               </h3>
               <p className="text-gray-600">
-                Review proposals and choose the best influencers for your brand
+                Review proposals and choose the best bids for your brand
               </p>
             </div>
             <div className="text-center">
@@ -555,100 +555,54 @@ export default function Index() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8 sm:py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
-            <div className="sm:col-span-2 md:col-span-1">
-              <div className="flex items-center gap-2 mb-3 sm:mb-4">
-                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-base sm:text-lg">
-                    E
-                  </span>
+        <footer className="bg-gray-900 text-white py-8 sm:py-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              {/* Centered Grid */}
+              <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 text-center">
+                
+                {/* Column 1 – Brand info */}
+                <div className="flex flex-col items-center">
+                  <div className="flex items-center justify-center gap-2 mb-3 sm:mb-4">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
+                      <span className="text-white font-bold text-base sm:text-lg">E</span>
+                    </div>
+                    <span className="text-lg sm:text-xl font-bold">EchoX</span>
+                  </div>
+                  <p className="text-sm sm:text-base text-gray-400 max-w-xs">
+                    Campaigns made hassle free for your business with prevetted micro influencers and guaranteed reach.
+                  </p>
                 </div>
-                <span className="text-lg sm:text-xl font-bold">EchoX</span>
+
+                {/* Column 2 – Platform */}
+                <div className="flex flex-col items-center">
+                  <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Platform</h3>
+                  <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
+                    <li>
+                      <Link to="/business-registration" className="hover:text-white">
+                        For Businesses
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/partner" className="hover:text-white">
+                        For Influencers
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Column 3 – Company */}
+                <div className="flex flex-col items-center">
+                  <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Company</h3>
+                  <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
+                    <li><a href="#" className="hover:text-white">About</a></li>
+                    <li><a href="#" className="hover:text-white">Privacy</a></li>
+                    <li><a href="#" className="hover:text-white">Terms</a></li>
+                  </ul>
+                </div>
               </div>
-              <p className="text-sm sm:text-base text-gray-400">
-                Connecting businesses with influencers for authentic social
-                media collaborations.
-              </p>
             </div>
-            <div>
-              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
-                Platform
-              </h3>
-              <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
-                <li>
-                  <Link
-                    to="/business-registration"
-                    className="hover:text-white"
-                  >
-                    For Businesses
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/partner" className="hover:text-white">
-                    For Influencers
-                  </Link>
-                </li>
-                <li>
-                  <a href="#pricing" className="hover:text-white">
-                    Pricing
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
-                Support
-              </h3>
-              <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Help Center
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Contact Us
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    API Docs
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
-                Company
-              </h3>
-              <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
-                <li>
-                  <a href="#" className="hover:text-white">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Privacy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Terms
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-gray-400">
-            <p className="text-sm sm:text-base">
-              &copy; 2025 EchoX. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
+        </footer>
+
     </div>
   );
 }

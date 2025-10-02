@@ -104,7 +104,7 @@ export default function RegisterBusiness() {
               Join as a Business
             </h1>
             <p className="text-lg text-gray-600 mb-8">
-              Launch campaigns with verified influencers and get guaranteed reach to your target audience.
+              Launch campaigns with verified micro influencers and get guaranteed reach to your target audience.
             </p>
 
             <div className="space-y-6 mb-8">
@@ -114,10 +114,10 @@ export default function RegisterBusiness() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">
-                    Verified Quality Influencers
+                    Verified Quality Micro Influencers
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    Access our network of verified, quality influencers across all niches
+                    A network of verified, quality micro influencers in matching niches will work on your campaign.
                   </p>
                 </div>
               </div>
@@ -158,7 +158,7 @@ export default function RegisterBusiness() {
               <ul className="text-sm text-gray-600 space-y-2">
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 bg-brand-600 rounded-full"></div>
-                  Access to verified, quality influencers
+                  Verified, quality micro influencers
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 bg-brand-600 rounded-full"></div>
