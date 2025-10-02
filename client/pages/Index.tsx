@@ -58,7 +58,7 @@ export default function Index() {
 
             {/* Desktop Auth Buttons */}
             <div className="hidden md:flex items-center space-x-4">
-              <Link to="/partner">
+              <Link to="/login">
                 <Button>Login</Button>
               </Link>
             </div>
@@ -103,7 +103,7 @@ export default function Index() {
                   Pricing
                 </a>
                 <div className="pt-4 pb-2 space-y-2">
-                  <Link to="/partner" className="block">
+                  <Link to="/login" className="block">
                     <Button className="w-full">Login</Button>
                   </Link>
                 </div>
@@ -119,18 +119,17 @@ export default function Index() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                Start your
+                Launch Campaigns With
                 <span className="bg-gradient-to-r from-brand-600 to-gradient-to bg-clip-text text-transparent">
                   {" "}
-                  Campaigns
+                  Verified Influencers
                 </span>
                 <br />
-                With verified influencers who Amplify Your Brand
+                And Guaranteed Reach
               </h1>
               <p className="mt-4 sm:mt-6 text-lg sm:text-xl text-gray-600 leading-relaxed">
-                EchoX bridges businesses and influencers through a seamless
-                platform for social media collaborations. Post jobs, get bids,
-                and watch your brand reach new heights.
+                EchoX connects you with quality influencers and guarantees your campaign reaches
+                the target number of users. Post campaigns, receive bids, and track your reach.
               </p>
               <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <Link to="/register/business" className="w-full sm:w-auto">
@@ -143,14 +142,14 @@ export default function Index() {
                   </Button>
                 </Link>
                 <Link to="/partner" className="w-full sm:w-auto">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="w-full sm:min-w-[260px] border-brand-200 text-brand-700 hover:bg-brand-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg flex-wrap whitespace-normal text-center leading-snug"
-                  >
-                    I’m an Influencer – I’m Interested 🙌
-                  </Button>
-                </Link>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full max-w-[800px] sm:w-auto sm:min-w-[400px] border-white text-brand-700 hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg flex items-center justify-center text-center whitespace-normal break-words leading-normal"
+                >
+                  I’m an Influencer – I’m Interested 🙌
+                </Button>
+            </Link>
               </div>
             </div>
             <div className="relative mt-8 sm:mt-10 lg:mt-0 lg:-translate-y-2 xl:-translate-y-4 2xl:-translate-y-8 lg:ml-auto">
@@ -188,11 +187,10 @@ export default function Index() {
                   <Users className="h-6 w-6 sm:h-8 sm:w-8 text-brand-600" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
-                  Smart Matching
+                  Verified Influencers
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Our algorithm connects you with influencers who match your
-                  brand values and target audience
+                  Connect with quality, verified influencers across all niches and audiences
                 </p>
               </CardContent>
             </Card>
@@ -202,11 +200,10 @@ export default function Index() {
                   <Shield className="h-8 w-8 text-brand-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  Verified Content
+                  Guaranteed Reach
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Every campaign includes proof of posting with screenshots and
-                  links for complete transparency
+                  We guarantee your campaign reaches the target number of users you specify
                 </p>
               </CardContent>
             </Card>
@@ -230,11 +227,10 @@ export default function Index() {
                   <Zap className="h-8 w-8 text-brand-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  Quick Setup
+                  Flexible Pricing
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Launch your first campaign in minutes with our intuitive job
-                  posting interface
+                  Pay per campaign or subscribe yearly for unlimited campaigns at a discounted rate
                 </p>
               </CardContent>
             </Card>
@@ -244,11 +240,10 @@ export default function Index() {
                   <Smartphone className="h-8 w-8 text-brand-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  Mobile First
+                  Easy Campaign Management
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Designed for the mobile generation - influencers can bid and
-                  manage campaigns on the go
+                  Post campaigns, review bids, select influencers, and track reach all in one place
                 </p>
               </CardContent>
             </Card>
@@ -292,8 +287,7 @@ export default function Index() {
                 Post Your Campaign
               </h3>
               <p className="text-sm sm:text-base text-gray-600">
-                Create a campaign with details about your brand, requirements,
-                and budget
+                Define your campaign goals, target reach, and budget
               </p>
             </div>
             <div className="text-center">
@@ -306,7 +300,7 @@ export default function Index() {
                 Receive Bids
               </h3>
               <p className="text-gray-600">
-                Qualified influencers submit their proposals with custom pricing
+                Verified influencers submit proposals to join your campaign
               </p>
             </div>
             <div className="text-center">
@@ -316,11 +310,10 @@ export default function Index() {
                 </span>
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
-                Select & Confirm
+                Select Influencers
               </h3>
               <p className="text-gray-600">
-                Choose your preferred influencers and they confirm their
-                participation
+                Review proposals and choose the best influencers for your brand
               </p>
             </div>
             <div className="text-center">
@@ -330,11 +323,10 @@ export default function Index() {
                 </span>
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
-                Verify & Complete
+                Track Guaranteed Reach
               </h3>
               <p className="text-gray-600">
-                Review proof of posting, approve the work, and payments are
-                processed automatically
+                Monitor campaign progress and get guaranteed reach to your target users
               </p>
             </div>
           </div>
@@ -345,13 +337,12 @@ export default function Index() {
       <section className="py-12 sm:py-20 bg-gradient-to-br from-brand-600 to-gradient-to">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6">
-            Ready to Amplify Your Brand?
+            Ready to Grow Your Brand?
           </h2>
           <p className="text-lg sm:text-xl text-brand-100 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-            Join thousands of businesses and influencers who trust EchoX for
-            their marketing collaborations
+            Join hundreds of businesses who trust EchoX for verified influencers and guaranteed reach
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
             <Link to="/register/business" className="w-full sm:w-auto">
               <Button
                 size="lg"
@@ -361,13 +352,13 @@ export default function Index() {
               </Button>
             </Link>
             <Link to="/partner" className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full sm:min-w-[260px] border-white text-white hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg flex-wrap whitespace-normal text-center leading-snug"
-              >
-                I’m an Influencer – I’m Interested 🙌
-              </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full max-w-[800px] sm:w-auto sm:min-w-[400px] border-white text-brand-700 hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg flex items-center justify-center text-center whitespace-normal break-words leading-normal"
+                >
+                  I’m an Influencer – I’m Interested 🙌
+                </Button>
             </Link>
           </div>
         </div>

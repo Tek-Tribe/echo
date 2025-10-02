@@ -104,7 +104,7 @@ export default function RegisterBusiness() {
               Join as a Business
             </h1>
             <p className="text-lg text-gray-600 mb-8">
-              Connect with authentic influencers and grow your brand through targeted Instagram campaigns.
+              Launch campaigns with verified influencers and get guaranteed reach to your target audience.
             </p>
 
             <div className="space-y-6 mb-8">
@@ -114,10 +114,10 @@ export default function RegisterBusiness() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">
-                    Access to Verified Influencers
+                    Verified Quality Influencers
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    Connect with our network of verified Instagram influencers across all niches
+                    Access our network of verified, quality influencers across all niches
                   </p>
                 </div>
               </div>
@@ -128,10 +128,10 @@ export default function RegisterBusiness() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">
-                    Campaign Management
+                    Guaranteed Reach
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    Create, manage, and track your campaigns all in one dashboard
+                    We guarantee your campaign reaches the target number of users you specify
                   </p>
                 </div>
               </div>
@@ -142,10 +142,10 @@ export default function RegisterBusiness() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">
-                    Performance Analytics
+                    Flexible Pricing
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    Track ROI and engagement metrics to optimize your marketing strategy
+                    Choose pay-per-campaign or yearly subscriptions for limited or unlimited campaigns
                   </p>
                 </div>
               </div>
@@ -153,28 +153,28 @@ export default function RegisterBusiness() {
 
             <div className="p-6 bg-white rounded-lg border border-brand-200">
               <h4 className="font-semibold text-gray-900 mb-3">
-                What's included in your account:
+                What You Get:
               </h4>
               <ul className="text-sm text-gray-600 space-y-2">
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 bg-brand-600 rounded-full"></div>
-                  Create unlimited campaigns
+                  Access to verified, quality influencers
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 bg-brand-600 rounded-full"></div>
-                  Access to influencer marketplace
+                  Guaranteed reach to target number of users
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 bg-brand-600 rounded-full"></div>
-                  Campaign analytics and reporting
+                  Campaign management dashboard
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 bg-brand-600 rounded-full"></div>
-                  Secure payment processing
+                  Real-time reach tracking & analytics
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 bg-brand-600 rounded-full"></div>
-                  24/7 customer support
+                  Flexible pricing: pay-per-campaign or yearly plans
                 </li>
               </ul>
             </div>
