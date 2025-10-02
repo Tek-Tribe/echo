@@ -132,24 +132,22 @@ export default function Index() {
                 the target number of users. Post campaigns, receive bids, and track your reach.
               </p>
               <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:items-stretch gap-3 sm:gap-4">
-                <Link to="/business-registration" className="w-full sm:w-auto">
+                <Link to="/register/business" className="w-full sm:w-auto">
                   <Button
                     size="lg"
-                    className="w-full sm:min-w-[260px] bg-brand-600 hover:bg-brand-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-lg"
+                    className="w-full max-w-[800px] sm:w-auto sm:min-w-[320px] bg-brand-600 hover:bg-brand-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
                   >
                     Start your campaigns
                     <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </Link>
-                <Link to="/influencer-login" className="w-full sm:w-auto">
+                <Link to="/partner" className="w-full sm:w-auto">
                   <Button
                     size="lg"
                     variant="outline"
-                    className="w-full sm:min-w-[260px] border-brand-200 text-brand-700 hover:bg-brand-50 px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-lg flex-wrap whitespace-normal text-center leading-snug"
+                    className="w-full max-w-[800px] sm:w-auto sm:min-w-[400px] border-white text-brand-700 hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg flex items-center justify-center text-center whitespace-normal break-words leading-normal"
                   >
-                    <span className="block w-full text-center leading-snug break-words">
-                      I’m an Influencer – I’m Interested 🙌
-                    </span>
+                    I’m an Influencer – I’m Interested 🙌
                   </Button>
                 </Link>
               </div>
@@ -345,23 +343,21 @@ export default function Index() {
             Join thousands of businesses and influencers who trust EchoX for their marketing collaborations
           </p>
           <div className="flex flex-col sm:flex-row sm:items-stretch gap-3 sm:gap-4 justify-center">
-            <Link to="/business-registration" className="w-full sm:w-auto">
+            <Link to="/register/business" className="w-full sm:w-auto">
               <Button
                 size="lg"
-                className="w-full sm:min-w-[260px] bg-white text-brand-600 hover:bg-gray-50 px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-lg"
+                className="w-full max-w-[800px] sm:w-auto sm:min-w-[320px] bg-white text-brand-600 hover:bg-gray-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
               >
                 Start Your First Campaign
               </Button>
             </Link>
-            <Link to="/influencer-login" className="w-full sm:w-auto">
+            <Link to="/partner" className="w-full sm:w-auto">
               <Button
                 size="lg"
                 variant="outline"
-                className="w-full sm:min-w-[260px] border-white text-white hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-lg flex-wrap whitespace-normal text-center leading-snug"
+                className="w-full max-w-[800px] sm:w-auto sm:min-w-[400px] border-white text-brand-700 hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg flex items-center justify-center text-center whitespace-normal break-words leading-normal"
               >
-                <span className="block w-full text-center leading-snug break-words">
-                  I’m an Influencer – I’m Interested 🙌
-                </span>
+                I’m an Influencer – I’m Interested 🙌
               </Button>
             </Link>
           </div>
@@ -397,7 +393,7 @@ export default function Index() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/influencer-login" className="hover:text-white">
+                  <Link to="/partner" className="hover:text-white">
                     For Influencers
                   </Link>
                 </li>
