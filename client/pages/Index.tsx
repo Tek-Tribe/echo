@@ -502,8 +502,8 @@ export default function Index() {
           <p className="text-lg sm:text-xl text-brand-100 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
             Join thousands of businesses and influencers who trust EchoX for their marketing collaborations
           </p>
-          <div className="flex flex-col gap-3 items-center">
-            <Link to="/register/business" className="w-full max-w-xl">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
+            <Link to="/register/business" className="w-full max-w-xl sm:max-w-none sm:w-auto">
               <Button
                 size="lg"
                 className="w-full max-w-[800px] sm:w-auto sm:min-w-[320px] bg-white text-brand-600 hover:bg-gray-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
@@ -511,7 +511,7 @@ export default function Index() {
                 Start Your First Campaign
               </Button>
             </Link>
-            <Link to="/partner" className="w-full max-w-xl">
+            <Link to="/partner" className="w-full max-w-xl sm:max-w-none sm:w-auto">
               <Button
                 size="lg"
                 variant="outline"
