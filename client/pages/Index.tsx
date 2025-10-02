@@ -137,7 +137,7 @@ export default function Index() {
                 <Link to="/business-registration" className="w-full sm:w-auto">
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
+                    className="w-full sm:min-w-[260px] bg-brand-600 hover:bg-brand-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
                   >
                     Start your campaigns
                     <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
@@ -147,7 +147,7 @@ export default function Index() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="w-full sm:w-auto border-brand-200 text-brand-700 hover:bg-brand-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg flex-wrap whitespace-normal text-center leading-snug"
+                    className="w-full sm:min-w-[260px] border-brand-200 text-brand-700 hover:bg-brand-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg flex-wrap whitespace-normal text-center leading-snug"
                   >
                     I’m an Influencer – I’m Interested 🙌
                   </Button>
@@ -356,7 +356,7 @@ export default function Index() {
             <Link to="/business-registration" className="w-full sm:w-auto">
               <Button
                 size="lg"
-                className="w-full sm:w-auto bg-white text-brand-600 hover:bg-gray-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
+                className="w-full sm:min-w-[260px] bg-white text-brand-600 hover:bg-gray-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
               >
                 Start Your First Campaign
               </Button>
@@ -365,7 +365,7 @@ export default function Index() {
               <Button
                 size="lg"
                 variant="outline"
-                className="w-full sm:w-auto border-white text-white hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg flex-wrap whitespace-normal text-center leading-snug"
+                className="w-full sm:min-w-[260px] border-white text-white hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg flex-wrap whitespace-normal text-center leading-snug"
               >
                 I’m an Influencer – I’m Interested 🙌
               </Button>
