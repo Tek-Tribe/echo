@@ -10,6 +10,8 @@ import {
   ArrowRight,
   Menu,
   X,
+  Clock3,
+  Target,
 } from "lucide-react";
 import { EchoCoinIcon } from "@/components/EchoCoinIcon";
 import { useState } from "react";
