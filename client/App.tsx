@@ -1,6 +1,6 @@
 import "./global.css";
 
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -10,6 +10,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import BusinessDashboard from "./pages/BusinessDashboard";
 import BusinessRegistration from "./pages/BusinessRegistration";
+import RegisterBusiness from "./pages/RegisterBusiness";
+import Login from "./pages/Login";
+import Partner from "./pages/Partner";
 import AdminDashboard from "./pages/AdminDashboard";
 import Analytics from "./pages/Analytics";
 import Payments from "./pages/Payments";
@@ -38,6 +41,9 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/register/business" element={<RegisterBusiness />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/partner" element={<Partner />} />
             <Route
               path="/business-registration"
               element={<BusinessRegistration />}

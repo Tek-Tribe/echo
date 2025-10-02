@@ -8,7 +8,6 @@ import {
   Smartphone,
   Star,
   ArrowRight,
-  CheckCircle,
   Menu,
   X,
 } from "lucide-react";
@@ -59,7 +58,7 @@ export default function Index() {
 
             {/* Desktop Auth Buttons */}
             <div className="hidden md:flex items-center space-x-4">
-              <Link to="/influencer-login">
+              <Link to="/login">
                 <Button>Login</Button>
               </Link>
             </div>
@@ -104,7 +103,7 @@ export default function Index() {
                   Pricing
                 </a>
                 <div className="pt-4 pb-2 space-y-2">
-                  <Link to="/influencer-login" className="block">
+                  <Link to="/login" className="block">
                     <Button className="w-full">Login</Button>
                   </Link>
                 </div>
@@ -120,18 +119,17 @@ export default function Index() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                Start your
+                Launch Campaigns With
                 <span className="bg-gradient-to-r from-brand-600 to-gradient-to bg-clip-text text-transparent">
                   {" "}
-                  Campaigns
+                  Verified Influencers
                 </span>
                 <br />
-                With verified influencers who Amplify Your Brand
+                And Guaranteed Reach
               </h1>
               <p className="mt-4 sm:mt-6 text-lg sm:text-xl text-gray-600 leading-relaxed">
-                EchoX bridges businesses and influencers through a seamless
-                platform for social media collaborations. Post jobs, get bids,
-                and watch your brand reach new heights.
+                EchoX connects you with quality influencers and guarantees your campaign reaches
+                the target number of users. Post campaigns, receive bids, and track your reach.
               </p>
               <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:items-stretch gap-3 sm:gap-4">
                 <Link to="/business-registration" className="w-full sm:w-auto">
@@ -191,11 +189,10 @@ export default function Index() {
                   <Users className="h-6 w-6 sm:h-8 sm:w-8 text-brand-600" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
-                  Smart Matching
+                  Verified Influencers
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Our algorithm connects you with influencers who match your
-                  brand values and target audience
+                  Connect with quality, verified influencers across all niches and audiences
                 </p>
               </CardContent>
             </Card>
@@ -205,11 +202,10 @@ export default function Index() {
                   <Shield className="h-8 w-8 text-brand-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  Verified Content
+                  Guaranteed Reach
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Every campaign includes proof of posting with screenshots and
-                  links for complete transparency
+                  We guarantee your campaign reaches the target number of users you specify
                 </p>
               </CardContent>
             </Card>
@@ -233,11 +229,10 @@ export default function Index() {
                   <Zap className="h-8 w-8 text-brand-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  Quick Setup
+                  Flexible Pricing
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Launch your first campaign in minutes with our intuitive job
-                  posting interface
+                  Pay per campaign or subscribe yearly for unlimited campaigns at a discounted rate
                 </p>
               </CardContent>
             </Card>
@@ -247,11 +242,10 @@ export default function Index() {
                   <Smartphone className="h-8 w-8 text-brand-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  Mobile First
+                  Easy Campaign Management
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Designed for the mobile generation - influencers can bid and
-                  manage campaigns on the go
+                  Post campaigns, review bids, select influencers, and track reach all in one place
                 </p>
               </CardContent>
             </Card>
@@ -295,8 +289,7 @@ export default function Index() {
                 Post Your Campaign
               </h3>
               <p className="text-sm sm:text-base text-gray-600">
-                Create a campaign with details about your brand, requirements,
-                and budget
+                Define your campaign goals, target reach, and budget
               </p>
             </div>
             <div className="text-center">
@@ -309,7 +302,7 @@ export default function Index() {
                 Receive Bids
               </h3>
               <p className="text-gray-600">
-                Qualified influencers submit their proposals with custom pricing
+                Verified influencers submit proposals to join your campaign
               </p>
             </div>
             <div className="text-center">
@@ -319,11 +312,10 @@ export default function Index() {
                 </span>
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
-                Select & Confirm
+                Select Influencers
               </h3>
               <p className="text-gray-600">
-                Choose your preferred influencers and they confirm their
-                participation
+                Review proposals and choose the best influencers for your brand
               </p>
             </div>
             <div className="text-center">
@@ -333,11 +325,10 @@ export default function Index() {
                 </span>
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
-                Verify & Complete
+                Track Guaranteed Reach
               </h3>
               <p className="text-gray-600">
-                Review proof of posting, approve the work, and payments are
-                processed automatically
+                Monitor campaign progress and get guaranteed reach to your target users
               </p>
             </div>
           </div>
@@ -351,8 +342,7 @@ export default function Index() {
             Ready to Amplify Your Brand?
           </h2>
           <p className="text-lg sm:text-xl text-brand-100 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-            Join thousands of businesses and influencers who trust EchoX for
-            their marketing collaborations
+            Join thousands of businesses and influencers who trust EchoX for their marketing collaborations
           </p>
           <div className="flex flex-col sm:flex-row sm:items-stretch gap-3 sm:gap-4 justify-center">
             <Link to="/business-registration" className="w-full sm:w-auto">
@@ -402,10 +392,7 @@ export default function Index() {
               </h3>
               <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
                 <li>
-                  <Link
-                    to="/business-registration"
-                    className="hover:text-white"
-                  >
+                  <Link to="/business-registration" className="hover:text-white">
                     For Businesses
                   </Link>
                 </li>
