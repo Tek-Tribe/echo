@@ -133,7 +133,7 @@ export default function Index() {
                 platform for social media collaborations. Post jobs, get bids,
                 and watch your brand reach new heights.
               </p>
-              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:items-stretch gap-3 sm:gap-4">
                 <Link to="/business-registration" className="w-full sm:w-auto">
                   <Button
                     size="lg"
@@ -352,7 +352,7 @@ export default function Index() {
             Join thousands of businesses and influencers who trust EchoX for
             their marketing collaborations
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row sm:items-stretch gap-3 sm:gap-4 justify-center">
             <Link to="/business-registration" className="w-full sm:w-auto">
               <Button
                 size="lg"
