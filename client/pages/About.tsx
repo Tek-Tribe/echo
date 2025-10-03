@@ -77,7 +77,8 @@ export default function About() {
             EchoX
           </h1>
           <p className="text-base text-gray-600 sm:text-lg">
-            EchoX was produced through close collaboration and relentless iteration.
+            EchoX was produced through close collaboration and relentless
+            iteration.
           </p>
         </section>
 
