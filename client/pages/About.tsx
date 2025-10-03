@@ -56,7 +56,7 @@ export default function About() {
       <main className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
         <section className="space-y-6 sm:space-y-8">
           <h1 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
-            Built together by TechTribe and WHAC
+            EchoX: co-created 50/50 by TechTribe and WHAC
           </h1>
           <p className="text-base text-gray-600 sm:text-lg">
             EchoX is a balanced collaboration between{" "}
