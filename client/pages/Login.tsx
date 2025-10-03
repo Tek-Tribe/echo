@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { apiClient } from '@shared/api/client';
 
 export default function Login() {
@@ -55,18 +55,24 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-50 to-gradient-to/10 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
-        {/* Back to home */}
-        <Link
-          to="/"
-          className="inline-flex items-center text-brand-600 hover:text-brand-700 mb-6 text-sm font-medium"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to home
-        </Link>
+    <div className="min-h-screen bg-gradient-to-br from-white via-brand-50/30 to-white">
+      <header className="border-b border-gray-100 bg-white/60 backdrop-blur">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
+          <Link to="/" className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-gradient-to text-white">
+              EX
+            </div>
+            EchoX Login
+          </Link>
+          <Button asChild variant="ghost" className="text-sm font-medium text-brand-700">
+            <Link to="/">Back to home</Link>
+          </Button>
+        </div>
+      </header>
 
-        <Card className="shadow-2xl border-0">
+      <main className="mx-auto flex max-w-5xl justify-center px-4 py-10 sm:py-16">
+        <div className="w-full max-w-md">
+          <Card className="shadow-2xl border-0">
           <CardHeader className="space-y-1 text-center pb-8">
             <div className="flex items-center justify-center gap-2 mb-4">
               <div className="w-10 h-10 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
@@ -174,8 +180,9 @@ export default function Login() {
               </Link>
             </div>
           </CardContent>
-        </Card>
-      </div>
+          </Card>
+        </div>
+      </main>
     </div>
   );
 }
