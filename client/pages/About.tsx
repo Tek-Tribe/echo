@@ -19,7 +19,7 @@ const milestones = [
     title: "EchoX launch",
     date: "April 2024",
     description:
-      "We shipped the production platform while WHAC took it to market. The close collaboration produced EchoX with guaranteed reach and transparent pricing.",
+      "We shipped the production platform and took it to market together. The close collaboration produced EchoX with guaranteed reach and transparent pricing.",
   },
   {
     title: "Scaling together",
