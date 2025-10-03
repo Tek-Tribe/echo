@@ -39,7 +39,7 @@ export default function About() {
         <section className="mt-10 space-y-3 sm:space-y-4">
           <h2 className="text-2xl font-semibold text-gray-900">Joint pilot</h2>
           <p className="text-base text-gray-600 sm:text-lg">
-            As EchoX we collaborated to validate the model and deliver value hand in hand.
+            Joint pilot — as EchoX we collaborated to validate the model together.
           </p>
         </section>
       </main>
