@@ -41,13 +41,13 @@ const milestones = [
   },
   {
     title: "Cross-border pilots",
-    date: "H1 2026",
+    date: "2026",
     description:
-      "We will expand EchoX to all-India and GCC markets, seeking investors in H1 2026 to scale responsibly while preserving the guaranteed reach promise.",
+      "We will expand EchoX to all-India and GCC markets, seeking investors in 2026 to scale responsibly while preserving the guaranteed reach promise.",
   },
   {
     title: "Revenue share marketplace",
-    date: "H2 2026",
+    date: "2026",
     description:
       "We plan to introduce shared-revenue campaigns so creators and EchoX both participate in upside with transparent dashboards and automated settlements.",
   },
