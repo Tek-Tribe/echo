@@ -65,13 +65,13 @@ export default function InfluencerLogin() {
                   <Input
                     id="password"
                     type="password"
-                    placeholder="••••••••"
+                    placeholder="•••���••••"
                     className="text-sm sm:text-base"
                   />
                 </div>
               </div>
 
-              <Link to="/influencer-dashboard" className="w-full">
+              <Link to="/influencer-dashboard" className="block w-full">
                 <Button className="w-full bg-brand-600 hover:bg-brand-700 text-white py-3 text-sm sm:text-base">
                   Sign In
                 </Button>
