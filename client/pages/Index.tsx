@@ -20,9 +20,9 @@ export default function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const highlightedBids = [
     {
-      initials: "NM",
-      name: "Nila Menon",
-      handle: "@nila_inspires",
+      initials: "NF",
+      name: "Nafeesa Faizal",
+      handle: "@nafeesa.creates",
       reach: "68K reach • Kochi, Kerala",
       amount: "₹9,200",
       status: "Shortlisted",
