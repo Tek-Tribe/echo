@@ -109,14 +109,18 @@ export default function InfluencerDashboard() {
     }
   }, [theme]);
 
-  // Demo influencer profile for matching logic
-  const [me, setMe] = useState<InfluencerProfile>({
-    id: "i1",
-    name: "Jane Doe",
-    email: "jane@example.com",
-    followers: 45000,
-    categories: ["Fitness", "Lifestyle"],
-    platforms: ["Instagram", "TikTok"],
+  // Get logged in influencer from localStorage
+  const [me, setMe] = useState<InfluencerProfile>(() => {
+    const userStr = localStorage.getItem('user');
+    const user = userStr ? JSON.parse(userStr) : null;
+    return {
+      id: user?.id || "i1",
+      name: user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : "Jane Doe",
+      email: user?.email || "jane@example.com",
+      followers: user?.followers || 45000,
+      categories: user?.categories || ["Fitness", "Lifestyle"],
+      platforms: user?.platforms || ["Instagram", "TikTok"],
+    };
   });
 
   // Header/mobile
@@ -356,8 +360,8 @@ export default function InfluencerDashboard() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="flex items-center space-x-2 hover:bg-gray-50">
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src="/placeholder.svg" />
-                      <AvatarFallback>JD</AvatarFallback>
+                      <AvatarImage src={(localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')!))?.profileImageUrl} />
+                      <AvatarFallback>{me.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                     </Avatar>
                     <span className="hidden md:block text-sm font-medium text-gray-700">
                       {me.name}
@@ -370,11 +374,13 @@ export default function InfluencerDashboard() {
                     <Settings className="h-4 w-4" />
                     <span>Settings</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/" className="flex items-center gap-2 text-red-600">
-                      <LogOut className="h-4 w-4" />
-                      <span>Logout</span>
-                    </Link>
+                  <DropdownMenuItem onClick={() => {
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/';
+                  }} className="flex items-center gap-2 text-red-600">
+                    <LogOut className="h-4 w-4" />
+                    <span>Logout</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -388,9 +394,14 @@ export default function InfluencerDashboard() {
                 <a href="#" className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-700" onClick={() => setView("settings")}>
                   Settings
                 </a>
-                <Link to="/" className="block px-3 py-2 text-base font-medium text-red-600">
+                <a href="#" onClick={(e) => {
+                  e.preventDefault();
+                  localStorage.removeItem('user');
+                  localStorage.removeItem('auth_token');
+                  window.location.href = '/';
+                }} className="block px-3 py-2 text-base font-medium text-red-600">
                   Logout
-                </Link>
+                </a>
               </div>
             </div>
           )}

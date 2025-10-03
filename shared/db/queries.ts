@@ -1,4 +1,4 @@
-import { eq, and, desc, asc } from 'drizzle-orm';
+import { eq, and, desc, asc, lt } from 'drizzle-orm';
 import { db } from './connection';
 import {
   users,
@@ -10,6 +10,7 @@ import {
   evidenceSubmissions,
   notifications,
   platforms,
+  emailVerificationCodes,
   type User,
   type NewUser,
   type Campaign,
@@ -20,6 +21,8 @@ import {
   type NewInfluencerProfile,
   type BusinessProfile,
   type NewBusinessProfile,
+  type EmailVerificationCode,
+  type NewEmailVerificationCode,
 } from './schema';
 
 // User queries
@@ -277,5 +280,46 @@ export const notificationQueries = {
       .update(notifications)
       .set({ isRead: true })
       .where(and(eq(notifications.userId, userId), eq(notifications.isRead, false)));
+  },
+};
+
+// Email verification queries
+export const verificationQueries = {
+  // Create verification code
+  create: async (verificationData: NewEmailVerificationCode): Promise<EmailVerificationCode> => {
+    const [code] = await db.insert(emailVerificationCodes).values(verificationData).returning();
+    return code;
+  },
+
+  // Get valid verification code by email and code
+  getValidCode: async (email: string, code: string): Promise<EmailVerificationCode | null> => {
+    const [verificationCode] = await db
+      .select()
+      .from(emailVerificationCodes)
+      .where(
+        and(
+          eq(emailVerificationCodes.email, email),
+          eq(emailVerificationCodes.code, code),
+          eq(emailVerificationCodes.isUsed, false),
+        )
+      );
+    return verificationCode || null;
+  },
+
+  // Mark code as used
+  markAsUsed: async (id: string): Promise<EmailVerificationCode> => {
+    const [code] = await db
+      .update(emailVerificationCodes)
+      .set({ isUsed: true })
+      .where(eq(emailVerificationCodes.id, id))
+      .returning();
+    return code;
+  },
+
+  // Delete expired codes
+  deleteExpired: async (): Promise<void> => {
+    await db
+      .delete(emailVerificationCodes)
+      .where(lt(emailVerificationCodes.expiresAt, new Date()));
   },
 };

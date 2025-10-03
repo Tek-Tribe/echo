@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
-import { register, login, getProfile } from "./routes/auth";
+import { register, login, getProfile, verifyEmailOnLogin, resendVerificationCode } from "./routes/auth";
 import { createCampaign, getActiveCampaigns, getBusinessCampaigns, getCampaignById, updateCampaign, updateCampaignStatus } from "./routes/campaigns";
 import { createBid, getInfluencerBids, getCampaignBids, updateBidStatus, completeBid } from "./routes/bids";
 
@@ -24,6 +24,8 @@ export function createServer() {
   // Auth routes
   app.post("/api/auth/register", register);
   app.post("/api/auth/login", login);
+  app.post("/api/auth/verify-email", verifyEmailOnLogin);
+  app.post("/api/auth/resend-verification", resendVerificationCode);
   app.get("/api/auth/profile/:userId", getProfile);
 
   // Campaign routes

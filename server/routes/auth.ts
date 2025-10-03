@@ -1,7 +1,13 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { supabase } from '../../shared/db/supabase';
-import { userQueries, influencerQueries, businessQueries } from '../../shared/db/queries';
+import { userQueries, influencerQueries, businessQueries, verificationQueries } from '../../shared/db/queries';
+import { sendVerificationCode } from '../email';
+
+// Generate a 6-digit verification code
+const generateVerificationCode = (): string => {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+};
 
 // User registration
 export const register = async (req: Request, res: Response) => {
@@ -22,13 +28,14 @@ export const register = async (req: Request, res: Response) => {
     // Hash password
     const passwordHash = await bcrypt.hash(password, 10);
 
-    // Create user
+    // Create user (unverified - will verify on first login)
     const user = await userQueries.create({
       email,
       passwordHash,
       userType,
       firstName,
       lastName,
+      isVerified: false,
     });
 
     // Create user profile based on user type
@@ -64,6 +71,9 @@ export const register = async (req: Request, res: Response) => {
           error: 'Business registration requires profileData with companyName'
         });
       }
+    } else if (userType === 'admin' || userType === 'manager') {
+      // Admin and manager users don't need a profile
+      profile = null;
     }
 
     // Register with Supabase Auth (optional, for additional features)
@@ -121,15 +131,55 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ error: 'Account is deactivated' });
     }
 
-    // Sign in with Supabase Auth (optional)
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    // Check if user is verified - if not, send verification code
+    if (!user.isVerified) {
+      // Generate verification code
+      const verificationCode = generateVerificationCode();
 
-    if (authError) {
-      console.warn('Supabase auth login failed:', authError);
-      // Continue without Supabase auth
+      // Store verification code (expires in 10 minutes)
+      const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+      await verificationQueries.create({
+        email,
+        code: verificationCode,
+        expiresAt,
+      });
+
+      // Send verification email
+      try {
+        await sendVerificationCode(email, verificationCode);
+      } catch (emailError) {
+        console.error('Failed to send verification email:', emailError);
+        return res.status(500).json({
+          error: 'Failed to send verification email. Please try again.'
+        });
+      }
+
+      // Return response indicating verification is required
+      return res.status(403).json({
+        requiresVerification: true,
+        message: 'Email verification required. A verification code has been sent to your email.',
+        email: user.email,
+        userId: user.id,
+      });
+    }
+
+    // Sign in with Supabase Auth (optional)
+    let authData = null;
+    try {
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (authError) {
+        console.warn('Supabase auth login failed:', authError.message);
+        // Continue without Supabase auth - this is optional
+      } else {
+        authData = data;
+      }
+    } catch (supabaseError: any) {
+      console.warn('Supabase auth error (continuing without it):', supabaseError.message);
+      // Continue without Supabase auth - login can still succeed with custom DB
     }
 
     // Get user profile data
@@ -150,6 +200,134 @@ export const login = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Login error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+// Verify email with code on first login
+export const verifyEmailOnLogin = async (req: Request, res: Response) => {
+  try {
+    const { email, code, userId } = req.body;
+
+    // Validate required fields
+    if (!email || !code) {
+      return res.status(400).json({ error: 'Email and code are required' });
+    }
+
+    // Get verification code from database
+    const verificationCode = await verificationQueries.getValidCode(email, code);
+
+    if (!verificationCode) {
+      return res.status(400).json({ error: 'Invalid or expired verification code' });
+    }
+
+    // Check if code has expired
+    if (new Date() > new Date(verificationCode.expiresAt)) {
+      return res.status(400).json({ error: 'Verification code has expired' });
+    }
+
+    // Get user
+    const user = await userQueries.getByEmail(email);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Check if user is already verified
+    if (user.isVerified) {
+      return res.status(400).json({ error: 'User is already verified' });
+    }
+
+    // Mark verification code as used
+    await verificationQueries.markAsUsed(verificationCode.id);
+
+    // Update user to verified
+    const updatedUser = await userQueries.update(user.id, { isVerified: true });
+
+    // Sign in with Supabase Auth (optional)
+    let authData = null;
+    try {
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password: req.body.password || '', // Password already verified in login
+      });
+
+      if (authError) {
+        console.warn('Supabase auth login failed:', authError.message);
+      } else {
+        authData = data;
+      }
+    } catch (supabaseError: any) {
+      console.warn('Supabase auth error (continuing without it):', supabaseError.message);
+    }
+
+    // Get user profile data
+    let profileData = null;
+    if (updatedUser.userType === 'influencer') {
+      profileData = await influencerQueries.getByUserId(updatedUser.id);
+    } else if (updatedUser.userType === 'business') {
+      profileData = await businessQueries.getByUserId(updatedUser.id);
+    }
+
+    // Return user data (without password hash) and profile
+    const { passwordHash: _, ...userWithoutPassword } = updatedUser;
+    res.status(200).json({
+      user: userWithoutPassword,
+      profile: profileData,
+      token: authData?.session?.access_token,
+      message: 'Email verified successfully',
+    });
+  } catch (error) {
+    console.error('Email verification error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+// Resend verification code
+export const resendVerificationCode = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
+
+    // Check if user exists
+    const existingUser = await userQueries.getByEmail(email);
+    if (!existingUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Check if user is already verified
+    if (existingUser.isVerified) {
+      return res.status(400).json({ error: 'User is already verified' });
+    }
+
+    // Generate new verification code
+    const verificationCode = generateVerificationCode();
+
+    // Store verification code (expires in 10 minutes)
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+    await verificationQueries.create({
+      email,
+      code: verificationCode,
+      expiresAt,
+    });
+
+    // Send verification email
+    try {
+      await sendVerificationCode(email, verificationCode);
+    } catch (emailError) {
+      console.error('Failed to send verification email:', emailError);
+      return res.status(500).json({
+        error: 'Failed to send verification email. Please try again.'
+      });
+    }
+
+    res.status(200).json({
+      message: 'Verification code sent to your email',
+    });
+  } catch (error) {
+    console.error('Resend verification code error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };

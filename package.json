@@ -21,7 +21,7 @@
     "typecheck": "tsc",
     "db:setup": "tsx database/setup.ts",
     "db:generate": "drizzle-kit generate:pg",
-    "db:migrate": "drizzle-kit up:pg",
+    "db:migrate": "drizzle-kit up",
     "db:studio": "drizzle-kit studio",
     "validate": "tsx scripts/validate-setup.ts",
     "test:api": "tsx tests/api-test.ts"
@@ -31,8 +31,7 @@
     "@types/bcrypt": "^6.0.0",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
-    "drizzle-kit": "^0.18.1",
-    "drizzle-orm": "^0.36.4",
+    "drizzle-orm": "^0.44.6",
     "express": "^4.18.2",
     "postgres": "^3.4.7",
     "zod": "^3.23.8"
@@ -84,6 +83,7 @@
     "cmdk": "^1.0.0",
     "cors": "^2.8.5",
     "date-fns": "^3.6.0",
+    "drizzle-kit": "^0.31.5",
     "embla-carousel-react": "^8.3.0",
     "framer-motion": "^12.6.2",
     "globals": "^15.9.0",

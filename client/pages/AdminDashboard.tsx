@@ -92,9 +92,15 @@ interface Job {
 }
 
 export default function AdminDashboard() {
-  const [role, setRole] = useState<Role>("super_admin");
+  // Get logged in user from localStorage
+  const [currentUser, setCurrentUser] = useState<any>(() => {
+    const userStr = localStorage.getItem('user');
+    return userStr ? JSON.parse(userStr) : null;
+  });
+  const role: Role = currentUser?.userType === 'admin' ? 'super_admin' : 'admin_manager';
+
   const [section, setSection] = useState<
-    "dashboard" | "businesses" | "influencers" | "jobs" | "managers"
+    "dashboard" | "businesses" | "influencers" | "jobs" | "managers" | "settings"
   >("dashboard");
   const [collapsed, setCollapsed] = useState(false);
 
@@ -474,14 +480,17 @@ export default function AdminDashboard() {
               to="/"
               className={`flex items-center gap-3 ${collapsed ? "justify-center w-full" : ""}`}
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-brand-700 rounded flex items-center justify-center">
-                E
-              </div>
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={currentUser?.profileImageUrl} />
+                <AvatarFallback className="bg-gradient-to-br from-brand-500 to-brand-700 text-white font-bold">
+                  {currentUser?.firstName?.[0]}{currentUser?.lastName?.[0]}
+                </AvatarFallback>
+              </Avatar>
               {!collapsed && (
                 <div>
-                  <div className="text-sm font-bold">Echo Admin</div>
-                  <div className="text-xs text-gray-500">
-                    {role === "super_admin" ? "Super Admin" : "Admin Manager"}
+                  <div className="text-sm font-bold">{currentUser?.firstName} {currentUser?.lastName}</div>
+                  <div className="text-xs text-gray-500 capitalize">
+                    {currentUser?.userType || 'User'}
                   </div>
                 </div>
               )}
@@ -540,33 +549,6 @@ export default function AdminDashboard() {
             )}
           </nav>
 
-          <div className="p-4 border-t">
-            <div
-              className={`text-xs text-gray-500 mb-2 ${collapsed ? "hidden" : ""}`}
-            >
-              Switch Role (dev)
-            </div>
-            <div className={`flex gap-2 ${collapsed ? "justify-center" : ""}`}>
-              <Button
-                variant={
-                  role === "super_admin" ? undefined : ("outline" as any)
-                }
-                size="sm"
-                onClick={() => setRole("super_admin")}
-              >
-                Super Admin
-              </Button>
-              <Button
-                variant={
-                  role === "admin_manager" ? undefined : ("outline" as any)
-                }
-                size="sm"
-                onClick={() => setRole("admin_manager")}
-              >
-                Admin Manager
-              </Button>
-            </div>
-          </div>
         </aside>
 
         {/* Main area */}
@@ -584,20 +566,24 @@ export default function AdminDashboard() {
             </div>
             <div className="flex items-center gap-3">
               <div
-                className={`hidden sm:block text-sm text-gray-600 ${collapsed ? "hidden" : ""}`}
+                className={`hidden sm:block text-sm ${collapsed ? "hidden" : ""}`}
               >
-                {role === "super_admin"
-                  ? "Signed in as Super Admin"
-                  : "Signed in as Admin Manager"}
+                <div className="text-gray-900 font-medium">
+                  {currentUser?.firstName} {currentUser?.lastName}
+                </div>
+                <div className="text-xs text-gray-500 capitalize">
+                  {currentUser?.userType || 'Not logged in'}
+                </div>
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="flex items-center gap-2">
                     <Avatar className="h-7 w-7">
-                      <AvatarImage src="/placeholder.svg" />
-                      <AvatarFallback>AD</AvatarFallback>
+                      <AvatarImage src={currentUser?.profileImageUrl} />
+                      <AvatarFallback>
+                        {currentUser?.firstName?.[0]}{currentUser?.lastName?.[0]}
+                      </AvatarFallback>
                     </Avatar>
-                    <span className="hidden sm:block">Admin User</span>
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -605,10 +591,12 @@ export default function AdminDashboard() {
                   <DropdownMenuItem onClick={() => setSection("settings")}>
                     <Settings className="h-4 w-4 mr-2" /> Settings
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/">
-                      <LogOut className="h-4 w-4 mr-2" /> Logout
-                    </Link>
+                  <DropdownMenuItem onClick={() => {
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/';
+                  }}>
+                    <LogOut className="h-4 w-4 mr-2" /> Logout
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -1018,29 +1006,42 @@ export default function AdminDashboard() {
                       <CardContent className="p-4">
                         <div className="space-y-3">
                           <div>
-                            <Label>Name</Label>
+                            <Label>First Name</Label>
                             <Input
-                              placeholder="Admin name"
+                              value={currentUser?.firstName || ''}
+                              placeholder="First name"
                               className="w-full h-10"
+                              readOnly
+                            />
+                          </div>
+                          <div>
+                            <Label>Last Name</Label>
+                            <Input
+                              value={currentUser?.lastName || ''}
+                              placeholder="Last name"
+                              className="w-full h-10"
+                              readOnly
                             />
                           </div>
                           <div>
                             <Label>Email</Label>
                             <Input
+                              value={currentUser?.email || ''}
                               placeholder="admin@example.com"
                               className="w-full h-10"
+                              readOnly
                             />
                           </div>
                           <div>
-                            <Label>Password</Label>
+                            <Label>User Type</Label>
                             <Input
-                              type="password"
-                              placeholder="••••••••"
-                              className="w-full h-10"
+                              value={currentUser?.userType || ''}
+                              placeholder="User type"
+                              className="w-full h-10 capitalize"
+                              readOnly
                             />
                           </div>
                           <div className="flex gap-2">
-                            <Button className="flex-1">Save Account</Button>
                             <Button
                               variant="outline"
                               className="flex-1"
@@ -1133,11 +1134,16 @@ export default function AdminDashboard() {
           <aside className="relative w-64 bg-white border-r border-gray-200 p-4">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-brand-700 rounded flex items-center justify-center text-white font-bold">
-                  E
-                </div>
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={currentUser?.profileImageUrl} />
+                  <AvatarFallback className="bg-gradient-to-br from-brand-500 to-brand-700 text-white font-bold">
+                    {currentUser?.firstName?.[0]}{currentUser?.lastName?.[0]}
+                  </AvatarFallback>
+                </Avatar>
                 <div>
-                  <div className="text-sm font-bold">Echo Admin</div>
+                  <div className="text-sm font-bold">
+                    {currentUser?.firstName} {currentUser?.lastName}
+                  </div>
                   <div className="text-xs text-gray-500">
                     {role === "super_admin" ? "Super Admin" : "Admin Manager"}
                   </div>

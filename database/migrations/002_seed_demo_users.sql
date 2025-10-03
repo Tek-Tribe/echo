@@ -1,6 +1,6 @@
 DO $$
 DECLARE
-  demo_password_hash TEXT := '$2b$10$yl9MwWsc5FuF8kEAV5IkIe/nYIkkcWiezHfUgAgq6.3741lzdwL4e';
+  demo_password_hash TEXT := '$2b$10$khRr/OWav/JUNuD8zWE6VeR.BorXpPUtmgWPsiYiw0xegAXUySula';
 BEGIN
   -- Business demo user
   WITH upsert_business AS (
@@ -117,6 +117,30 @@ BEGIN
     'admin',
     'EchoX',
     'Admin',
+    NULL,
+    NULL,
+    TRUE,
+    TRUE,
+    NOW(),
+    NOW()
+  )
+  ON CONFLICT (email) DO UPDATE SET
+    password_hash = EXCLUDED.password_hash,
+    user_type = EXCLUDED.user_type,
+    first_name = EXCLUDED.first_name,
+    last_name = EXCLUDED.last_name,
+    is_verified = TRUE,
+    is_active = TRUE,
+    updated_at = NOW();
+
+  -- Manager demo user
+  INSERT INTO users (email, password_hash, user_type, first_name, last_name, phone, profile_image_url, is_verified, is_active, created_at, updated_at)
+  VALUES (
+    'demo-manager@echox.app',
+    demo_password_hash,
+    'manager',
+    'EchoX',
+    'Manager',
     NULL,
     NULL,
     TRUE,

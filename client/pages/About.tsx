@@ -4,28 +4,28 @@ import { Button } from "@/components/ui/button";
 
 const milestones = [
   {
-    title: "The spark",
+    title: "The foundation",
     date: "Q1 2023",
     description:
-      "WHAC, a collective of consumer brand veterans, and TechTribe, a product engineering studio, aligned on a shared vision: make influencer collaborations predictable, data-rich, and safe for both sides.",
+      "A critical gap existed in the influencer marketing landscape—the lack of transparent, data-driven platforms that could serve both brands and creators equally. TechTribe, a software innovation lab, and WHAC, a digital marketing company, aligned on a shared vision: make influencer collaborations predictable, secure, and mutually beneficial.",
   },
   {
     title: "Joint pilot",
     date: "Q3 2023",
     description:
-      "Working with five D2C brands in Kerala, the combined team prototyped campaign bidding flows, verified influencer onboarding, and escrow-backed payouts under one secure platform.",
+      "TechTribe and WHAC collaborated with five D2C brands in Kerala to prototype campaign bidding flows, verified influencer onboarding, and escrow-backed payouts. The combined expertise shaped a platform where technology and marketplace insight work hand in hand.",
   },
   {
     title: "EchoX launch",
     date: "April 2024",
     description:
-      "WHAC led the go-to-market strategy while TechTribe productionised the stack. Together they launched EchoX with guaranteed reach, transparent pricing, and tools tuned for high-trust collaborations.",
+      "TechTribe productionized the entire platform stack while WHAC led the go-to-market strategy. Together, they launched EchoX with guaranteed reach, transparent pricing, and tools built on the strength of their collaboration—where engineering excellence meets marketplace expertise.",
   },
   {
-    title: "Scaling responsibly",
+    title: "Scaling together",
     date: "Today",
     description:
-      "The partnership continues to co-own the roadmap: WHAC shapes marketplace policy, while TechTribe evolves the product with privacy, automation, and analytics at its core.",
+      "The partnership thrives through balanced collaboration: TechTribe evolves the product with privacy, automation, and analytics innovation, while WHAC shapes marketplace policy and creator networks. Both partners co-own the roadmap, ensuring EchoX serves all stakeholders equally.",
   },
 ];
 
@@ -56,25 +56,27 @@ export default function About() {
       <main className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
         <section className="space-y-6 sm:space-y-8">
           <h1 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
-            Built together by WHAC and TechTribe
+            Built together by TechTribe and WHAC
           </h1>
           <p className="text-base text-gray-600 sm:text-lg">
-            EchoX is the result of a deep product partnership between{" "}
-            <span className="font-semibold text-gray-900">WHAC</span>, a growth
-            collective that works with fast-scaling consumer brands, and{" "}
+            EchoX is a balanced collaboration between{" "}
             <span className="font-semibold text-gray-900">TechTribe</span>, a
-            product studio specialising in resilient, data-driven SaaS
-            platforms. WHAC brings category insight, marketplace governance, and
-            a trusted network of creators. TechTribe anchors the engineering,
-            automation, and security layers that make guaranteed reach possible.
+            software innovation lab specializing in resilient, data-driven SaaS
+            platforms, and{" "}
+            <span className="font-semibold text-gray-900">WHAC</span>, a digital
+            marketing company that works with fast-scaling consumer brands. TechTribe
+            anchors the engineering, automation, and security layers that make
+            guaranteed reach possible, while WHAC brings category insight,
+            marketplace governance, and a trusted network of creators.
           </p>
           <p className="text-base text-gray-600 sm:text-lg">
-            Together they designed EchoX to give Indian brands and influencers a
-            transparent collaboration stack: verified onboarding, escrow-backed
-            payouts, real-time analytics, and workflows honed for repeatable
-            success. Every feature is co-owned—from marketplace playbooks
-            authored by WHAC to the privacy-first infrastructure shipped by
-            TechTribe.
+            Together, as equal partners, they designed EchoX to give Indian brands
+            and influencers a transparent collaboration stack: verified onboarding,
+            escrow-backed payouts, real-time analytics, and workflows honed for
+            repeatable success. Every feature is co-owned—TechTribe ships the
+            privacy-first infrastructure and product innovation, while WHAC
+            authors marketplace playbooks and community standards. The strength
+            lies in this balanced partnership.
           </p>
         </section>
 
@@ -107,24 +109,26 @@ export default function About() {
         <section className="mt-12 grid gap-6 sm:grid-cols-2">
           <div className="rounded-3xl border border-brand-100 bg-brand-50/60 p-6 sm:p-8">
             <h2 className="text-xl font-semibold text-brand-700">
-              WHAC at a glance
+              TechTribe at a glance
             </h2>
             <p className="mt-3 text-sm text-brand-700/80 sm:text-base">
-              WHAC coaches consumer brands on positioning, creator partnerships,
-              and go-to-market mechanics. In EchoX they curate verified
-              influencers, craft campaign playbooks, and monitor marketplace
-              health.
+              TechTribe is a software innovation lab designing resilient,
+              data-driven SaaS platforms. For EchoX, they created the secure
+              escrow architecture, analytics pipeline, automation layers, and
+              responsive web experience that powers every campaign interaction
+              with privacy and reliability at its core.
             </p>
           </div>
           <div className="rounded-3xl border border-brand-100 bg-brand-50/60 p-6 sm:p-8">
             <h2 className="text-xl font-semibold text-brand-700">
-              TechTribe at a glance
+              WHAC at a glance
             </h2>
             <p className="mt-3 text-sm text-brand-700/80 sm:text-base">
-              TechTribe is a builder collective designing resilient SaaS
-              products. For EchoX they created the secure escrow architecture,
-              analytics pipeline, and responsive web experience that powers
-              every campaign interaction.
+              WHAC is a digital marketing company specializing in consumer brand
+              growth, creator partnerships, and go-to-market strategies. In EchoX,
+              they curate verified influencers, craft campaign playbooks, and
+              monitor marketplace health to ensure both brands and creators thrive
+              in a trusted environment.
             </p>
           </div>
         </section>
@@ -134,11 +138,12 @@ export default function About() {
             What comes next
           </h2>
           <p className="mt-3 text-sm text-gray-600 sm:text-base">
-            The WHAC × TechTribe partnership continues to iterate on EchoX with
-            roadmap themes around creator analytics, AI-assisted campaign
-            briefs, and tighter compliance tooling for regulated categories. If
-            you want to collaborate with the core team or join upcoming pilots,
-            reach us at{" "}
+            The balanced collaboration between TechTribe and WHAC continues to
+            drive EchoX forward with shared roadmap themes around creator
+            analytics, AI-assisted campaign briefs, and tighter compliance
+            tooling for regulated categories. Our strength lies in combining
+            technical innovation with marketplace expertise. If you want to
+            collaborate with the core team or join upcoming pilots, reach us at{" "}
             <a
               className="font-medium text-brand-700 underline"
               href="mailto:team@echox.app"
