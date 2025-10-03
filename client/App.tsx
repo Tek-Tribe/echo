@@ -13,6 +13,7 @@ import BusinessRegistration from "./pages/BusinessRegistration";
 import RegisterBusiness from "./pages/RegisterBusiness";
 import Login from "./pages/Login";
 import Partner from "./pages/Partner";
+import About from "./pages/About";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -46,6 +47,7 @@ const App = () => {
             <Route path="/register/business" element={<RegisterBusiness />} />
             <Route path="/login" element={<Login />} />
             <Route path="/partner" element={<Partner />} />
+            <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route
