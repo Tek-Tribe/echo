@@ -13,7 +13,7 @@ const milestones = [
     title: "Joint pilot",
     date: "Q3 2023",
     description:
-      "Joint pilot — as EchoX we collaborated with five D2C brands in Kerala to prove the campaign flow, verified onboarding, and escrow-backed payouts.",
+      "Joint pilot — as EchoX we analyzed similar businesses in the market and collaborated with multiple influencers and D2C brands in Kerala to prove the campaign flow, guaranteed campaign reach, and secure payment.",
   },
   {
     title: "EchoX launch",
