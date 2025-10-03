@@ -117,7 +117,8 @@ export default function About() {
               data-driven SaaS platforms. For EchoX, they created the secure
               escrow architecture, analytics pipeline, automation layers, and
               responsive web experience that powers every campaign interaction
-              with privacy and reliability at its core.
+              with privacy and reliability at its core—delivered in lockstep with
+              WHAC.
             </p>
           </div>
           <div className="rounded-3xl border border-brand-100 bg-brand-50/60 p-6 sm:p-8">
