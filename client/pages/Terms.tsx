@@ -6,7 +6,7 @@ const termsSections = [
   {
     title: "1. Acceptance of Terms",
     content:
-      "By accessing or using EchoX, you agree to these Terms of Service and any additional policies referenced herein. Businesses, influencers, and agencies are jointly referred to as \"Users\". If you are entering into this agreement on behalf of an organisation, you confirm that you have authority to bind the organisation to these terms.",
+      'By accessing or using EchoX, you agree to these Terms of Service and any additional policies referenced herein. Businesses, influencers, and agencies are jointly referred to as "Users". If you are entering into this agreement on behalf of an organisation, you confirm that you have authority to bind the organisation to these terms.',
   },
   {
     title: "2. Platform Access",
@@ -45,13 +45,20 @@ export default function Terms() {
     <div className="min-h-screen bg-gradient-to-br from-white via-brand-50/30 to-white">
       <header className="border-b border-gray-100 bg-white/70 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
-          <Link to="/" className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+          <Link
+            to="/"
+            className="flex items-center gap-2 text-lg font-semibold text-gray-900"
+          >
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-gradient-to text-white">
               EX
             </div>
             EchoX Terms of Service
           </Link>
-          <Button asChild variant="ghost" className="text-sm font-medium text-brand-700">
+          <Button
+            asChild
+            variant="ghost"
+            className="text-sm font-medium text-brand-700"
+          >
             <Link to="/">Back to home</Link>
           </Button>
         </div>
@@ -63,26 +70,39 @@ export default function Terms() {
             Terms of Service
           </h1>
           <p className="text-base text-gray-600 sm:text-lg">
-            These Terms of Service govern your access to and use of the EchoX influencer collaboration
-            platform. Please read them carefully to ensure compliant usage by your organisation or creator
-            team.
+            These Terms of Service govern your access to and use of the EchoX
+            influencer collaboration platform. Please read them carefully to
+            ensure compliant usage by your organisation or creator team.
           </p>
         </div>
 
         <div className="mt-10 space-y-8">
           {termsSections.map((section) => (
-            <section key={section.title} className="rounded-3xl border border-gray-100 bg-white/80 p-6 shadow-sm sm:p-8">
-              <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl">{section.title}</h2>
-              <p className="mt-3 text-sm text-gray-600 sm:text-base">{section.content}</p>
+            <section
+              key={section.title}
+              className="rounded-3xl border border-gray-100 bg-white/80 p-6 shadow-sm sm:p-8"
+            >
+              <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl">
+                {section.title}
+              </h2>
+              <p className="mt-3 text-sm text-gray-600 sm:text-base">
+                {section.content}
+              </p>
             </section>
           ))}
         </div>
 
         <footer className="mt-12 rounded-3xl border border-brand-100 bg-brand-50/60 p-6 sm:p-8">
-          <h2 className="text-xl font-semibold text-brand-700">Questions or disputes?</h2>
+          <h2 className="text-xl font-semibold text-brand-700">
+            Questions or disputes?
+          </h2>
           <p className="mt-2 text-sm text-brand-700/80 sm:text-base">
-            Email <a className="font-medium underline" href="mailto:legal@echox.app">legal@echox.app</a> with your
-            registered account details, and our compliance desk will respond within two business days.
+            Email{" "}
+            <a className="font-medium underline" href="mailto:legal@echox.app">
+              legal@echox.app
+            </a>{" "}
+            with your registered account details, and our compliance desk will
+            respond within two business days.
           </p>
         </footer>
       </main>

@@ -54,13 +54,20 @@ export default function Privacy() {
     <div className="min-h-screen bg-gradient-to-br from-white via-brand-50/30 to-white">
       <header className="border-b border-gray-100 bg-white/70 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
-          <Link to="/" className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+          <Link
+            to="/"
+            className="flex items-center gap-2 text-lg font-semibold text-gray-900"
+          >
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-gradient-to text-white">
               EX
             </div>
             EchoX Privacy Policy
           </Link>
-          <Button asChild variant="ghost" className="text-sm font-medium text-brand-700">
+          <Button
+            asChild
+            variant="ghost"
+            className="text-sm font-medium text-brand-700"
+          >
             <Link to="/">Back to home</Link>
           </Button>
         </div>
@@ -72,23 +79,33 @@ export default function Privacy() {
             Privacy Policy
           </h1>
           <p className="text-base text-gray-600 sm:text-lg">
-            EchoX is committed to protecting the privacy of every creator and brand collaborating on our
-            platform. This policy explains the information we collect, why we collect it, and how you can
-            control your data while using EchoX services across web and mobile interfaces.
+            EchoX is committed to protecting the privacy of every creator and
+            brand collaborating on our platform. This policy explains the
+            information we collect, why we collect it, and how you can control
+            your data while using EchoX services across web and mobile
+            interfaces.
           </p>
         </div>
 
         <div className="mt-10 space-y-10">
           {sections.map((section) => (
-            <section key={section.title} className="rounded-3xl border border-gray-100 bg-white/80 p-6 shadow-sm sm:p-8">
+            <section
+              key={section.title}
+              className="rounded-3xl border border-gray-100 bg-white/80 p-6 shadow-sm sm:p-8"
+            >
               <h2 className="text-2xl font-semibold text-gray-900 sm:text-[26px]">
                 {section.title}
               </h2>
-              <p className="mt-3 text-sm text-gray-600 sm:text-base">{section.description}</p>
+              <p className="mt-3 text-sm text-gray-600 sm:text-base">
+                {section.description}
+              </p>
               <ul className="mt-5 space-y-3 text-sm text-gray-600 sm:text-base">
                 {section.bullets.map((point) => (
                   <li key={point} className="flex gap-3">
-                    <span className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-brand-500" aria-hidden />
+                    <span
+                      className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-brand-500"
+                      aria-hidden
+                    />
                     <span>{point}</span>
                   </li>
                 ))}
@@ -102,7 +119,13 @@ export default function Privacy() {
             Need clarifications?
           </h2>
           <p className="mt-2 text-sm text-brand-700/80 sm:text-base">
-            Contact our privacy desk at <a className="font-medium underline" href="mailto:support@echox.app">support@echox.app</a>
+            Contact our privacy desk at{" "}
+            <a
+              className="font-medium underline"
+              href="mailto:support@echox.app"
+            >
+              support@echox.app
+            </a>
             for questions about data rights, compliance, or GDPR requests.
           </p>
         </footer>
