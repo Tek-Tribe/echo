@@ -2,6 +2,33 @@ import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 
+const milestones = [
+  {
+    title: "The foundation",
+    date: "Q1 2023",
+    description:
+      "A critical gap existed in influencer marketing. TechTribe and WHAC agreed that EchoX should fix it with transparent, data-led collaboration.",
+  },
+  {
+    title: "Joint pilot",
+    date: "Q3 2023",
+    description:
+      "Joint pilot — as EchoX we collaborated with five D2C brands in Kerala to prove the campaign flow, verified onboarding, and escrow-backed payouts.",
+  },
+  {
+    title: "EchoX launch",
+    date: "April 2024",
+    description:
+      "TechTribe shipped the production platform while WHAC took it to market. The close collaboration produced EchoX with guaranteed reach and transparent pricing.",
+  },
+  {
+    title: "Scaling together",
+    date: "Today",
+    description:
+      "EchoX keeps advancing because TechTribe and WHAC share the roadmap: engineering, privacy, and analytics paired with marketplace policy and creator networks.",
+  },
+];
+
 export default function About() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-brand-50/30 to-white">
@@ -36,11 +63,30 @@ export default function About() {
           </p>
         </section>
 
-        <section className="mt-10 space-y-3 sm:space-y-4">
-          <h2 className="text-2xl font-semibold text-gray-900">Joint pilot</h2>
-          <p className="text-base text-gray-600 sm:text-lg">
-            Joint pilot — as EchoX we collaborated to validate the model together.
-          </p>
+        <section className="mt-12 space-y-6">
+          <h2 className="text-2xl font-semibold text-gray-900 sm:text-3xl">
+            Milestones
+          </h2>
+          <div className="space-y-4 sm:space-y-6">
+            {milestones.map((milestone) => (
+              <div
+                key={milestone.title}
+                className="rounded-3xl border border-gray-100 bg-white/85 p-5 shadow-sm sm:p-6"
+              >
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {milestone.title}
+                  </h3>
+                  <span className="text-xs font-semibold uppercase tracking-wide text-brand-600">
+                    {milestone.date}
+                  </span>
+                </div>
+                <p className="mt-3 text-sm text-gray-600 sm:text-base">
+                  {milestone.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </section>
       </main>
     </div>
