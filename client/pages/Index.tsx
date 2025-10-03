@@ -167,7 +167,10 @@ export default function Index() {
                 Post campaigns, receive bids, and track your reach.
               </p>
               <div className="mt-6 sm:mt-8 flex flex-col gap-3 items-stretch sm:items-center lg:items-start">
-                <Link to="/register/business" className="block w-full sm:w-auto">
+                <Link
+                  to="/register/business"
+                  className="block w-full sm:w-auto"
+                >
                   <Button
                     size="lg"
                     className="w-full sm:w-auto lg:min-w-[360px] bg-brand-600 hover:bg-brand-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
