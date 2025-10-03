@@ -71,13 +71,13 @@ export default function About() {
             and creator relationships that make the platform thrive.
           </p>
           <p className="text-base text-gray-600 sm:text-lg">
-            Together, as equal partners, they designed EchoX to give Indian brands
-            and influencers a transparent collaboration stack: verified onboarding,
-            escrow-backed payouts, real-time analytics, and workflows honed for
-            repeatable success. Every feature is co-owned—TechTribe ships the
-            privacy-first infrastructure and product innovation, while WHAC
-            authors marketplace playbooks and community standards. The strength
-            lies in this balanced partnership.
+            Working as equal co-founders, TechTribe and WHAC designed EchoX to give
+            Indian brands and influencers a transparent collaboration stack:
+            verified onboarding, escrow-backed payouts, real-time analytics, and
+            workflows tuned for repeatable success. Every capability is co-led—
+            TechTribe advances the privacy-first infrastructure and product
+            innovation, and WHAC authors marketplace playbooks and community
+            standards—so neither perspective outweighs the other.
           </p>
         </section>
 
