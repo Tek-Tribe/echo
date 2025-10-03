@@ -4,16 +4,40 @@ import { Button } from "@/components/ui/button";
 
 const milestones = [
   {
-    title: "Scaling together",
-    date: "Q2 2025",
+    title: "Conversation sparked",
+    date: "Q3 2025",
     description:
-      "We begin a nationwide rollout of EchoX, pairing automation upgrades with curated campaign playbooks so every new cohort enjoys guaranteed reach and escrow-backed payouts.",
+      "We started this conversation in Q3 2025 to align on the opportunity EchoX could unlock for campaign guarantees and secure payouts.",
+  },
+  {
+    title: "Market study",
+    date: "Q3 2025",
+    description:
+      "We completed a fast market study to map customer pains, distribution channels, and the messaging EchoX needed to lead with.",
+  },
+  {
+    title: "Competitor analysis",
+    date: "Late Q3 2025",
+    description:
+      "We benchmarked comparable platforms so EchoX could differentiate on verified campaign reach, escrow flows, and transparent pricing.",
+  },
+  {
+    title: "Product plan finalised",
+    date: "Early Q4 2025",
+    description:
+      "We finalised the EchoX product plan, roadmap, and success metrics, ready to move into focused build sprints.",
+  },
+  {
+    title: "MVP shipped",
+    date: "End Q4 2025",
+    description:
+      "We built and shipped the EchoX MVP with the core campaign flow, guaranteed reach instrumentation, and secure payment rails.",
   },
   {
     title: "Performance labs",
     date: "Q4 2025",
     description:
-      "We will launch joint performance labs where EchoX models campaign lift and curates creators, letting brands trial AI-assisted briefs before committing spend.",
+      "We will launch performance labs where EchoX models campaign lift and curates creators, letting brands trial AI-assisted briefs before committing spend.",
   },
   {
     title: "Cross-border pilots",
