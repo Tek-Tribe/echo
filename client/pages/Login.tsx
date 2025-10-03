@@ -8,6 +8,27 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Eye, EyeOff } from 'lucide-react';
 import { apiClient } from '@shared/api/client';
 
+const demoAccounts = [
+  {
+    role: 'Business',
+    description: 'Access the brand dashboard with campaign management tools.',
+    email: 'demo-business@echox.app',
+    password: 'EchoX#2025',
+  },
+  {
+    role: 'Influencer',
+    description: 'Preview influencer bidding and collaboration experience.',
+    email: 'demo-influencer@echox.app',
+    password: 'EchoX#2025',
+  },
+  {
+    role: 'Admin',
+    description: 'Review governance, dispute handling, and platform analytics.',
+    email: 'demo-admin@echox.app',
+    password: 'EchoX#2025',
+  },
+];
+
 export default function Login() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
