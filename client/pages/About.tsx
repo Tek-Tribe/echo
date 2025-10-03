@@ -35,6 +35,13 @@ export default function About() {
             EchoX was produced through the close collaboration of TechTribe and WHAC.
           </p>
         </section>
+
+        <section className="mt-10 space-y-3 sm:space-y-4">
+          <h2 className="text-2xl font-semibold text-gray-900">Joint pilot</h2>
+          <p className="text-base text-gray-600 sm:text-lg">
+            As EchoX we collaborated to validate the model and deliver value hand in hand.
+          </p>
+        </section>
       </main>
     </div>
   );
