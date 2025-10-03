@@ -59,15 +59,16 @@ export default function About() {
             EchoX: co-created 50/50 by TechTribe and WHAC
           </h1>
           <p className="text-base text-gray-600 sm:text-lg">
-            EchoX is a balanced collaboration between{" "}
-            <span className="font-semibold text-gray-900">TechTribe</span>, a
-            software innovation lab specializing in resilient, data-driven SaaS
+            EchoX is jointly stewarded by{" "}
+            <span className="font-semibold text-gray-900">TechTribe</span>, the
+            software innovation lab that delivers resilient, data-driven SaaS
             platforms, and{" "}
-            <span className="font-semibold text-gray-900">WHAC</span>, a digital
-            marketing company that works with fast-scaling consumer brands. TechTribe
-            anchors the engineering, automation, and security layers that make
-            guaranteed reach possible, while WHAC brings category insight,
-            marketplace governance, and a trusted network of creators.
+            <span className="font-semibold text-gray-900">WHAC</span>, the digital
+            marketing company trusted by fast-scaling consumer brands. Each
+            organisation contributes its full strength: TechTribe builds and runs
+            the engineering, automation, and security stack that powers guaranteed
+            reach, while WHAC shapes the category insight, marketplace governance,
+            and creator relationships that make the platform thrive.
           </p>
           <p className="text-base text-gray-600 sm:text-lg">
             Together, as equal partners, they designed EchoX to give Indian brands
