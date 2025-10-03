@@ -81,12 +81,12 @@ export default function Index() {
                 >
                   How it Works
                 </a>
-                <a
-                  href="#pricing"
+                <Link
+                  to="/about"
                   className="text-gray-600 hover:text-brand-600 px-3 py-2 text-sm font-medium"
                 >
-                  Pricing
-                </a>
+                  About
+                </Link>
               </div>
             </div>
 
@@ -130,12 +130,12 @@ export default function Index() {
                 >
                   How it Works
                 </a>
-                <a
-                  href="#pricing"
+                <Link
+                  to="/about"
                   className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-brand-600"
                 >
-                  Pricing
-                </a>
+                  About
+                </Link>
                 <div className="pt-4 pb-2 space-y-2">
                   <Link to="/login" className="block">
                     <Button className="w-full">Login</Button>
@@ -598,9 +598,9 @@ export default function Index() {
               </h3>
               <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <Link to="/about" className="hover:text-white">
                     About
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <Link to="/privacy" className="hover:text-white">
