@@ -34,21 +34,21 @@ export default function About() {
     <div className="min-h-screen bg-gradient-to-br from-white via-brand-50/30 to-white">
       <header className="border-b border-gray-100 bg-white/70 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
-          <Link
-            to="/"
+          <a
+            href="/"
             className="flex items-center gap-2 text-lg font-semibold text-gray-900"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-gradient-to text-white">
               EX
             </div>
             About EchoX
-          </Link>
+          </a>
           <Button
             asChild
             variant="ghost"
             className="text-sm font-medium text-brand-700"
           >
-            <Link to="/">Back to home</Link>
+            <a href="/">Back to home</a>
           </Button>
         </div>
       </header>
