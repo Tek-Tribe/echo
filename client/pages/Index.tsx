@@ -249,7 +249,7 @@ export default function Index() {
                             Budget locked
                           </p>
                           <p className="mt-1 text-2xl font-semibold text-gray-900">
-                            ₹2,40,000
+                            ₹50,000
                           </p>
                         </div>
                         <span className="text-xs font-semibold text-brand-600">
@@ -268,13 +268,13 @@ export default function Index() {
                         <div className="rounded-xl bg-gray-50 p-3">
                           <p className="text-xs text-gray-500">Applications</p>
                           <p className="text-lg font-semibold text-gray-900">
-                            23
+                            12
                           </p>
                         </div>
                         <div className="rounded-xl bg-gray-50 p-3">
                           <p className="text-xs text-gray-500">Avg. bid</p>
                           <p className="text-lg font-semibold text-gray-900">
-                            ₹31,800
+                            ₹8,200
                           </p>
                         </div>
                       </div>
