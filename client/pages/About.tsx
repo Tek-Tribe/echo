@@ -4,28 +4,28 @@ import { Button } from "@/components/ui/button";
 
 const milestones = [
   {
-    title: "The foundation",
-    date: "Q1 2023",
-    description:
-      "A critical gap existed in influencer marketing. TechTribe and WHAC agreed that EchoX should fix it with transparent, data-led collaboration.",
-  },
-  {
-    title: "Joint pilot",
-    date: "Q3 2023",
-    description:
-      "Joint pilot — as EchoX we analyzed similar businesses in the market and collaborated with multiple influencers and D2C brands in Kerala to prove the campaign flow, guaranteed campaign reach, and secure payment.",
-  },
-  {
-    title: "EchoX launch",
-    date: "April 2024",
-    description:
-      "We shipped the production platform and took it to market together. The close collaboration produced EchoX with guaranteed reach and transparent pricing.",
-  },
-  {
     title: "Scaling together",
     date: "Q2 2025",
     description:
-      "EchoX keeps advancing because TechTribe and WHAC share the roadmap: engineering, privacy, and analytics paired with marketplace policy and creator networks.",
+      "We begin the nationwide rollout of EchoX, pairing TechTribe's automation upgrades with WHAC's campaign playbooks so every new cohort enjoys guaranteed reach and escrow-backed payouts.",
+  },
+  {
+    title: "Performance labs",
+    date: "Q4 2025",
+    description:
+      "We will launch joint performance labs where TechTribe models campaign lift and WHAC curates creators, letting brands trial AI-assisted briefs before committing spend.",
+  },
+  {
+    title: "Cross-border pilots",
+    date: "H1 2026",
+    description:
+      "Together we will expand EchoX to GCC and SEA niches, adapting compliance and payments while preserving the same guaranteed reach promise.",
+  },
+  {
+    title: "Revenue share marketplace",
+    date: "H2 2026",
+    description:
+      "We plan to introduce shared-revenue campaigns so creators, WHAC, and TechTribe all participate in upside with transparent dashboards and automated settlements.",
   },
 ];
 
