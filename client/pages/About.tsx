@@ -23,7 +23,7 @@ const milestones = [
   },
   {
     title: "Scaling together",
-    date: "Today",
+    date: "Q2 2025",
     description:
       "EchoX keeps advancing because TechTribe and WHAC share the roadmap: engineering, privacy, and analytics paired with marketplace policy and creator networks.",
   },
