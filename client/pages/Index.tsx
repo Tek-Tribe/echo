@@ -20,16 +20,6 @@ export default function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const highlightedBids = [
     {
-      initials: "NF",
-      name: "Nafeesa Faizal",
-      handle: "@nafeesa.creates",
-      reach: "68K reach • Kochi, Kerala",
-      amount: "₹9,200",
-      status: "Shortlisted",
-      badgeClass: "bg-brand-50 text-brand-700",
-      avatarClass: "bg-brand-500/10 text-brand-700",
-    },
-    {
       initials: "RJ",
       name: "Rahul Joseph",
       handle: "@rahul.joseph",
@@ -38,6 +28,16 @@ export default function Index() {
       status: "In review",
       badgeClass: "bg-emerald-50 text-emerald-600",
       avatarClass: "bg-emerald-500/10 text-emerald-700",
+    },
+    {
+      initials: "NF",
+      name: "Nafeesa Faizal",
+      handle: "@nafeesa.creates",
+      reach: "68K reach • Kochi, Kerala",
+      amount: "₹9,200",
+      status: "Shortlisted",
+      badgeClass: "bg-brand-50 text-brand-700",
+      avatarClass: "bg-brand-500/10 text-brand-700",
     },
     {
       initials: "AK",
