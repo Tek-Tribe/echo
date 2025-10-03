@@ -43,7 +43,7 @@ const milestones = [
     title: "Cross-border pilots",
     date: "H1 2026",
     description:
-      "We will expand EchoX to GCC and SEA niches, adapting compliance and payments while preserving the same guaranteed reach promise.",
+      "We will expand EchoX to all-India and GCC markets, seeking investors in H1 2026 to scale responsibly while preserving the guaranteed reach promise.",
   },
   {
     title: "Revenue share marketplace",
