@@ -144,8 +144,8 @@ export default function About() {
             The balanced collaboration between TechTribe and WHAC continues to
             drive EchoX forward with shared roadmap themes around creator
             analytics, AI-assisted campaign briefs, and tighter compliance
-            tooling for regulated categories. Our strength lies in combining
-            technical innovation with marketplace expertise. If you want to
+            tooling for regulated categories. Our advantage comes from giving both
+            partners equal voice in every decision. If you want to
             collaborate with the core team or join upcoming pilots, reach us at{" "}
             <a
               className="font-medium text-brand-700 underline"
