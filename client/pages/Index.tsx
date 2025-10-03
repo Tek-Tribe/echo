@@ -590,16 +590,6 @@ export default function Index() {
                     For Influencers
                   </Link>
                 </li>
-                <li>
-                  <Link to="/privacy" className="hover:text-white">
-                    Privacy
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/terms" className="hover:text-white">
-                    Terms
-                  </Link>
-                </li>
               </ul>
             </div>
             <div>
@@ -635,14 +625,14 @@ export default function Index() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <Link to="/privacy" className="hover:text-white">
                     Privacy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <Link to="/terms" className="hover:text-white">
                     Terms
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
