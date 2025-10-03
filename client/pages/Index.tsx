@@ -526,26 +526,20 @@ export default function Index() {
           <p className="text-lg sm:text-xl text-brand-100 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
             Start guaranteed campaigns hassle free via verified influencers
           </p>
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
-            <Link
-              to="/register/business"
-              className="w-full max-w-xl sm:max-w-none sm:w-auto"
-            >
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
+            <Link to="/register/business" className="block w-full sm:w-auto">
               <Button
                 size="lg"
-                className="w-full max-w-[800px] sm:w-auto sm:min-w-[320px] bg-white text-brand-600 hover:bg-gray-50 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
+                className="w-full sm:w-auto bg-white text-brand-600 hover:bg-gray-50 px-6 py-4 sm:px-6 sm:py-5 text-base sm:text-lg"
               >
                 Start Your First Campaign
               </Button>
             </Link>
-            <Link
-              to="/partner"
-              className="w-full max-w-xl sm:max-w-none sm:w-auto"
-            >
+            <Link to="/partner" className="block w-full sm:w-auto">
               <Button
                 size="lg"
                 variant="outline"
-                className="w-full max-w-[800px] sm:w-auto sm:min-w-[400px] border-white text-brand-700 hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg flex items-center justify-center text-center whitespace-normal break-words leading-normal"
+                className="w-full sm:w-auto border-white text-brand-700 hover:bg-white/10 px-6 py-4 sm:px-6 sm:py-5 text-base sm:text-lg flex items-center justify-center text-center whitespace-normal break-words leading-normal"
               >
                 I’m an Influencer – I’m Interested 🙌
               </Button>
