@@ -94,113 +94,140 @@ export default function Login() {
       <main className="mx-auto flex max-w-5xl justify-center px-4 py-10 sm:py-16">
         <div className="w-full max-w-md">
           <Card className="shadow-2xl border-0">
-          <CardHeader className="space-y-1 text-center pb-8">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">E</span>
+            <CardHeader className="space-y-1 text-center pb-8">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-gradient-to">
+                  <span className="text-white font-bold text-xl">E</span>
+                </div>
+                <span className="text-2xl font-bold text-gray-900">EchoX</span>
               </div>
-              <span className="text-2xl font-bold text-gray-900">EchoX</span>
-            </div>
-            <CardTitle className="text-2xl font-bold text-gray-900">
-              Welcome back
-            </CardTitle>
-            <CardDescription className="text-gray-600">
-              Sign in to your account to continue
-            </CardDescription>
-          </CardHeader>
+              <CardTitle className="text-2xl font-bold text-gray-900">
+                Welcome back
+              </CardTitle>
+              <CardDescription className="text-gray-600">
+                Sign in to your account to continue
+              </CardDescription>
+            </CardHeader>
 
-          <CardContent className="space-y-6">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                  disabled={loading}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
+            <CardContent className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
                   <Input
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Enter your password"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
                     disabled={loading}
                   />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-                    onClick={() => setShowPassword(!showPassword)}
-                    disabled={loading}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
-                    ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
-                    )}
-                  </Button>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="password">Password</Label>
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="Enter your password"
+                      value={formData.password}
+                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                      required
+                      disabled={loading}
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                      onClick={() => setShowPassword(!showPassword)}
+                      disabled={loading}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4 text-gray-400" />
+                      ) : (
+                        <Eye className="h-4 w-4 text-gray-400" />
+                      )}
+                    </Button>
+                  </div>
+                </div>
+
+                {error && (
+                  <Alert variant="destructive">
+                    <AlertDescription>{error}</AlertDescription>
+                  </Alert>
+                )}
+
+                <Button
+                  type="submit"
+                  className="w-full bg-brand-600 hover:bg-brand-700 text-white"
+                  disabled={loading}
+                >
+                  {loading ? 'Signing in...' : 'Sign in'}
+                </Button>
+              </form>
+
+              <div className="text-center">
+                <div className="mb-4 text-sm text-gray-600">Don't have an account?</div>
+                <div className="flex flex-col gap-2 sm:flex-row">
+                  <Link to="/register/business" className="flex-1">
+                    <Button
+                      variant="outline"
+                      className="w-full border-brand-200 text-brand-700 hover:bg-brand-50"
+                    >
+                      Join as Business
+                    </Button>
+                  </Link>
+                  <Link to="/partner" className="flex-1">
+                    <Button
+                      variant="outline"
+                      className="w-full border-gray-200 text-gray-700 hover:bg-gray-50"
+                    >
+                      Partner with us
+                    </Button>
+                  </Link>
                 </div>
               </div>
 
-              {error && (
-                <Alert variant="destructive">
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
-
-              <Button
-                type="submit"
-                className="w-full bg-brand-600 hover:bg-brand-700 text-white"
-                disabled={loading}
-              >
-                {loading ? 'Signing in...' : 'Sign in'}
-              </Button>
-            </form>
-
-            <div className="text-center">
-              <div className="text-sm text-gray-600 mb-4">
-                Don't have an account?
-              </div>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <Link to="/register/business" className="flex-1">
-                  <Button
-                    variant="outline"
-                    className="w-full border-brand-200 text-brand-700 hover:bg-brand-50"
-                  >
-                    Join as Business
-                  </Button>
-                </Link>
-                <Link to="/partner" className="flex-1">
-                  <Button
-                    variant="outline"
-                    className="w-full border-gray-200 text-gray-700 hover:bg-gray-50"
-                  >
-                    Partner with us
-                  </Button>
+              <div className="text-center">
+                <Link to="#" className="text-sm text-brand-600 hover:text-brand-700">
+                  Forgot your password?
                 </Link>
               </div>
-            </div>
 
-            <div className="text-center">
-              <Link
-                to="#"
-                className="text-sm text-brand-600 hover:text-brand-700"
-              >
-                Forgot your password?
-              </Link>
-            </div>
-          </CardContent>
+              <div className="rounded-2xl border border-brand-100 bg-brand-50/60 p-4 sm:p-5">
+                <h3 className="text-sm font-semibold uppercase tracking-wide text-brand-700">
+                  Demo access
+                </h3>
+                <p className="mt-1 text-xs text-brand-700/80">
+                  Use these sandbox credentials to explore each role. Data refreshes nightly (IST).
+                </p>
+                <div className="mt-4 space-y-3">
+                  {demoAccounts.map((account) => (
+                    <div
+                      key={account.role}
+                      className="rounded-xl bg-white/95 p-3 shadow-sm ring-1 ring-brand-100/60"
+                    >
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                          <p className="text-sm font-semibold text-gray-900">{account.role}</p>
+                          <p className="text-xs text-gray-500">{account.description}</p>
+                        </div>
+                        <div className="text-xs font-medium text-gray-600">
+                          <p>
+                            Email: <span className="font-semibold text-gray-900">{account.email}</span>
+                          </p>
+                          <p>
+                            Password: <span className="font-semibold text-gray-900">{account.password}</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
           </Card>
         </div>
       </main>
