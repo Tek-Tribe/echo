@@ -162,9 +162,9 @@ export default function Index() {
                 And Guaranteed Reach
               </h1>
               <p className="mt-4 sm:mt-6 text-lg sm:text-xl text-gray-600 leading-relaxed">
-                EchoX connects you with prevetted micro influencers and guarantees your
-                campaign reaches the target number of users. Post campaigns,
-                receive bids, and track your reach.
+                EchoX connects you with prevetted micro influencers and
+                guarantees your campaign reaches the target number of users.
+                Post campaigns, receive bids, and track your reach.
               </p>
               <div className="mt-6 sm:mt-8 flex flex-col gap-3">
                 <Link to="/register/business" className="w-full">
@@ -425,8 +425,8 @@ export default function Index() {
                   Easy Campaign Management
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  Post campaigns, review bids, select bids, and track
-                  reach all in one place
+                  Post campaigns, review bids, select bids, and track reach all
+                  in one place
                 </p>
               </CardContent>
             </Card>
@@ -561,19 +561,27 @@ export default function Index() {
             <div className="sm:col-span-2 md:col-span-1">
               <div className="flex items-center gap-2 mb-3 sm:mb-4">
                 <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-base sm:text-lg">E</span>
+                  <span className="text-white font-bold text-base sm:text-lg">
+                    E
+                  </span>
                 </div>
                 <span className="text-lg sm:text-xl font-bold">EchoX</span>
               </div>
               <p className="text-sm sm:text-base text-gray-400 max-w-md">
-                Campaigns made hassle free for your business with prevetted micro influencers and guaranteed reach.
+                Campaigns made hassle free for your business with prevetted
+                micro influencers and guaranteed reach.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Platform</h3>
+              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
+                Platform
+              </h3>
               <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
                 <li>
-                  <Link to="/business-registration" className="hover:text-white">
+                  <Link
+                    to="/business-registration"
+                    className="hover:text-white"
+                  >
                     For Businesses
                   </Link>
                 </li>
@@ -585,7 +593,9 @@ export default function Index() {
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Company</h3>
+              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
+                Company
+              </h3>
               <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
                 <li>
                   <Link to="/about" className="hover:text-white">
@@ -606,7 +616,9 @@ export default function Index() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-gray-400">
-            <p className="text-sm sm:text-base">&copy; 2025 EchoX. All rights reserved.</p>
+            <p className="text-sm sm:text-base">
+              &copy; 2025 EchoX. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
