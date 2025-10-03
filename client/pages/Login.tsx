@@ -19,19 +19,21 @@ const demoAccounts = [
     role: "Business",
     description: "Access the brand dashboard with campaign management tools.",
     email: "demo-business@echox.app",
-    password: "EchoX#2025",
   },
   {
     role: "Influencer",
     description: "Preview influencer bidding and collaboration experience.",
     email: "demo-influencer@echox.app",
-    password: "EchoX#2025",
   },
   {
     role: "Admin",
     description: "Review governance, dispute handling, and platform analytics.",
     email: "demo-admin@echox.app",
-    password: "EchoX#2025",
+  },
+  {
+    role: "Manager",
+    description: "Manage platform operations and user accounts.",
+    email: "demo-manager@echox.app",
   },
 ];
 
@@ -72,6 +74,7 @@ export default function Login() {
           navigate("/influencer-dashboard");
           break;
         case "admin":
+        case "manager":
           navigate("/admin-dashboard");
           break;
         default:
@@ -249,12 +252,6 @@ export default function Login() {
                             Email:{" "}
                             <span className="font-semibold text-gray-900">
                               {account.email}
-                            </span>
-                          </p>
-                          <p>
-                            Password:{" "}
-                            <span className="font-semibold text-gray-900">
-                              {account.password}
                             </span>
                           </p>
                         </div>

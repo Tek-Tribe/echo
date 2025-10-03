@@ -9,16 +9,10 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Settings, LogOut, ChevronDown } from "lucide-react";
 
 export default function BusinessDashboard() {
-  const [currentBusiness, setCurrentBusiness] = useState<any>({
-    id: "b1",
-    name: "FitnessNutrition Co.",
-    email: "contact@fitnessnutrition.co",
-    phone: "+1 555 0099",
-    address: "123 Wellness Ave, Austin, TX",
-    industry: "Health & Wellness",
-    category: "Supplements",
-    latitude: 30.2672,
-    longitude: -97.7431,
+  // Get logged in business user from localStorage
+  const [currentBusiness, setCurrentBusiness] = useState<any>(() => {
+    const userStr = localStorage.getItem('user');
+    return userStr ? JSON.parse(userStr) : null;
   });
   const [editedBusiness, setEditedBusiness] = useState<any>(currentBusiness);
 
@@ -91,7 +85,7 @@ export default function BusinessDashboard() {
   const [showCreateCampaign, setShowCreateCampaign] = useState(false);
   const [newCampaign, setNewCampaign] = useState<any>({ type: "", platform: "", postUrl: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days", reach: "", maxInfluencers: 1 });
 
-  const myCampaigns = campaigns.filter((c) => c.business === currentBusiness.name);
+  const myCampaigns = campaigns.filter((c) => c.business === (currentBusiness?.businessName || currentBusiness?.firstName + ' ' + currentBusiness?.lastName));
   const activeCount = myCampaigns.filter((c) => c.status !== "Done").length;
   const totalBudget = myCampaigns.reduce((s, c) => s + Number(c.budget || 0), 0);
 
@@ -145,7 +139,7 @@ export default function BusinessDashboard() {
   const createCampaign = () => {
     const id = `c${Date.now()}`;
     const duration = { value: Number(newCampaign.durationValue || 0), unit: newCampaign.durationUnit || "days" };
-    setCampaigns([...campaigns, { id, type: newCampaign.type, platform: newCampaign.platform, postUrl: newCampaign.postUrl, business: currentBusiness.name, status: newCampaign.status || "Todo", budget: Number(newCampaign.budget || 0), bidStart: newCampaign.bidStart || undefined, bidEnd: newCampaign.bidEnd || undefined, duration, createdAt: new Date().toISOString(), postedAt: newCampaign.postedAt || undefined, completedAt: newCampaign.completedAt || undefined, reach: newCampaign.reach ? Number(newCampaign.reach) : undefined, participants: [], selected: undefined, maxInfluencers: newCampaign.maxInfluencers ? Number(newCampaign.maxInfluencers) : 1 }]);
+    setCampaigns([...campaigns, { id, type: newCampaign.type, platform: newCampaign.platform, postUrl: newCampaign.postUrl, business: currentBusiness?.businessName || currentBusiness?.firstName + ' ' + currentBusiness?.lastName, status: newCampaign.status || "Todo", budget: Number(newCampaign.budget || 0), bidStart: newCampaign.bidStart || undefined, bidEnd: newCampaign.bidEnd || undefined, duration, createdAt: new Date().toISOString(), postedAt: newCampaign.postedAt || undefined, completedAt: newCampaign.completedAt || undefined, reach: newCampaign.reach ? Number(newCampaign.reach) : undefined, participants: [], selected: undefined, maxInfluencers: newCampaign.maxInfluencers ? Number(newCampaign.maxInfluencers) : 1 }]);
     setShowCreateCampaign(false);
     setNewCampaign({ type: "", platform: "", postUrl: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days", reach: "" });
   };
@@ -159,18 +153,18 @@ export default function BusinessDashboard() {
               <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-brand-700 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold">E</span>
               </div>
-              <h1 className="text-lg font-semibold text-gray-900">{currentBusiness.name}</h1>
-              <div className="text-sm text-gray-500">{currentBusiness.industry}</div>
+              <h1 className="text-lg font-semibold text-gray-900">{currentBusiness?.businessName || currentBusiness?.firstName + ' ' + currentBusiness?.lastName || 'Business'}</h1>
+              <div className="text-sm text-gray-500">{currentBusiness?.industry || currentBusiness?.userType || ''}</div>
             </div>
             <div className="flex items-center gap-3">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="flex items-center gap-2">
                     <Avatar className="h-7 w-7">
-                      <AvatarImage src="/placeholder.svg" />
-                      <AvatarFallback>{currentBusiness.name.charAt(0)}</AvatarFallback>
+                      <AvatarImage src={currentBusiness?.profileImageUrl} />
+                      <AvatarFallback>{currentBusiness?.firstName?.[0]}{currentBusiness?.lastName?.[0]}</AvatarFallback>
                     </Avatar>
-                    <span className="hidden sm:block">{currentBusiness.name}</span>
+                    <span className="hidden sm:block">{currentBusiness?.firstName} {currentBusiness?.lastName}</span>
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -178,10 +172,12 @@ export default function BusinessDashboard() {
                   <DropdownMenuItem onClick={() => setView('settings')}>
                     <Settings className="h-4 w-4 mr-2" /> Settings
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/">
-                      <LogOut className="h-4 w-4 mr-2" /> Logout
-                    </Link>
+                  <DropdownMenuItem onClick={() => {
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('auth_token');
+                    window.location.href = '/';
+                  }}>
+                    <LogOut className="h-4 w-4 mr-2" /> Logout
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

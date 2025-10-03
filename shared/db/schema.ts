@@ -13,7 +13,7 @@ import {
 } from 'drizzle-orm/pg-core';
 
 // Enums
-export const userTypeEnum = pgEnum('user_type', ['influencer', 'business', 'admin']);
+export const userTypeEnum = pgEnum('user_type', ['influencer', 'business', 'admin', 'manager']);
 export const campaignTypeEnum = pgEnum('campaign_type', ['story_reshare', 'post_reshare']);
 export const platformTypeEnum = pgEnum('platform_type', ['instagram']);
 export const campaignStatusEnum = pgEnum('campaign_status', [
@@ -31,6 +31,16 @@ export const paymentStatusEnum = pgEnum('payment_status', [
   'failed',
   'refunded',
 ]);
+
+// Email verification codes table
+export const emailVerificationCodes = pgTable('email_verification_codes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: varchar('email', { length: 255 }).notNull(),
+  code: varchar('code', { length: 6 }).notNull(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+  isUsed: boolean('is_used').default(false),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+});
 
 // Users table
 export const users = pgTable('users', {
@@ -213,3 +223,6 @@ export type NewEvidenceSubmission = typeof evidenceSubmissions.$inferInsert;
 
 export type Notification = typeof notifications.$inferSelect;
 export type NewNotification = typeof notifications.$inferInsert;
+
+export type EmailVerificationCode = typeof emailVerificationCodes.$inferSelect;
+export type NewEmailVerificationCode = typeof emailVerificationCodes.$inferInsert;

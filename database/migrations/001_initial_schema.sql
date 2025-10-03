@@ -2,7 +2,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Create ENUM types
-CREATE TYPE user_type AS ENUM ('influencer', 'business', 'admin');
+CREATE TYPE user_type AS ENUM ('influencer', 'business', 'admin', 'manager');
 CREATE TYPE campaign_type AS ENUM ('story_reshare', 'post_reshare');
 CREATE TYPE platform_type AS ENUM ('instagram');
 CREATE TYPE campaign_status AS ENUM ('draft', 'active', 'paused', 'completed', 'cancelled');
