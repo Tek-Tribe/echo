@@ -130,7 +130,8 @@ export default function About() {
               growth, creator partnerships, and go-to-market strategies. In EchoX,
               they curate verified influencers, craft campaign playbooks, and
               monitor marketplace health to ensure both brands and creators thrive
-              in a trusted environment.
+              in a trusted environment—always paired with TechTribe’s engineering
+              horsepower.
             </p>
           </div>
         </section>
