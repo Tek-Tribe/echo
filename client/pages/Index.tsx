@@ -594,28 +594,6 @@ export default function Index() {
             </div>
             <div>
               <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
-                Support
-              </h3>
-              <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Help Center
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Contact Us
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    API Docs
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
                 Company
               </h3>
               <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
