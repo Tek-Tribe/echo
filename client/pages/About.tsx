@@ -7,25 +7,25 @@ const milestones = [
     title: "Scaling together",
     date: "Q2 2025",
     description:
-      "We begin the nationwide rollout of EchoX, pairing TechTribe's automation upgrades with WHAC's campaign playbooks so every new cohort enjoys guaranteed reach and escrow-backed payouts.",
+      "We begin a nationwide rollout of EchoX, pairing automation upgrades with curated campaign playbooks so every new cohort enjoys guaranteed reach and escrow-backed payouts.",
   },
   {
     title: "Performance labs",
     date: "Q4 2025",
     description:
-      "We will launch joint performance labs where TechTribe models campaign lift and WHAC curates creators, letting brands trial AI-assisted briefs before committing spend.",
+      "We will launch joint performance labs where EchoX models campaign lift and curates creators, letting brands trial AI-assisted briefs before committing spend.",
   },
   {
     title: "Cross-border pilots",
     date: "H1 2026",
     description:
-      "Together we will expand EchoX to GCC and SEA niches, adapting compliance and payments while preserving the same guaranteed reach promise.",
+      "We will expand EchoX to GCC and SEA niches, adapting compliance and payments while preserving the same guaranteed reach promise.",
   },
   {
     title: "Revenue share marketplace",
     date: "H2 2026",
     description:
-      "We plan to introduce shared-revenue campaigns so creators, WHAC, and TechTribe all participate in upside with transparent dashboards and automated settlements.",
+      "We plan to introduce shared-revenue campaigns so creators and EchoX both participate in upside with transparent dashboards and automated settlements.",
   },
 ];
 
@@ -59,7 +59,7 @@ export default function About() {
             EchoX
           </h1>
           <p className="text-base text-gray-600 sm:text-lg">
-            EchoX was produced through the close collaboration of TechTribe and WHAC.
+            EchoX was produced through close collaboration and relentless iteration.
           </p>
         </section>
 
