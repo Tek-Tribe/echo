@@ -166,21 +166,21 @@ export default function Index() {
                 guarantees your campaign reaches the target number of users.
                 Post campaigns, receive bids, and track your reach.
               </p>
-              <div className="mt-6 sm:mt-8 flex flex-col gap-3">
-                <Link to="/register/business" className="w-full">
+              <div className="mt-6 sm:mt-8 flex flex-col gap-3 items-stretch sm:items-center lg:items-start">
+                <Link to="/register/business" className="block w-full sm:w-auto">
                   <Button
                     size="lg"
-                    className="w-full max-w-[800px] sm:w-auto sm:min-w-[320px] bg-brand-600 hover:bg-brand-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
+                    className="w-full sm:w-auto lg:min-w-[360px] bg-brand-600 hover:bg-brand-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg"
                   >
                     Start your campaigns
                     <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </Link>
-                <Link to="/partner" className="w-full">
+                <Link to="/partner" className="block w-full sm:w-auto">
                   <Button
                     size="lg"
                     variant="outline"
-                    className="w-full max-w-[800px] sm:w-auto sm:min-w-[400px] border-white text-brand-700 hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg flex items-center justify-center text-center whitespace-normal break-words leading-normal"
+                    className="w-full sm:w-auto lg:min-w-[360px] border-white text-brand-700 hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg flex items-center justify-center text-center whitespace-normal break-words leading-normal"
                   >
                     I’m an Influencer – I’m Interested 🙌
                   </Button>
