@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
 import { bidQueries, campaignQueries, userQueries, notificationQueries } from '../../shared/db/queries';
+import { db } from '../../shared/db/connection';
+import { bids } from '../../shared/db/schema';
+import { eq } from 'drizzle-orm';
 
 // Create a new bid
 export const createBid = async (req: Request, res: Response) => {
@@ -11,13 +14,13 @@ export const createBid = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Verify campaign exists and is active
+    // Verify campaign exists and is accepting bids
     const campaign = await campaignQueries.getById(campaignId);
     if (!campaign) {
       return res.status(404).json({ error: 'Campaign not found' });
     }
-    if (campaign.status !== 'active') {
-      return res.status(400).json({ error: 'Campaign is not active' });
+    if (campaign.status !== 'bid') {
+      return res.status(400).json({ error: 'Campaign is not accepting bids' });
     }
 
     // Verify influencer exists
@@ -34,19 +37,62 @@ export const createBid = async (req: Request, res: Response) => {
       message,
     });
 
+    // Check if auto-accept is enabled
+    let finalBid = bid;
+    let autoAccepted = false;
+
+    if (campaign.autoAcceptBids) {
+      // Get count of already accepted bids for this campaign
+      const acceptedBids = await bidQueries.getAcceptedBidsByCampaignId(campaignId);
+      const acceptedCount = acceptedBids.length;
+
+      // Check if under max influencers limit
+      const maxInfluencers = campaign.maxInfluencers || 1;
+      if (acceptedCount < maxInfluencers) {
+        // Auto-accept the bid with timestamp
+        const [acceptedBid] = await db
+          .update(bids)
+          .set({
+            status: 'accepted',
+            respondedAt: new Date(),
+            acceptedAt: new Date(),
+            updatedAt: new Date()
+          })
+          .where(eq(bids.id, bid.id))
+          .returning();
+        finalBid = acceptedBid;
+        autoAccepted = true;
+
+        // Create notification for influencer about auto-acceptance
+        await notificationQueries.create({
+          userId: influencer.id,
+          title: 'Bid Automatically Accepted',
+          message: `Your bid for campaign "${campaign.title}" has been automatically accepted!`,
+          type: 'bid_accepted',
+          relatedId: bid.id,
+          relatedType: 'bid',
+        });
+      }
+    }
+
     // Create notification for business owner
     await notificationQueries.create({
       userId: campaign.businessId,
-      title: 'New Bid Received',
-      message: `${influencer.firstName} ${influencer.lastName} has submitted a bid for your campaign "${campaign.title}"`,
-      type: 'bid_received',
+      title: autoAccepted ? 'Bid Auto-Accepted' : 'New Bid Received',
+      message: autoAccepted
+        ? `Bid from ${influencer.firstName} ${influencer.lastName} was automatically accepted for campaign "${campaign.title}"`
+        : `${influencer.firstName} ${influencer.lastName} has submitted a bid for your campaign "${campaign.title}"`,
+      type: autoAccepted ? 'bid_accepted' : 'bid_received',
       relatedId: bid.id,
       relatedType: 'bid',
     });
 
     res.status(201).json({
-      bid,
-      message: 'Bid submitted successfully',
+      bid: finalBid,
+      message: autoAccepted
+        ? 'Bid submitted and automatically accepted!'
+        : 'Bid submitted successfully',
+      autoAccepted,
     });
   } catch (error) {
     console.error('Create bid error:', error);
@@ -63,7 +109,19 @@ export const getInfluencerBids = async (req: Request, res: Response) => {
     const { influencerId } = req.params;
 
     const bids = await bidQueries.getByInfluencerId(influencerId);
-    res.json({ bids });
+
+    // Fetch campaign details for each bid
+    const bidsWithCampaigns = await Promise.all(
+      bids.map(async (bid) => {
+        const campaign = await campaignQueries.getById(bid.campaignId);
+        return {
+          ...bid,
+          campaign,
+        };
+      })
+    );
+
+    res.json({ bids: bidsWithCampaigns });
   } catch (error) {
     console.error('Get influencer bids error:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -76,7 +134,21 @@ export const getCampaignBids = async (req: Request, res: Response) => {
     const { campaignId } = req.params;
 
     const bids = await bidQueries.getByCampaignId(campaignId);
-    res.json({ bids });
+
+    // Fetch influencer and campaign details for each bid
+    const bidsWithDetails = await Promise.all(
+      bids.map(async (bid) => {
+        const influencer = await userQueries.getById(bid.influencerId);
+        const campaign = await campaignQueries.getById(bid.campaignId);
+        return {
+          ...bid,
+          influencer,
+          campaign,
+        };
+      })
+    );
+
+    res.json({ bids: bidsWithDetails });
   } catch (error) {
     console.error('Get campaign bids error:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -107,8 +179,23 @@ export const updateBidStatus = async (req: Request, res: Response) => {
       return res.status(403).json({ error: 'Unauthorized' });
     }
 
-    // Update bid status
-    const updatedBid = await bidQueries.updateStatus(bidId, status);
+    // Update bid status with timestamp
+    const updateData: any = {
+      status,
+      respondedAt: new Date(),
+      updatedAt: new Date()
+    };
+
+    // Add acceptedAt timestamp when accepting
+    if (status === 'accepted') {
+      updateData.acceptedAt = new Date();
+    }
+
+    const [updatedBid] = await db
+      .update(bids)
+      .set(updateData)
+      .where(eq(bids.id, bidId))
+      .returning();
 
     // Get influencer info for notification
     const influencer = await userQueries.getById(bid.influencerId);
@@ -129,6 +216,46 @@ export const updateBidStatus = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Update bid status error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+// Mark work as started
+export const startWork = async (req: Request, res: Response) => {
+  try {
+    const { bidId } = req.params;
+    const { influencerId } = req.body;
+
+    // Get bid and verify influencer ownership
+    const bid = await bidQueries.getById(bidId);
+    if (!bid) {
+      return res.status(404).json({ error: 'Bid not found' });
+    }
+
+    if (bid.influencerId !== influencerId) {
+      return res.status(403).json({ error: 'Unauthorized' });
+    }
+
+    if (bid.status !== 'accepted') {
+      return res.status(400).json({ error: 'Can only start work on accepted bids' });
+    }
+
+    // Update work started timestamp
+    const [updatedBid] = await db
+      .update(bids)
+      .set({
+        workStartedAt: new Date(),
+        updatedAt: new Date()
+      })
+      .where(eq(bids.id, bidId))
+      .returning();
+
+    res.json({
+      bid: updatedBid,
+      message: 'Work started successfully',
+    });
+  } catch (error) {
+    console.error('Start work error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };

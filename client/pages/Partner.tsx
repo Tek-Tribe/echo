@@ -30,16 +30,22 @@ export default function Partner() {
     setError('');
 
     try {
-      // For now, we'll just show success. In production, you'd save this to your database
-      // or send to your backend to process the partnership interest
-      console.log('Partnership interest submitted:', formData);
+      const response = await fetch('/api/partnership/apply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to submit application');
+      }
 
       setSubmitted(true);
     } catch (err: any) {
-      setError('Failed to submit your interest. Please try again.');
+      setError(err.message || 'Failed to submit your interest. Please try again.');
     } finally {
       setLoading(false);
     }

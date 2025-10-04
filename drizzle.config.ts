@@ -10,10 +10,10 @@
 import { defineConfig } from "drizzle-kit";
 
 export default defineConfig({
-  dialect: "postgresql",                // 👈 required now
-  schema: "./src/schema.ts",            // adjust to where your schema is                  
-  out: './database/migrations', // folder where migrations are stored
+  dialect: "postgresql",
+  schema: "./shared/db/schema.ts",
+  out: './database/migrations',
   dbCredentials: {
-    url: process.env.DATABASE_URL!,     // make sure DATABASE_URL is set
+    url: process.env.DATABASE_URL!,
   },
 });

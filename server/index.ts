@@ -3,7 +3,11 @@ import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { register, login, getProfile, verifyEmailOnLogin, resendVerificationCode } from "./routes/auth";
 import { createCampaign, getActiveCampaigns, getBusinessCampaigns, getCampaignById, updateCampaign, updateCampaignStatus } from "./routes/campaigns";
-import { createBid, getInfluencerBids, getCampaignBids, updateBidStatus, completeBid } from "./routes/bids";
+import { createBid, getInfluencerBids, getCampaignBids, updateBidStatus, completeBid, startWork } from "./routes/bids";
+import { submitPartnershipApplication, getPartnershipApplications, updatePartnershipApplication } from "./routes/partnership";
+import { getEchoConfig, updateEchoConfig, getPartnershipEmail, updatePartnershipEmail } from "./routes/config";
+import { getPlatforms } from "./routes/platforms";
+import { submitEvidence, getBidEvidence, confirmEvidence } from "./routes/evidence";
 
 export function createServer() {
   const app = express();
@@ -28,6 +32,9 @@ export function createServer() {
   app.post("/api/auth/resend-verification", resendVerificationCode);
   app.get("/api/auth/profile/:userId", getProfile);
 
+  // Platform routes
+  app.get("/api/platforms", getPlatforms);
+
   // Campaign routes
   app.post("/api/campaigns", createCampaign);
   app.get("/api/campaigns/active", getActiveCampaigns);
@@ -41,7 +48,24 @@ export function createServer() {
   app.get("/api/bids/influencer/:influencerId", getInfluencerBids);
   app.get("/api/bids/campaign/:campaignId", getCampaignBids);
   app.patch("/api/bids/:bidId/status", updateBidStatus);
+  app.patch("/api/bids/:bidId/start-work", startWork);
   app.patch("/api/bids/:bidId/complete", completeBid);
+
+  // Evidence routes
+  app.post("/api/evidence", submitEvidence);
+  app.get("/api/evidence/bid/:bidId", getBidEvidence);
+  app.patch("/api/evidence/bid/:bidId/confirm", confirmEvidence);
+
+  // Partnership routes
+  app.post("/api/partnership/apply", submitPartnershipApplication);
+  app.get("/api/partnership/applications", getPartnershipApplications);
+  app.patch("/api/partnership/applications/:id", updatePartnershipApplication);
+
+  // Config routes (Admin only in production - should add auth middleware)
+  app.get("/api/config", getEchoConfig);
+  app.put("/api/config", updateEchoConfig);
+  app.get("/api/config/partnership-email", getPartnershipEmail);
+  app.put("/api/config/partnership-email", updatePartnershipEmail);
 
   return app;
 }

@@ -358,7 +358,7 @@ export default function Index() {
               Everything You Need for Successful Campaigns
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-              From campaign posting to payment processing, Echo handles every
+              From campaign posting to payment processing, EchoX handles every
               aspect of influencer marketing
             </p>
           </div>

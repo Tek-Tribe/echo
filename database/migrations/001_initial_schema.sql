@@ -1,3 +1,7 @@
+-- ============================================
+-- Echo Platform - Complete Database Schema
+-- ============================================
+
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
@@ -178,3 +182,85 @@ CREATE TRIGGER update_business_profiles_updated_at BEFORE UPDATE ON business_pro
 CREATE TRIGGER update_campaigns_updated_at BEFORE UPDATE ON campaigns FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_bids_updated_at BEFORE UPDATE ON bids FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_payments_updated_at BEFORE UPDATE ON payments FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- ============================================
+-- Email Verification
+-- ============================================
+
+-- Add email verification codes table
+CREATE TABLE IF NOT EXISTS email_verification_codes (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email VARCHAR(255) NOT NULL,
+  code VARCHAR(6) NOT NULL,
+  expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+  is_used BOOLEAN DEFAULT false,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Add indexes for faster lookups
+CREATE INDEX IF NOT EXISTS idx_email_verification_codes_email ON email_verification_codes(email);
+CREATE INDEX IF NOT EXISTS idx_email_verification_codes_code ON email_verification_codes(code);
+CREATE INDEX IF NOT EXISTS idx_email_verification_codes_expires_at ON email_verification_codes(expires_at);
+
+-- ============================================
+-- Partnership Applications
+-- ============================================
+
+-- Partnership applications table
+CREATE TABLE IF NOT EXISTS partnership_applications (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  first_name VARCHAR(100) NOT NULL,
+  last_name VARCHAR(100) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone VARCHAR(20),
+  instagram_handle VARCHAR(100) NOT NULL,
+  instagram_followers INTEGER,
+  niche VARCHAR(100),
+  location VARCHAR(100),
+  bio TEXT,
+  status VARCHAR(20) DEFAULT 'pending',
+  submitted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  reviewed_at TIMESTAMP WITH TIME ZONE,
+  reviewed_by UUID REFERENCES users(id),
+  notes TEXT
+);
+
+-- ============================================
+-- System Configuration
+-- ============================================
+
+-- Drop legacy system_settings table if it exists
+DROP TABLE IF EXISTS system_settings CASCADE;
+
+-- Echo configuration table
+CREATE TABLE IF NOT EXISTS echo_config (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  partnership_notification_email VARCHAR(255),
+  default_currency VARCHAR(10) DEFAULT 'INR',
+  timezone VARCHAR(50) DEFAULT 'UTC',
+  platform_name VARCHAR(100) DEFAULT 'Echo Platform',
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_by UUID REFERENCES users(id)
+);
+
+-- ============================================
+-- Campaign Bidding Enhancements
+-- ============================================
+
+-- Add max_influencers and auto_accept_bids to campaigns
+ALTER TABLE campaigns ADD COLUMN IF NOT EXISTS max_influencers INTEGER DEFAULT 1;
+ALTER TABLE campaigns ADD COLUMN IF NOT EXISTS auto_accept_bids BOOLEAN DEFAULT false;
+
+-- ============================================
+-- Campaign Status Update
+-- ============================================
+
+-- Add new status values to enum
+ALTER TYPE campaign_status ADD VALUE IF NOT EXISTS 'bid';
+ALTER TYPE campaign_status ADD VALUE IF NOT EXISTS 'running';
+ALTER TYPE campaign_status ADD VALUE IF NOT EXISTS 'closed';
+
+-- Migrate existing data to new statuses
+UPDATE campaigns SET status = 'bid' WHERE status = 'active';
+UPDATE campaigns SET status = 'running' WHERE status = 'paused';
+UPDATE campaigns SET status = 'closed' WHERE status = 'completed' OR status = 'cancelled';

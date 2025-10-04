@@ -74,7 +74,7 @@ export default function Payments() {
                 <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-gradient-to rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-lg">E</span>
                 </div>
-                <span className="text-xl font-bold text-gray-900">Echo</span>
+                <span className="text-xl font-bold text-gray-900">EchoX</span>
               </Link>
               <nav className="hidden md:flex ml-8 space-x-8">
                 <Link

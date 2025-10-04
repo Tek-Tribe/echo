@@ -38,6 +38,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { PartnershipEmailSettings } from "@/components/PartnershipEmailSettings";
 
 type Role = "super_admin" | "admin_manager";
 
@@ -544,7 +545,7 @@ export default function AdminDashboard() {
                 className={`w-full flex items-center ${collapsed ? "justify-center px-2" : "text-left px-3 py-2"} rounded ${section === "managers" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"}`}
               >
                 <UserPlus className="inline-block" />
-                {!collapsed && <span className="ml-2">Echo Users</span>}
+                {!collapsed && <span className="ml-2">EchoX Users</span>}
               </button>
             )}
           </nav>
@@ -1116,6 +1117,8 @@ export default function AdminDashboard() {
                         </div>
                       </CardContent>
                     </Card>
+
+                    <PartnershipEmailSettings userId={currentUser?.id} />
                   </div>
                 </div>
               </div>
@@ -1202,7 +1205,7 @@ export default function AdminDashboard() {
                   }}
                   className="w-full text-left px-3 py-2 rounded hover:bg-gray-50"
                 >
-                  Echo Users
+                  EchoX Users
                 </button>
               )}
               <button

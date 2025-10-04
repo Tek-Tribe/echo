@@ -158,12 +158,12 @@ export const campaignQueries = {
       .orderBy(desc(campaigns.createdAt));
   },
 
-  // Get active campaigns
+  // Get active campaigns (status='bid' - accepting bids)
   getActiveCampaigns: async (): Promise<Campaign[]> => {
     return db
       .select()
       .from(campaigns)
-      .where(eq(campaigns.status, 'active'))
+      .where(eq(campaigns.status, 'bid'))
       .orderBy(desc(campaigns.createdAt));
   },
 
@@ -210,15 +210,31 @@ export const bidQueries = {
       .orderBy(desc(bids.submittedAt));
   },
 
+  // Get accepted bids by campaign ID
+  getAcceptedBidsByCampaignId: async (campaignId: string): Promise<Bid[]> => {
+    return db
+      .select()
+      .from(bids)
+      .where(and(eq(bids.campaignId, campaignId), eq(bids.status, 'accepted')))
+      .orderBy(desc(bids.submittedAt));
+  },
+
   // Update bid status
   updateStatus: async (id: string, status: 'pending' | 'accepted' | 'rejected' | 'completed'): Promise<Bid> => {
+    const updateData: any = {
+      status,
+      respondedAt: new Date(),
+      updatedAt: new Date()
+    };
+
+    // Set acceptedAt timestamp when accepting
+    if (status === 'accepted') {
+      updateData.acceptedAt = new Date();
+    }
+
     const [bid] = await db
       .update(bids)
-      .set({
-        status,
-        respondedAt: new Date(),
-        updatedAt: new Date()
-      })
+      .set(updateData)
       .where(eq(bids.id, id))
       .returning();
     return bid;

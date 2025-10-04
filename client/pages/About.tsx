@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 const milestones = [
   {
     title: "Conversation sparked",
-    date: "Q3 2025",
+    date: "Q2 2025",
     description:
-      "We started this conversation in Q3 2025 to align on the opportunity EchoX could unlock for campaign guarantees and secure payouts.",
+      "We started this conversation in Q2 2025 to align on the opportunity EchoX could unlock for campaign guarantees and secure payouts.",
   },
   {
     title: "Market study",

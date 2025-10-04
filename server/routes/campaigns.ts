@@ -6,6 +6,7 @@ export const createCampaign = async (req: Request, res: Response) => {
   try {
     const {
       businessId,
+      platformId,
       platformName = 'instagram',
       title,
       description,
@@ -14,6 +15,8 @@ export const createCampaign = async (req: Request, res: Response) => {
       contentUrl,
       requirements,
       targetAudience,
+      maxInfluencers,
+      autoAcceptBids,
       startDate,
       endDate,
     } = req.body;
@@ -30,15 +33,19 @@ export const createCampaign = async (req: Request, res: Response) => {
     }
 
     // Get platform ID
-    const platform = await platformQueries.getByName(platformName);
-    if (!platform) {
-      return res.status(400).json({ error: 'Invalid platform' });
+    let finalPlatformId = platformId;
+    if (!finalPlatformId) {
+      const platform = await platformQueries.getByName(platformName);
+      if (!platform) {
+        return res.status(400).json({ error: 'Invalid platform' });
+      }
+      finalPlatformId = platform.id;
     }
 
     // Create campaign
     const campaign = await campaignQueries.create({
       businessId,
-      platformId: platform.id,
+      platformId: finalPlatformId,
       title,
       description,
       campaignType,
@@ -46,6 +53,8 @@ export const createCampaign = async (req: Request, res: Response) => {
       contentUrl,
       requirements,
       targetAudience,
+      maxInfluencers: maxInfluencers || 1,
+      autoAcceptBids: autoAcceptBids || false,
       startDate: startDate ? new Date(startDate) : null,
       endDate: endDate ? new Date(endDate) : null,
     });
@@ -60,7 +69,7 @@ export const createCampaign = async (req: Request, res: Response) => {
   }
 };
 
-// Get all active campaigns
+// Get all campaigns accepting bids (status='bid')
 export const getActiveCampaigns = async (req: Request, res: Response) => {
   try {
     const campaigns = await campaignQueries.getActiveCampaigns();
@@ -134,7 +143,7 @@ export const updateCampaignStatus = async (req: Request, res: Response) => {
     const { campaignId } = req.params;
     const { status } = req.body;
 
-    const validStatuses = ['draft', 'active', 'paused', 'completed', 'cancelled'];
+    const validStatuses = ['draft', 'bid', 'running', 'closed'];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ error: 'Invalid status' });
     }

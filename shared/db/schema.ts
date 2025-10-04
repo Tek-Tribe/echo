@@ -18,6 +18,10 @@ export const campaignTypeEnum = pgEnum('campaign_type', ['story_reshare', 'post_
 export const platformTypeEnum = pgEnum('platform_type', ['instagram']);
 export const campaignStatusEnum = pgEnum('campaign_status', [
   'draft',
+  'bid',
+  'running',
+  'closed',
+  // Legacy statuses (kept for backwards compatibility)
   'active',
   'paused',
   'completed',
@@ -118,6 +122,8 @@ export const campaigns = pgTable('campaigns', {
   contentUrl: text('content_url'),
   requirements: text('requirements'),
   targetAudience: text('target_audience'),
+  maxInfluencers: integer('max_influencers').default(1),
+  autoAcceptBids: boolean('auto_accept_bids').default(false),
   startDate: timestamp('start_date', { withTimezone: true }),
   endDate: timestamp('end_date', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
@@ -140,6 +146,10 @@ export const bids = pgTable(
     status: bidStatusEnum('status').default('pending'),
     submittedAt: timestamp('submitted_at', { withTimezone: true }).defaultNow(),
     respondedAt: timestamp('responded_at', { withTimezone: true }),
+    acceptedAt: timestamp('accepted_at', { withTimezone: true }),
+    workStartedAt: timestamp('work_started_at', { withTimezone: true }),
+    evidenceSubmittedAt: timestamp('evidence_submitted_at', { withTimezone: true }),
+    evidenceConfirmedAt: timestamp('evidence_confirmed_at', { withTimezone: true }),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
   },
@@ -226,3 +236,39 @@ export type NewNotification = typeof notifications.$inferInsert;
 
 export type EmailVerificationCode = typeof emailVerificationCodes.$inferSelect;
 export type NewEmailVerificationCode = typeof emailVerificationCodes.$inferInsert;
+
+// Partnership applications table
+export const partnershipApplications = pgTable('partnership_applications', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  firstName: varchar('first_name', { length: 100 }).notNull(),
+  lastName: varchar('last_name', { length: 100 }).notNull(),
+  email: varchar('email', { length: 255 }).notNull(),
+  phone: varchar('phone', { length: 20 }),
+  instagramHandle: varchar('instagram_handle', { length: 100 }).notNull(),
+  instagramFollowers: integer('instagram_followers'),
+  niche: varchar('niche', { length: 100 }),
+  location: varchar('location', { length: 100 }),
+  bio: text('bio'),
+  status: varchar('status', { length: 20 }).default('pending'),
+  submittedAt: timestamp('submitted_at', { withTimezone: true }).defaultNow(),
+  reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+  reviewedBy: uuid('reviewed_by').references(() => users.id),
+  notes: text('notes'),
+});
+
+// Echo configuration table
+export const echoConfig = pgTable('echo_config', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  partnershipNotificationEmail: varchar('partnership_notification_email', { length: 255 }),
+  defaultCurrency: varchar('default_currency', { length: 10 }).default('INR'),
+  timezone: varchar('timezone', { length: 50 }).default('UTC'),
+  platformName: varchar('platform_name', { length: 100 }).default('Echo Platform'),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
+  updatedBy: uuid('updated_by').references(() => users.id),
+});
+
+export type PartnershipApplication = typeof partnershipApplications.$inferSelect;
+export type NewPartnershipApplication = typeof partnershipApplications.$inferInsert;
+
+export type EchoConfig = typeof echoConfig.$inferSelect;
+export type NewEchoConfig = typeof echoConfig.$inferInsert;

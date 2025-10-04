@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Settings, LogOut, ChevronDown } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Settings, LogOut, ChevronDown, CheckCircle, XCircle, Clock } from "lucide-react";
 
 export default function BusinessDashboard() {
   // Get logged in business user from localStorage
@@ -24,69 +26,111 @@ export default function BusinessDashboard() {
   const [view, setView] = useState<'dashboard' | 'settings'>('dashboard');
   const [showUserMenu, setShowUserMenu] = useState(false);
 
-  const [campaigns, setCampaigns] = useState<any[]>([
-    {
-      id: "c1",
-      type: "Feed Post",
-      platform: "Instagram",
-      business: "FitnessNutrition Co.",
-      status: "Doing",
-      budget: 2500,
-      postUrl: "",
-      duration: { value: 3, unit: "days" },
-      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3).toISOString(),
-      bidStart: new Date(Date.now() - 1000 * 60 * 60 * 24 * 4).toISOString(),
-      bidEnd: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
-      postedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
-      completedAt: undefined,
-      reach: 42000,
-      participants: [ { id: 'i1', name: 'Alex Johnson' }, { id: 'i2', name: 'Emma Wellness' } ],
-      selected: { id: 'i1', name: 'Alex Johnson' },
-      maxInfluencers: 2
-    },
-    {
-      id: "c2",
-      type: "Story Repost",
-      platform: "Instagram",
-      business: "FitnessNutrition Co.",
-      status: "Done",
-      budget: 500,
-      postUrl: "",
-      duration: { value: 1, unit: "days" },
-      maxInfluencers: 1,
-      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString(),
-      bidStart: new Date(Date.now() - 1000 * 60 * 60 * 24 * 9).toISOString(),
-      bidEnd: new Date(Date.now() - 1000 * 60 * 60 * 24 * 8).toISOString(),
-      postedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 8).toISOString(),
-      completedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
-      reach: 18500,
-      participants: [ { id: 'i3', name: 'Mike Strong' } ],
-      selected: { id: 'i3', name: 'Mike Strong' }
-    },
-    {
-      id: "c3",
-      type: "Product Review",
-      platform: "YouTube",
-      business: "Other Brand",
-      status: "Done",
-      budget: 1200,
-      postUrl: "",
-      duration: { value: 7, unit: "days" },
-      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 20).toISOString(),
-      bidStart: new Date(Date.now() - 1000 * 60 * 60 * 24 * 19).toISOString(),
-      bidEnd: new Date(Date.now() - 1000 * 60 * 60 * 24 * 18).toISOString(),
-      postedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 18).toISOString(),
-      completedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString(),
-      reach: 76000,
-      maxInfluencers: 1,
-    },
-  ]);
+  const [campaigns, setCampaigns] = useState<any[]>([]);
 
   const [showCreateCampaign, setShowCreateCampaign] = useState(false);
-  const [newCampaign, setNewCampaign] = useState<any>({ type: "", platform: "", postUrl: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days", reach: "", maxInfluencers: 1 });
+  const [newCampaign, setNewCampaign] = useState<any>({ type: "", platform: "", postUrl: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days", reach: "", maxInfluencers: 1, autoAcceptBids: false });
+  const [campaignError, setCampaignError] = useState<string>("");
 
-  const myCampaigns = campaigns.filter((c) => c.business === (currentBusiness?.businessName || currentBusiness?.firstName + ' ' + currentBusiness?.lastName));
-  const activeCount = myCampaigns.filter((c) => c.status !== "Done").length;
+  // Bids state
+  const [bids, setBids] = useState<any[]>([]);
+  const [bidsLoading, setBidsLoading] = useState(false);
+  const [evidenceMap, setEvidenceMap] = useState<Record<string, any[]>>({});
+
+  // Fetch bids for all business campaigns
+  const fetchBids = async () => {
+    if (!currentBusiness?.id) return;
+
+    try {
+      setBidsLoading(true);
+      const response = await fetch(`/api/campaigns/business/${currentBusiness.id}`);
+      if (response.ok) {
+        const data = await response.json();
+        // Collect all bids from all campaigns
+        const allBids: any[] = [];
+        for (const campaign of data.campaigns) {
+          const bidsResponse = await fetch(`/api/bids/campaign/${campaign.id}`);
+          if (bidsResponse.ok) {
+            const bidsData = await bidsResponse.json();
+            const bidsWithCampaign = bidsData.bids.map((bid: any) => ({
+              ...bid,
+              campaign: {
+                id: campaign.id,
+                title: campaign.title,
+                budget: campaign.budget,
+              }
+            }));
+            allBids.push(...bidsWithCampaign);
+          }
+        }
+        setBids(allBids);
+
+        // Fetch evidence for bids that have evidence submitted
+        const evidenceData: Record<string, any[]> = {};
+        for (const bid of allBids) {
+          if (bid.evidenceSubmittedAt) {
+            try {
+              const evidenceResponse = await fetch(`/api/evidence/bid/${bid.id}`);
+              if (evidenceResponse.ok) {
+                const { evidence } = await evidenceResponse.json();
+                evidenceData[bid.id] = evidence;
+              }
+            } catch (err) {
+              console.error(`Error fetching evidence for bid ${bid.id}:`, err);
+            }
+          }
+        }
+        setEvidenceMap(evidenceData);
+      }
+    } catch (error) {
+      console.error('Error fetching bids:', error);
+    } finally {
+      setBidsLoading(false);
+    }
+  };
+
+  // Fetch campaigns from database
+  const fetchCampaigns = async () => {
+    if (!currentBusiness?.id) return;
+
+    try {
+      const response = await fetch(`/api/campaigns/business/${currentBusiness.id}`);
+      if (response.ok) {
+        const data = await response.json();
+        const mappedCampaigns = data.campaigns.map((c: any) => ({
+          id: c.id,
+          type: c.campaignType === 'story_reshare' ? 'Story Repost' : 'Post Repost',
+          platform: 'Instagram',
+          postUrl: c.contentUrl || '',
+          business: currentBusiness?.businessName || currentBusiness?.firstName + ' ' + currentBusiness?.lastName,
+          status: c.status,
+          budget: Number(c.budget),
+          bidStart: c.startDate,
+          bidEnd: c.endDate,
+          duration: { value: 0, unit: 'days' },
+          createdAt: c.createdAt,
+          postedAt: undefined,
+          completedAt: c.status === 'completed' ? c.updatedAt : undefined,
+          reach: undefined,
+          participants: [],
+          selected: undefined,
+          maxInfluencers: c.maxInfluencers || 1,
+        }));
+        setCampaigns(mappedCampaigns);
+      }
+    } catch (error) {
+      console.error('Error fetching campaigns:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCampaigns();
+    fetchBids();
+  }, [currentBusiness?.id]);
+
+  // All campaigns are already filtered by businessId from the API, so use them all
+  const myCampaigns = campaigns;
+  const activeCount = myCampaigns.filter((c) => c.status !== "closed").length;
   const totalBudget = myCampaigns.reduce((s, c) => s + Number(c.budget || 0), 0);
 
   const formatDate = (d?: string) => (d ? new Date(d).toLocaleString() : '—');
@@ -136,12 +180,84 @@ export default function BusinessDashboard() {
   const STATUS_OPTIONS = ["Todo", "In Progress", "Done"];
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
-  const createCampaign = () => {
-    const id = `c${Date.now()}`;
-    const duration = { value: Number(newCampaign.durationValue || 0), unit: newCampaign.durationUnit || "days" };
-    setCampaigns([...campaigns, { id, type: newCampaign.type, platform: newCampaign.platform, postUrl: newCampaign.postUrl, business: currentBusiness?.businessName || currentBusiness?.firstName + ' ' + currentBusiness?.lastName, status: newCampaign.status || "Todo", budget: Number(newCampaign.budget || 0), bidStart: newCampaign.bidStart || undefined, bidEnd: newCampaign.bidEnd || undefined, duration, createdAt: new Date().toISOString(), postedAt: newCampaign.postedAt || undefined, completedAt: newCampaign.completedAt || undefined, reach: newCampaign.reach ? Number(newCampaign.reach) : undefined, participants: [], selected: undefined, maxInfluencers: newCampaign.maxInfluencers ? Number(newCampaign.maxInfluencers) : 1 }]);
-    setShowCreateCampaign(false);
-    setNewCampaign({ type: "", platform: "", postUrl: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days", reach: "" });
+  const createCampaign = async () => {
+    setCampaignError("");
+
+    if (!currentBusiness?.id || !newCampaign.type || !newCampaign.platform || !newCampaign.budget) {
+      setCampaignError('Please fill in all required fields (Campaign Type, Platform, and Budget)');
+      return;
+    }
+
+    try {
+      // Get platform ID (for now, assume Instagram)
+      const platformsResponse = await fetch('/api/platforms');
+      if (!platformsResponse.ok) {
+        setCampaignError('Failed to fetch platforms. Please try again.');
+        return;
+      }
+
+      const platformsData = await platformsResponse.json();
+      const platform = platformsData.platforms.find((p: any) => p.name === 'instagram');
+
+      if (!platform) {
+        setCampaignError('Instagram platform not found. Please contact support.');
+        return;
+      }
+
+      const response = await fetch('/api/campaigns', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          businessId: currentBusiness.id,
+          platformId: platform.id,
+          title: `${newCampaign.type} Campaign`,
+          description: `${newCampaign.type} on ${newCampaign.platform}`,
+          campaignType: newCampaign.type === 'Story Repost' ? 'story_reshare' : 'post_reshare',
+          status: 'draft',
+          budget: Number(newCampaign.budget),
+          contentUrl: newCampaign.postUrl || null,
+          requirements: `Campaign type: ${newCampaign.type}`,
+          targetAudience: null,
+          maxInfluencers: Number(newCampaign.maxInfluencers) || 1,
+          autoAcceptBids: newCampaign.autoAcceptBids || false,
+          startDate: newCampaign.bidStart ? new Date(newCampaign.bidStart).toISOString() : null,
+          endDate: newCampaign.bidEnd ? new Date(newCampaign.bidEnd).toISOString() : null,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Add to local state for immediate UI update
+        const duration = { value: Number(newCampaign.durationValue || 0), unit: newCampaign.durationUnit || "days" };
+        setCampaigns([...campaigns, {
+          id: data.campaign.id,
+          type: newCampaign.type,
+          platform: newCampaign.platform,
+          postUrl: newCampaign.postUrl,
+          business: currentBusiness?.businessName || currentBusiness?.firstName + ' ' + currentBusiness?.lastName,
+          status: 'draft',
+          budget: Number(newCampaign.budget || 0),
+          bidStart: newCampaign.bidStart || undefined,
+          bidEnd: newCampaign.bidEnd || undefined,
+          duration,
+          createdAt: new Date().toISOString(),
+          reach: newCampaign.reach ? Number(newCampaign.reach) : undefined,
+          participants: [],
+          selected: undefined,
+          maxInfluencers: newCampaign.maxInfluencers ? Number(newCampaign.maxInfluencers) : 1
+        }]);
+        setShowCreateCampaign(false);
+        setNewCampaign({ type: "", platform: "", postUrl: "", budget: "", bidStart: "", bidEnd: "", durationValue: "", durationUnit: "days", reach: "", maxInfluencers: 1, autoAcceptBids: false });
+        setCampaignError("");
+      } else {
+        const error = await response.json();
+        console.error('Campaign creation error:', error);
+        setCampaignError(error.error || error.message || 'Failed to create campaign. Please try again.');
+      }
+    } catch (error: any) {
+      console.error('Error creating campaign:', error);
+      setCampaignError(`Network error: ${error.message || 'Failed to create campaign. Please check your connection.'}`);
+    }
   };
 
   return (
@@ -238,13 +354,25 @@ export default function BusinessDashboard() {
           </div>
         )}
 
-        <section className="bg-white rounded border p-4">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-lg font-semibold">Campaigns</h3>
-            <div>
-              <Button onClick={() => setShowCreateCampaign(true)}>Create Campaign</Button>
-            </div>
-          </div>
+        <Tabs defaultValue="campaigns" className="space-y-4">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="campaigns">Campaigns</TabsTrigger>
+            <TabsTrigger value="bids">
+              Bids
+              {bids.filter(b => b.status === 'pending').length > 0 && (
+                <Badge className="ml-2 bg-brand-600">{bids.filter(b => b.status === 'pending').length}</Badge>
+              )}
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="campaigns">
+            <section className="bg-white rounded border p-4">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-lg font-semibold">Campaigns</h3>
+                <div>
+                  <Button onClick={() => setShowCreateCampaign(true)}>Create Campaign</Button>
+                </div>
+              </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left">
@@ -267,7 +395,19 @@ export default function BusinessDashboard() {
                     <td className="px-3 py-2">{c.type}</td>
                     <td className="px-3 py-2">{c.platform}</td>
                     <td className="px-3 py-2">{c.budget} INR</td>
-                    <td className="px-3 py-2">{c.status === 'Done' ? <span className="inline-flex items-center px-2 py-1 rounded text-sm bg-green-100 text-green-800">Done</span> : c.status}</td>
+                    <td className="px-3 py-2">
+                      {c.status === 'closed' ? (
+                        <span className="inline-flex items-center px-2 py-1 rounded text-sm bg-gray-100 text-gray-800">Closed</span>
+                      ) : c.status === 'bid' ? (
+                        <span className="inline-flex items-center px-2 py-1 rounded text-sm bg-blue-100 text-blue-800">Accepting Bids</span>
+                      ) : c.status === 'draft' ? (
+                        <span className="inline-flex items-center px-2 py-1 rounded text-sm bg-yellow-100 text-yellow-800">Draft</span>
+                      ) : c.status === 'running' ? (
+                        <span className="inline-flex items-center px-2 py-1 rounded text-sm bg-green-100 text-green-800">Running</span>
+                      ) : (
+                        <span className="inline-flex items-center px-2 py-1 rounded text-sm bg-gray-100 text-gray-800">{c.status}</span>
+                      )}
+                    </td>
                     <td className="px-3 py-2">
                       <div className="text-xs text-gray-600 space-y-1">
                         <div>Created: {formatDate(c.createdAt)}</div>
@@ -280,14 +420,74 @@ export default function BusinessDashboard() {
                     <td className="px-3 py-2">{typeof c.maxInfluencers === 'number' ? Math.max(0, c.maxInfluencers - (c.selected ? 1 : 0)) : '—'}</td>
                     <td className="px-3 py-2">{c.selected ? c.selected.name : '—'}</td>
                     <td className="px-3 py-2">
-                      <div className="flex gap-2 items-center">
-                        <Button size="sm" variant="outline" onClick={() => { setSelectedCampaign(c); setShowCampaignModal(true); }}>View</Button>
-                        {c.status !== 'Done' ? (
-                          <Button size="sm" onClick={() => {
-                            setCampaigns(campaigns.map((cc) => cc.id === c.id ? { ...cc, status: 'Done', completedAt: new Date().toISOString() } : cc));
-                          }}>Mark Done</Button>
+                      <div className="flex gap-2 items-center flex-wrap">
+                        {c.status === 'draft' ? (
+                          <Button size="sm" className="bg-blue-600 hover:bg-blue-700" onClick={async () => {
+                            try {
+                              const response = await fetch(`/api/campaigns/${c.id}/status`, {
+                                method: 'PATCH',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ status: 'bid' }),
+                              });
+                              if (response.ok) {
+                                setCampaigns(campaigns.map((cc) => cc.id === c.id ? { ...cc, status: 'bid' } : cc));
+                              }
+                            } catch (error) {
+                              console.error('Error opening bids:', error);
+                              alert('Failed to open campaign for bidding');
+                            }
+                          }}>Open for Bids</Button>
+                        ) : c.status === 'bid' ? (
+                          <>
+                            <Button size="sm" className="bg-green-600 hover:bg-green-700" onClick={async () => {
+                              try {
+                                const response = await fetch(`/api/campaigns/${c.id}/status`, {
+                                  method: 'PATCH',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({ status: 'running' }),
+                                });
+                                if (response.ok) {
+                                  setCampaigns(campaigns.map((cc) => cc.id === c.id ? { ...cc, status: 'running' } : cc));
+                                }
+                              } catch (error) {
+                                console.error('Error starting campaign:', error);
+                                alert('Failed to start campaign');
+                              }
+                            }}>Start Campaign</Button>
+                            <Button size="sm" variant="outline" onClick={async () => {
+                              try {
+                                const response = await fetch(`/api/campaigns/${c.id}/status`, {
+                                  method: 'PATCH',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({ status: 'draft' }),
+                                });
+                                if (response.ok) {
+                                  setCampaigns(campaigns.map((cc) => cc.id === c.id ? { ...cc, status: 'draft' } : cc));
+                                }
+                              } catch (error) {
+                                console.error('Error closing bids:', error);
+                                alert('Failed to close bidding');
+                              }
+                            }}>Close Bids</Button>
+                          </>
+                        ) : c.status === 'running' ? (
+                          <Button size="sm" className="bg-gray-600 hover:bg-gray-700" onClick={async () => {
+                            try {
+                              const response = await fetch(`/api/campaigns/${c.id}/status`, {
+                                method: 'PATCH',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ status: 'closed' }),
+                              });
+                              if (response.ok) {
+                                setCampaigns(campaigns.map((cc) => cc.id === c.id ? { ...cc, status: 'closed', completedAt: new Date().toISOString() } : cc));
+                              }
+                            } catch (error) {
+                              console.error('Error closing campaign:', error);
+                              alert('Failed to close campaign');
+                            }
+                          }}>Complete</Button>
                         ) : (
-                          <div className="text-xs text-gray-500">Completed {c.completedAt ? `on ${formatDate(c.completedAt)}` : ''}</div>
+                          <div className="text-xs text-gray-500">Campaign closed</div>
                         )}
                       </div>
                     </td>
@@ -302,6 +502,339 @@ export default function BusinessDashboard() {
             </table>
           </div>
         </section>
+          </TabsContent>
+
+          <TabsContent value="bids">
+            <section className="bg-white rounded border p-4">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-lg font-semibold">Received Bids</h3>
+                <Button variant="outline" onClick={fetchBids}>Refresh</Button>
+              </div>
+
+              {bidsLoading ? (
+                <div className="p-8 text-center text-gray-500">Loading bids...</div>
+              ) : bids.length === 0 ? (
+                <div className="p-8 text-center text-gray-500">No bids received yet.</div>
+              ) : (
+                <div className="space-y-4">
+                  {bids.map((bid) => (
+                    <Card key={bid.id} className="border">
+                      <CardContent className="p-4">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-2">
+                              <Avatar className="h-10 w-10">
+                                <AvatarImage src={bid.influencer?.profileImageUrl} />
+                                <AvatarFallback>
+                                  {bid.influencer?.firstName?.[0]}{bid.influencer?.lastName?.[0]}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div>
+                                <div className="font-semibold">
+                                  {bid.influencer?.firstName} {bid.influencer?.lastName}
+                                </div>
+                                <div className="text-sm text-gray-500">
+                                  Campaign: {bid.campaign?.title}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-3 text-sm">
+                              <div>
+                                <span className="text-gray-500">Bid Amount:</span>
+                                <span className="font-semibold ml-1">{bid.amount} INR</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-500">Budget:</span>
+                                <span className="font-semibold ml-1">{bid.campaign?.budget} INR</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-500">Campaign Status:</span>
+                                <Badge
+                                  className={`ml-1 ${
+                                    bid.campaign?.status === 'closed'
+                                      ? 'bg-gray-100 text-gray-800'
+                                      : bid.campaign?.status === 'bid'
+                                      ? 'bg-blue-100 text-blue-800'
+                                      : bid.campaign?.status === 'draft'
+                                      ? 'bg-yellow-100 text-yellow-800'
+                                      : bid.campaign?.status === 'running'
+                                      ? 'bg-green-100 text-green-800'
+                                      : 'bg-gray-100 text-gray-800'
+                                  }`}
+                                >
+                                  {bid.campaign?.status === 'bid' ? 'Accepting Bids' : bid.campaign?.status?.charAt(0).toUpperCase() + bid.campaign?.status?.slice(1)}
+                                </Badge>
+                              </div>
+                              <div>
+                                <span className="text-gray-500">Bid Status:</span>
+                                <Badge
+                                  className={`ml-1 ${
+                                    bid.status === 'accepted'
+                                      ? 'bg-green-100 text-green-800'
+                                      : bid.status === 'rejected'
+                                      ? 'bg-red-100 text-red-800'
+                                      : bid.status === 'completed'
+                                      ? 'bg-blue-100 text-blue-800'
+                                      : 'bg-yellow-100 text-yellow-800'
+                                  }`}
+                                >
+                                  {bid.status === 'accepted' && <CheckCircle className="h-3 w-3 mr-1 inline" />}
+                                  {bid.status === 'rejected' && <XCircle className="h-3 w-3 mr-1 inline" />}
+                                  {bid.status === 'pending' && <Clock className="h-3 w-3 mr-1 inline" />}
+                                  {bid.status.charAt(0).toUpperCase() + bid.status.slice(1)}
+                                </Badge>
+                              </div>
+                              <div className="col-span-2">
+                                <span className="text-gray-500">Submitted:</span>
+                                <span className="ml-1">{new Date(bid.createdAt).toLocaleDateString()}</span>
+                              </div>
+                              {bid.acceptedAt && (
+                                <div className="col-span-2">
+                                  <span className="text-gray-500">Accepted:</span>
+                                  <span className="ml-1">{new Date(bid.acceptedAt).toLocaleString()}</span>
+                                </div>
+                              )}
+                              {bid.workStartedAt && (
+                                <div className="col-span-2">
+                                  <span className="text-gray-500">Work Started:</span>
+                                  <span className="ml-1">{new Date(bid.workStartedAt).toLocaleString()}</span>
+                                </div>
+                              )}
+                              {bid.evidenceSubmittedAt && (
+                                <div className="col-span-2">
+                                  <span className="text-gray-500">Evidence Submitted:</span>
+                                  <span className="ml-1">{new Date(bid.evidenceSubmittedAt).toLocaleString()}</span>
+                                </div>
+                              )}
+                              {bid.evidenceConfirmedAt && (
+                                <div className="col-span-2">
+                                  <span className="text-gray-500">Payment Confirmed:</span>
+                                  <span className="ml-1">{new Date(bid.evidenceConfirmedAt).toLocaleString()}</span>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Timeline of workflow steps */}
+                            {(bid.acceptedAt || bid.workStartedAt || bid.evidenceSubmittedAt || bid.evidenceConfirmedAt) && (
+                              <div className="mt-3 pt-3 border-t border-gray-200">
+                                <span className="text-gray-500 block mb-2 font-medium text-sm">Timeline:</span>
+                                <div className="space-y-2 pl-2">
+                                  <div className="flex items-start gap-2">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5"></div>
+                                    <div className="flex-1">
+                                      <div className="text-xs text-gray-700">Bid Submitted</div>
+                                      <div className="text-xs text-gray-500">{new Date(bid.createdAt).toLocaleString()}</div>
+                                    </div>
+                                  </div>
+                                  {bid.acceptedAt && (
+                                    <div className="flex items-start gap-2">
+                                      <div className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5"></div>
+                                      <div className="flex-1">
+                                        <div className="text-xs text-gray-700">Bid Accepted</div>
+                                        <div className="text-xs text-gray-500">{new Date(bid.acceptedAt).toLocaleString()}</div>
+                                      </div>
+                                    </div>
+                                  )}
+                                  {bid.workStartedAt && (
+                                    <div className="flex items-start gap-2">
+                                      <div className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5"></div>
+                                      <div className="flex-1">
+                                        <div className="text-xs text-gray-700">Work Started</div>
+                                        <div className="text-xs text-gray-500">{new Date(bid.workStartedAt).toLocaleString()}</div>
+                                      </div>
+                                    </div>
+                                  )}
+                                  {bid.evidenceSubmittedAt && (
+                                    <div className="flex items-start gap-2">
+                                      <div className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-1.5"></div>
+                                      <div className="flex-1">
+                                        <div className="text-xs text-gray-700">Evidence Submitted</div>
+                                        <div className="text-xs text-gray-500">{new Date(bid.evidenceSubmittedAt).toLocaleString()}</div>
+                                      </div>
+                                    </div>
+                                  )}
+                                  {bid.evidenceConfirmedAt && (
+                                    <div className="flex items-start gap-2">
+                                      <div className="w-1.5 h-1.5 rounded-full bg-green-600 mt-1.5"></div>
+                                      <div className="flex-1">
+                                        <div className="text-xs text-gray-700 font-medium">Payment Confirmed</div>
+                                        <div className="text-xs text-gray-500">{new Date(bid.evidenceConfirmedAt).toLocaleString()}</div>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+
+                            {bid.proposal && (
+                              <div className="mt-2 text-sm text-gray-600">
+                                {bid.proposal}
+                              </div>
+                            )}
+
+                            {/* Evidence Submissions */}
+                            {evidenceMap[bid.id] && evidenceMap[bid.id].length > 0 && (
+                              <div className="mt-3 pt-3 border-t border-gray-200">
+                                <span className="text-gray-500 block mb-2 font-medium text-sm">Submitted Evidence:</span>
+                                {evidenceMap[bid.id].map((evidence: any, idx: number) => (
+                                  <div key={evidence.id} className="bg-blue-50 border border-blue-200 rounded-lg p-3 space-y-2">
+                                    <div className="flex items-start justify-between">
+                                      <div className="flex-1">
+                                        <div className="text-sm font-medium text-gray-900">Evidence #{idx + 1}</div>
+                                        <div className="text-xs text-gray-500 mt-1">
+                                          Submitted on {new Date(evidence.submittedAt).toLocaleString()}
+                                        </div>
+                                      </div>
+                                      {evidence.isApproved !== null && (
+                                        <Badge className={evidence.isApproved ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}>
+                                          {evidence.isApproved ? 'Approved' : 'Rejected'}
+                                        </Badge>
+                                      )}
+                                    </div>
+                                    <div className="space-y-1">
+                                      <div className="text-sm">
+                                        <span className="text-gray-500">Link: </span>
+                                        <a
+                                          href={evidence.evidenceUrl}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-brand-600 hover:text-brand-700 underline break-all"
+                                        >
+                                          {evidence.evidenceUrl}
+                                        </a>
+                                      </div>
+                                      {evidence.description && (
+                                        <div className="text-sm">
+                                          <span className="text-gray-500">Description: </span>
+                                          <span className="text-gray-900">{evidence.description}</span>
+                                        </div>
+                                      )}
+                                      {evidence.reviewerNotes && (
+                                        <div className="text-sm mt-2 pt-2 border-t border-blue-300">
+                                          <span className="text-gray-500">Reviewer Notes: </span>
+                                          <span className="text-gray-900">{evidence.reviewerNotes}</span>
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+
+                            {bid.evidenceSubmittedAt && !bid.evidenceConfirmedAt && (
+                              <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-center">
+                                <div className="flex items-center justify-center gap-2 text-yellow-800">
+                                  <Clock className="h-4 w-4" />
+                                  <span className="font-medium text-sm">Under Review by EchoX</span>
+                                </div>
+                                <p className="text-xs text-yellow-700 mt-1">Evidence is being reviewed by our team</p>
+                              </div>
+                            )}
+                            {bid.evidenceConfirmedAt && (
+                              <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg text-center">
+                                <div className="flex items-center justify-center gap-2 text-green-800">
+                                  <CheckCircle className="h-4 w-4" />
+                                  <span className="font-medium text-sm">Payment Credited to Influencer</span>
+                                </div>
+                                <p className="text-xs text-green-700 mt-1">Campaign completed successfully</p>
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                            {bid.status === 'pending' ? (
+                              <>
+                                <Button
+                                  size="sm"
+                                  className="bg-green-600 hover:bg-green-700"
+                                  onClick={async () => {
+                                    try {
+                                      // Accept the bid
+                                      const bidResponse = await fetch(`/api/bids/${bid.id}/status`, {
+                                        method: 'PATCH',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({
+                                          status: 'accepted',
+                                          businessId: currentBusiness?.id
+                                        }),
+                                      });
+
+                                      if (bidResponse.ok) {
+                                        // Update campaign status to running
+                                        if (bid.campaign?.id) {
+                                          await fetch(`/api/campaigns/${bid.campaign.id}/status`, {
+                                            method: 'PATCH',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify({ status: 'running' }),
+                                          });
+                                        }
+
+                                        await fetchBids();
+                                        await fetchCampaigns();
+                                        alert('Bid accepted! Campaign is now running.');
+                                      }
+                                    } catch (error) {
+                                      console.error('Error accepting bid:', error);
+                                      alert('Failed to accept bid');
+                                    }
+                                  }}
+                                >
+                                  <CheckCircle className="h-4 w-4 mr-1" />
+                                  Accept
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="text-red-600 border-red-600 hover:bg-red-50"
+                                  onClick={async () => {
+                                    try {
+                                      const response = await fetch(`/api/bids/${bid.id}/status`, {
+                                        method: 'PATCH',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({
+                                          status: 'rejected',
+                                          businessId: currentBusiness?.id
+                                        }),
+                                      });
+                                      if (response.ok) {
+                                        await fetchBids();
+                                        alert('Bid rejected');
+                                      }
+                                    } catch (error) {
+                                      console.error('Error rejecting bid:', error);
+                                      alert('Failed to reject bid');
+                                    }
+                                  }}
+                                >
+                                  <XCircle className="h-4 w-4 mr-1" />
+                                  Reject
+                                </Button>
+                              </>
+                            ) : (
+                              <Badge
+                                className={
+                                  bid.status === 'accepted'
+                                    ? 'bg-green-100 text-green-800'
+                                    : bid.status === 'rejected'
+                                    ? 'bg-red-100 text-red-800'
+                                    : 'bg-gray-100 text-gray-800'
+                                }
+                              >
+                                {bid.status === 'accepted' && <CheckCircle className="h-3 w-3 mr-1" />}
+                                {bid.status === 'rejected' && <XCircle className="h-3 w-3 mr-1" />}
+                                {bid.status === 'pending' && <Clock className="h-3 w-3 mr-1" />}
+                                {bid.status.charAt(0).toUpperCase() + bid.status.slice(1)}
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </section>
+          </TabsContent>
+        </Tabs>
 
         {/* Campaign View Modal */}
         {showCampaignModal && selectedCampaign && (
@@ -411,6 +944,19 @@ export default function BusinessDashboard() {
                 <Input type="number" min={1} value={newCampaign.maxInfluencers} onChange={(e) => setNewCampaign({ ...newCampaign, maxInfluencers: Number(e.target.value) })} />
               </div>
 
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="autoAcceptBids"
+                  checked={newCampaign.autoAcceptBids}
+                  onChange={(e) => setNewCampaign({ ...newCampaign, autoAcceptBids: e.target.checked })}
+                  className="w-4 h-4 text-brand-600 border-gray-300 rounded focus:ring-brand-500"
+                />
+                <Label htmlFor="autoAcceptBids" className="cursor-pointer">
+                  Auto-accept bids (automatically accept bids up to max influencers limit)
+                </Label>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
                   <Label>Budget (INR)</Label>
@@ -436,8 +982,14 @@ export default function BusinessDashboard() {
                 </div>
               </div>
 
+              {campaignError && (
+                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded text-red-800 text-sm">
+                  {campaignError}
+                </div>
+              )}
+
               <div className="flex items-center justify-end gap-2 mt-4">
-                <Button variant="outline" onClick={() => setShowCreateCampaign(false)}>Cancel</Button>
+                <Button variant="outline" onClick={() => { setShowCreateCampaign(false); setCampaignError(""); }}>Cancel</Button>
                 <Button onClick={createCampaign}>Save Campaign</Button>
               </div>
             </div>
