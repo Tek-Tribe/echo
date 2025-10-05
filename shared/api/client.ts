@@ -25,14 +25,20 @@ class ApiClient {
       ...options,
     };
 
-    const response = await fetch(url, config);
+    let response: Response;
+    try {
+      response = await fetch(url, config);
+    } catch (err) {
+      // Network or CORS error
+      throw new Error(`Network error: ${(err as Error).message}`);
+    }
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
       throw new Error(error.error || `HTTP ${response.status}`);
     }
 
-    return response.json();
+    return response.json().catch(() => ({} as any));
   }
 
   // Auth endpoints
