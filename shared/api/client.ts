@@ -34,11 +34,28 @@ class ApiClient {
     }
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({}));
-      throw new Error(error.error || `HTTP ${response.status}`);
+      let message = `HTTP ${response.status}`;
+      try {
+        const errorData = await response.clone().json();
+        if (errorData?.error) {
+          message = errorData.error;
+        } else if (errorData?.message) {
+          message = errorData.message;
+        }
+      } catch {
+        const text = await response.text().catch(() => '');
+        if (text) {
+          message = text;
+        }
+      }
+      throw new Error(message);
     }
 
-    return response.json().catch(() => ({} as any));
+    try {
+      return await response.json();
+    } catch {
+      return {} as any;
+    }
   }
 
   // Auth endpoints
