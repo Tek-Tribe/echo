@@ -98,7 +98,8 @@ export default function RegisterBusiness() {
       // Redirect to business dashboard
       navigate('/business-dashboard');
     } catch (err: any) {
-      setError(err.message || 'Registration failed. Please try again.');
+      const friendlyMessage = mapRegistrationError(err?.message ?? '');
+      setError(friendlyMessage);
     } finally {
       setLoading(false);
     }
