@@ -1,7 +1,7 @@
-import { supabase } from '../db/supabase';
+import { supabase } from "../db/supabase";
 
 // Use relative API path so dev server proxy or same-origin deployments work without CORS
-const API_BASE_URL = '/api';
+const API_BASE_URL = "/api";
 
 // API client utility
 class ApiClient {
@@ -13,13 +13,13 @@ class ApiClient {
 
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
 
     const config: RequestInit = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...options.headers,
       },
       ...options,
@@ -43,7 +43,7 @@ class ApiClient {
           message = errorData.message;
         }
       } catch {
-        const text = await response.text().catch(() => '');
+        const text = await response.text().catch(() => "");
         if (text) {
           message = text;
         }
@@ -63,23 +63,23 @@ class ApiClient {
     register: (data: {
       email: string;
       password: string;
-      userType: 'influencer' | 'business';
+      userType: "influencer" | "business";
       firstName: string;
       lastName: string;
       profileData?: any;
-    }) => this.request('/auth/register', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }),
+    }) =>
+      this.request("/auth/register", {
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
 
     login: (email: string, password: string) =>
-      this.request('/auth/login', {
-        method: 'POST',
+      this.request("/auth/login", {
+        method: "POST",
         body: JSON.stringify({ email, password }),
       }),
 
-    getProfile: (userId: string) =>
-      this.request(`/auth/profile/${userId}`),
+    getProfile: (userId: string) => this.request(`/auth/profile/${userId}`),
   };
 
   // Campaign endpoints
@@ -88,35 +88,35 @@ class ApiClient {
       businessId: string;
       title: string;
       description?: string;
-      campaignType: 'story_reshare' | 'post_reshare';
+      campaignType: "story_reshare" | "post_reshare";
       budget: number;
       contentUrl?: string;
       requirements?: string;
       targetAudience?: string;
       startDate?: string;
       endDate?: string;
-    }) => this.request('/campaigns', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }),
+    }) =>
+      this.request("/campaigns", {
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
 
-    getActive: () => this.request('/campaigns/active'),
+    getActive: () => this.request("/campaigns/active"),
 
     getByBusiness: (businessId: string) =>
       this.request(`/campaigns/business/${businessId}`),
 
-    getById: (campaignId: string) =>
-      this.request(`/campaigns/${campaignId}`),
+    getById: (campaignId: string) => this.request(`/campaigns/${campaignId}`),
 
     update: (campaignId: string, data: any) =>
       this.request(`/campaigns/${campaignId}`, {
-        method: 'PUT',
+        method: "PUT",
         body: JSON.stringify(data),
       }),
 
     updateStatus: (campaignId: string, status: string) =>
       this.request(`/campaigns/${campaignId}/status`, {
-        method: 'PATCH',
+        method: "PATCH",
         body: JSON.stringify({ status }),
       }),
   };
@@ -128,10 +128,11 @@ class ApiClient {
       influencerId: string;
       proposedRate: number;
       message?: string;
-    }) => this.request('/bids', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }),
+    }) =>
+      this.request("/bids", {
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
 
     getByInfluencer: (influencerId: string) =>
       this.request(`/bids/influencer/${influencerId}`),
@@ -139,15 +140,19 @@ class ApiClient {
     getByCampaign: (campaignId: string) =>
       this.request(`/bids/campaign/${campaignId}`),
 
-    updateStatus: (bidId: string, status: 'accepted' | 'rejected', businessId: string) =>
+    updateStatus: (
+      bidId: string,
+      status: "accepted" | "rejected",
+      businessId: string,
+    ) =>
       this.request(`/bids/${bidId}/status`, {
-        method: 'PATCH',
+        method: "PATCH",
         body: JSON.stringify({ status, businessId }),
       }),
 
     complete: (bidId: string, influencerId: string) =>
       this.request(`/bids/${bidId}/complete`, {
-        method: 'PATCH',
+        method: "PATCH",
         body: JSON.stringify({ influencerId }),
       }),
   };
@@ -167,7 +172,7 @@ export type ApiResponse<T = any> = {
 export type User = {
   id: string;
   email: string;
-  userType: 'influencer' | 'business' | 'admin';
+  userType: "influencer" | "business" | "admin";
   firstName: string;
   lastName: string;
   phone?: string;
@@ -184,8 +189,8 @@ export type Campaign = {
   platformId: string;
   title: string;
   description?: string;
-  campaignType: 'story_reshare' | 'post_reshare';
-  status: 'draft' | 'active' | 'paused' | 'completed' | 'cancelled';
+  campaignType: "story_reshare" | "post_reshare";
+  status: "draft" | "active" | "paused" | "completed" | "cancelled";
   budget: number;
   contentUrl?: string;
   requirements?: string;
@@ -202,7 +207,7 @@ export type Bid = {
   influencerId: string;
   proposedRate: number;
   message?: string;
-  status: 'pending' | 'accepted' | 'rejected' | 'completed';
+  status: "pending" | "accepted" | "rejected" | "completed";
   submittedAt: string;
   respondedAt?: string;
   createdAt: string;

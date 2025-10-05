@@ -1,57 +1,70 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Eye, EyeOff, ArrowLeft, Building, Users, TrendingUp } from 'lucide-react';
-import { apiClient } from '@shared/api/client';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  Eye,
+  EyeOff,
+  ArrowLeft,
+  Building,
+  Users,
+  TrendingUp,
+} from "lucide-react";
+import { apiClient } from "@shared/api/client";
 
 export default function RegisterBusiness() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     // Personal info
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    phone: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phone: "",
 
     // Business info
-    companyName: '',
-    companyWebsite: '',
-    industry: '',
-    description: '',
+    companyName: "",
+    companyWebsite: "",
+    industry: "",
+    description: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const mapRegistrationError = (message: string) => {
     if (!message) {
-      return 'Registration failed. Please try again.';
+      return "Registration failed. Please try again.";
     }
 
     const normalized = message.toLowerCase();
 
-    if (normalized.includes('user already exists')) {
-      return 'An account with this email already exists. Try signing in or use a different email address.';
+    if (normalized.includes("user already exists")) {
+      return "An account with this email already exists. Try signing in or use a different email address.";
     }
 
-    if (normalized.includes('business registration requires profiledata')) {
-      return 'Please include your company name before submitting the form.';
+    if (normalized.includes("business registration requires profiledata")) {
+      return "Please include your company name before submitting the form.";
     }
 
-    if (normalized.includes('missing required fields')) {
-      return 'Please fill in all required fields before submitting.';
+    if (normalized.includes("missing required fields")) {
+      return "Please fill in all required fields before submitting.";
     }
 
-    if (normalized.startsWith('http ')) {
-      return 'Registration failed. Please check your details and try again.';
+    if (normalized.startsWith("http ")) {
+      return "Registration failed. Please check your details and try again.";
     }
 
     return message;
@@ -60,18 +73,18 @@ export default function RegisterBusiness() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       setLoading(false);
       return;
     }
 
     // Validate password strength
     if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long');
+      setError("Password must be at least 6 characters long");
       setLoading(false);
       return;
     }
@@ -80,7 +93,7 @@ export default function RegisterBusiness() {
       const response = await apiClient.auth.register({
         email: formData.email,
         password: formData.password,
-        userType: 'business',
+        userType: "business",
         firstName: formData.firstName,
         lastName: formData.lastName,
         profileData: {
@@ -92,13 +105,13 @@ export default function RegisterBusiness() {
       });
 
       // Store user info in localStorage (in production, use proper token management)
-      localStorage.setItem('user', JSON.stringify(response.user));
-      localStorage.setItem('profile', JSON.stringify(response.profile));
+      localStorage.setItem("user", JSON.stringify(response.user));
+      localStorage.setItem("profile", JSON.stringify(response.profile));
 
       // Redirect to business dashboard
-      navigate('/business-dashboard');
+      navigate("/business-dashboard");
     } catch (err: any) {
-      const friendlyMessage = mapRegistrationError(err?.message ?? '');
+      const friendlyMessage = mapRegistrationError(err?.message ?? "");
       setError(friendlyMessage);
     } finally {
       setLoading(false);
@@ -131,7 +144,8 @@ export default function RegisterBusiness() {
               Join as a Business
             </h1>
             <p className="text-lg text-gray-600 mb-8">
-              Launch campaigns with verified micro influencers and get guaranteed reach to your target audience.
+              Launch campaigns with verified micro influencers and get
+              guaranteed reach to your target audience.
             </p>
 
             <div className="space-y-6 mb-8">
@@ -144,7 +158,8 @@ export default function RegisterBusiness() {
                     Verified Quality Micro Influencers
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    A network of verified, quality micro influencers in matching niches will work on your campaign.
+                    A network of verified, quality micro influencers in matching
+                    niches will work on your campaign.
                   </p>
                 </div>
               </div>
@@ -158,7 +173,8 @@ export default function RegisterBusiness() {
                     Guaranteed Reach
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    We guarantee your campaign reaches the target number of users you specify
+                    We guarantee your campaign reaches the target number of
+                    users you specify
                   </p>
                 </div>
               </div>
@@ -172,7 +188,8 @@ export default function RegisterBusiness() {
                     Flexible Pricing
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    Choose pay-per-campaign or yearly subscriptions for limited or unlimited campaigns
+                    Choose pay-per-campaign or yearly subscriptions for limited
+                    or unlimited campaigns
                   </p>
                 </div>
               </div>
@@ -222,7 +239,9 @@ export default function RegisterBusiness() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Personal Information */}
                 <div className="space-y-4">
-                  <h4 className="font-medium text-gray-900 text-sm">Personal Information</h4>
+                  <h4 className="font-medium text-gray-900 text-sm">
+                    Personal Information
+                  </h4>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -231,7 +250,12 @@ export default function RegisterBusiness() {
                         id="firstName"
                         placeholder="John"
                         value={formData.firstName}
-                        onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            firstName: e.target.value,
+                          })
+                        }
                         required
                         disabled={loading}
                       />
@@ -242,7 +266,9 @@ export default function RegisterBusiness() {
                         id="lastName"
                         placeholder="Smith"
                         value={formData.lastName}
-                        onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, lastName: e.target.value })
+                        }
                         required
                         disabled={loading}
                       />
@@ -256,7 +282,9 @@ export default function RegisterBusiness() {
                       type="email"
                       placeholder="john@company.com"
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
                       required
                       disabled={loading}
                     />
@@ -269,7 +297,9 @@ export default function RegisterBusiness() {
                       type="tel"
                       placeholder="+1 (555) 123-4567"
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, phone: e.target.value })
+                      }
                       disabled={loading}
                     />
                   </div>
@@ -280,10 +310,15 @@ export default function RegisterBusiness() {
                       <div className="relative">
                         <Input
                           id="password"
-                          type={showPassword ? 'text' : 'password'}
+                          type={showPassword ? "text" : "password"}
                           placeholder="Create password"
                           value={formData.password}
-                          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              password: e.target.value,
+                            })
+                          }
                           required
                           disabled={loading}
                         />
@@ -305,14 +340,21 @@ export default function RegisterBusiness() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="confirmPassword">Confirm Password *</Label>
+                      <Label htmlFor="confirmPassword">
+                        Confirm Password *
+                      </Label>
                       <div className="relative">
                         <Input
                           id="confirmPassword"
-                          type={showConfirmPassword ? 'text' : 'password'}
+                          type={showConfirmPassword ? "text" : "password"}
                           placeholder="Confirm password"
                           value={formData.confirmPassword}
-                          onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              confirmPassword: e.target.value,
+                            })
+                          }
                           required
                           disabled={loading}
                         />
@@ -321,7 +363,9 @@ export default function RegisterBusiness() {
                           variant="ghost"
                           size="sm"
                           className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          onClick={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                          }
                           disabled={loading}
                         >
                           {showConfirmPassword ? (
@@ -337,7 +381,9 @@ export default function RegisterBusiness() {
 
                 {/* Business Information */}
                 <div className="space-y-4 pt-4 border-t border-gray-100">
-                  <h4 className="font-medium text-gray-900 text-sm">Business Information</h4>
+                  <h4 className="font-medium text-gray-900 text-sm">
+                    Business Information
+                  </h4>
 
                   <div className="space-y-2">
                     <Label htmlFor="companyName">Company Name *</Label>
@@ -345,7 +391,12 @@ export default function RegisterBusiness() {
                       id="companyName"
                       placeholder="Your Company Inc."
                       value={formData.companyName}
-                      onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          companyName: e.target.value,
+                        })
+                      }
                       required
                       disabled={loading}
                     />
@@ -359,7 +410,12 @@ export default function RegisterBusiness() {
                         type="url"
                         placeholder="https://yourcompany.com"
                         value={formData.companyWebsite}
-                        onChange={(e) => setFormData({ ...formData, companyWebsite: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            companyWebsite: e.target.value,
+                          })
+                        }
                         disabled={loading}
                       />
                     </div>
@@ -369,7 +425,9 @@ export default function RegisterBusiness() {
                         id="industry"
                         placeholder="Technology, Fashion, Food..."
                         value={formData.industry}
-                        onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, industry: e.target.value })
+                        }
                         disabled={loading}
                       />
                     </div>
@@ -381,7 +439,12 @@ export default function RegisterBusiness() {
                       id="description"
                       placeholder="Tell us about your company and marketing goals..."
                       value={formData.description}
-                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          description: e.target.value,
+                        })
+                      }
                       disabled={loading}
                       rows={3}
                     />
@@ -399,22 +462,25 @@ export default function RegisterBusiness() {
                   className="w-full bg-brand-600 hover:bg-brand-700 text-white"
                   disabled={loading}
                 >
-                  {loading ? 'Creating Account...' : 'Create Business Account'}
+                  {loading ? "Creating Account..." : "Create Business Account"}
                 </Button>
 
                 <div className="text-center text-sm text-gray-600">
-                  Already have an account?{' '}
-                  <Link to="/login" className="text-brand-600 hover:text-brand-700 font-medium">
+                  Already have an account?{" "}
+                  <Link
+                    to="/login"
+                    className="text-brand-600 hover:text-brand-700 font-medium"
+                  >
                     Sign in
                   </Link>
                 </div>
 
                 <p className="text-xs text-gray-500 text-center">
-                  By creating an account, you agree to our{' '}
+                  By creating an account, you agree to our{" "}
                   <Link to="#" className="text-brand-600 hover:text-brand-700">
                     Terms of Service
-                  </Link>{' '}
-                  and{' '}
+                  </Link>{" "}
+                  and{" "}
                   <Link to="#" className="text-brand-600 hover:text-brand-700">
                     Privacy Policy
                   </Link>
