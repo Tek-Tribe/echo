@@ -1,8 +1,7 @@
 import { supabase } from '../db/supabase';
 
-const API_BASE_URL = process.env.NODE_ENV === 'production'
-  ? '/api'
-  : 'http://localhost:3000/api';
+// Use relative API path so dev server proxy or same-origin deployments work without CORS
+const API_BASE_URL = '/api';
 
 // API client utility
 class ApiClient {
