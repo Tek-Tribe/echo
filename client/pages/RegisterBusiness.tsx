@@ -31,6 +31,32 @@ export default function RegisterBusiness() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const mapRegistrationError = (message: string) => {
+    if (!message) {
+      return 'Registration failed. Please try again.';
+    }
+
+    const normalized = message.toLowerCase();
+
+    if (normalized.includes('user already exists')) {
+      return 'An account with this email already exists. Try signing in or use a different email address.';
+    }
+
+    if (normalized.includes('business registration requires profiledata')) {
+      return 'Please include your company name before submitting the form.';
+    }
+
+    if (normalized.includes('missing required fields')) {
+      return 'Please fill in all required fields before submitting.';
+    }
+
+    if (normalized.startsWith('http ')) {
+      return 'Registration failed. Please check your details and try again.';
+    }
+
+    return message;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
